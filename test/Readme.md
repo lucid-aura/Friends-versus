@@ -4,3 +4,8 @@ op.gg 사이트를 약간 크롤링해보았음
 ~~~sh
 pip install -r requirements.txt # python 3.7
 ~~~
+
+실행방법
+~~~sh
+python CrawlerTest.py
+~~~
