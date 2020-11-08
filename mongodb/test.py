@@ -1,7 +1,7 @@
 # https://basketdeveloper.tistory.com/34
 from pymongo import MongoClient 
 
-MONGODB_HOST = '0.0.0.0'
+MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
 
 client = MongoClient(host=MONGODB_HOST,

@@ -1,19 +1,17 @@
 version: "3.2" # 버전 정보를 작성한다.
 
 services: # 서비스 목록을 정의한다.
-        mongodb: # 서비스의 이름을 정의한다.
+        mongo: # 서비스의 이름을 정의한다.
                 image : mongo # 해당 서비스에서 사용할 이미지
                 restart : always # container를 실행할 때 항상 이미 수행중이라면 재시작
                 environment: # 환경 변수를 정의한다
                         MONGO_INITDB_ROOT_USERNAME : root
                         MONGO_INITDB_ROOT_PASSWORD : root12345!
                 volumes: 
-                        - type: bind
-                          source : mongodb # 볼륨 컨테이너 생성 
-                          target : /data/db # 몽고디비 내부 경로
+                        - /c/Users/SAMSUNG/Desktop/hsh/git/Friends-versus/mongodb:/data/db
                 container_name: "mongodb_friendversus"
                 ports : 
-                        - "27017:27017" # 몽고디비 기본 포
+                        - 27017:27017
 
         mongo-express: 
                 image : mongo-express
@@ -21,9 +19,8 @@ services: # 서비스 목록을 정의한다.
                 container_name : "mongodb_express_friendversus"
                 ports:
                     - 8081:8081
+                volumes:
+                    - /c/Users/SAMSUNG/Desktop/hsh/git/Friends-versus/mongodb:/data/db
                 environment: 
                     ME_CONFIG_MONGODB_ADMINUSERNAME : root 
                     ME_CONFIG_MONGODB_ADMINPASSWORD : root12345!
-                    ME_CONFIG_MONGODB_SERVER : mongodb_friendversus
-                depends_on: 
-                    - mongodb
