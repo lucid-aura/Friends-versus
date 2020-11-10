@@ -6,6 +6,9 @@
             "USERNAME" : "root",
             "PASSWORD" : "root12345!"
         }
+    },
+    "RIOTAPI" : {
+        "APIKEY" : ""
     }
 
 }

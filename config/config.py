@@ -1,4 +1,5 @@
 import json 
+import os 
 
 class JsonConfig:
     def __init__(self, configFile="Develop.json"):
@@ -11,7 +12,9 @@ class JsonConfig:
 
     def load(self):
         # 설정 파일을 로딩한다.
-        with open(self.configFile, 'r') as jsonFile:
+        script_dir = os.path.dirname(__file__)
+        abs_file_path = os.path.join(script_dir, self.configFile)
+        with open(abs_file_path, 'r') as jsonFile:
             self.config = json.load(jsonFile)
         
         
