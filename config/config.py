@@ -1,30 +1,5 @@
-import json 
-import os 
-
-Champion_stat = [  # Champion.json의 name = 'data' 딕셔너리 정보
-"id",
-"attack",
-"armor",
-"armorperlevel",
-"attackdamage",
-"attackdamageperlevel",
-"attackrange",
-"attackspeed",
-"attackspeedperlevel",
-"crit",
-"critperlevel",
-"hp",
-"hpperlevel",
-"hpregen",
-"hpregenperlevel",
-"movespeed",
-"mp",
-"mpperlevel",
-"mpregen",
-"mpregenperlevel",
-"spellblock",
-"spellblockperlevel"
-]
+import json
+import os
 
 class JsonConfig:
     #def __init__(self, configFile="../data/Champion_one.json"):
@@ -43,8 +18,6 @@ class JsonConfig:
         with open(abs_file_path, 'r') as jsonFile:
             self.config = json.load(jsonFile)
         
-        
-
 
 
 

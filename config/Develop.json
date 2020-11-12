@@ -9,6 +9,9 @@
     },
     "RIOTAPI" : {
         "APIKEY" : ""
+    },
+    "DATA" : {
+        "CHAMPIONSTAT" : "/data/Champion.json"
     }
 
 }
