@@ -1,0 +1,17 @@
+{
+    "DATABASE" : {
+        "MONGODB" : {
+            "HOST" : "localhost",
+            "PORT" : "27017",
+            "USERNAME" : "root",
+            "PASSWORD" : "root12345!"
+        }
+    },
+    "RIOTAPI" : {
+        "APIKEY" : ""
+    },
+    "DATA" : {
+        "CHAMPIONSTAT" : "/data/Champion.json"
+    }
+
+}
