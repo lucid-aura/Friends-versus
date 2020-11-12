@@ -57,8 +57,15 @@ class MongoDBHandler:
         collection = self.client[db_name][collection_name]
         condition = self.create_condition(column_name, column_value)
         res = collection.find_one(condition)
-        print(res)
         return res, condition
+
+    def find_items(self, db_name, collection_name, name):
+        collection = self.client[db_name][collection_name]
+        values = list()
+        for doc in collection.find():
+            value = str(doc[name])
+            values.append(value)
+        return values
 
     def delete_item(self, column_name, column_value, db_name, collection_name):
         result, condition = self.find_item(column_name, column_value, db_name, collection_name)
@@ -83,19 +90,6 @@ class MongoDBHandler:
 
     def create_condition(self, column_name, column_value):
         return {str(column_name): str(column_value)}
-
-
-    def check_version(self):
-        json = JsonConfig()
-        version = json.client_version()
-        #version = [version]
-        print(version)
-        self.insert_item("Integrity", "Client_version", [version])
-        # if collection != version:
-        #     # 버전을 비교하고 업데이트 하는 기능 필요
-        #     new_value = {"$set": {"version": version}}
-        #     result = collection.update_one(new_value)
-        return version
 
     def check_duplicate(self, db_name, collection_name, key):
         collection = self.client[db_name][collection_name]

@@ -11,7 +11,8 @@
         "APIKEY" : ""
     },
     "DATA" : {
-        "CHAMPIONSTAT" : "/data/Champion.json"
+        "CHAMPIONSTAT" : "../data/champion.json",
+        "VERSION" : "../data/version.json"
     }
 
 }
