@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "boostrap": "^2.0.0",
+    "bootstrap": "^4.5.3",
     "bootstrap4-vue": "^0.3.12",
     "colorette": "^1.2.0",
     "core-js": "^3.6.5",
@@ -16,6 +17,7 @@
     "popper.js": "^1.16.1",
     "verify": "^0.1.2",
     "vue": "^2.6.11",
+    "vue-router": "^3.4.9",
     "vuetify": "^2.3.17"
   },
   "devDependencies": {
