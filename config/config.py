@@ -1,0 +1,66 @@
+import json 
+import os 
+
+Champion_stat = [  # Champion.json의 name = 'data' 딕셔너리 정보
+"id",
+"attack",
+"armor",
+"armorperlevel",
+"attackdamage",
+"attackdamageperlevel",
+"attackrange",
+"attackspeed",
+"attackspeedperlevel",
+"crit",
+"critperlevel",
+"hp",
+"hpperlevel",
+"hpregen",
+"hpregenperlevel",
+"movespeed",
+"mp",
+"mpperlevel",
+"mpregen",
+"mpregenperlevel",
+"spellblock",
+"spellblockperlevel"
+]
+
+class JsonConfig:
+    #def __init__(self, configFile="../data/Champion_one.json"):
+        # 다른 json 파일도 선택적으로 읽을 수 있게 수정해야한다.
+    def __init__(self, configFile="../data/Champion.json"):
+        assert configFile != ""
+        self.configFile = configFile
+        self.config = None 
+        self.load()
+        
+
+    def load(self):
+        # 설정 파일을 로딩한다.
+        script_dir = os.path.dirname(__file__)
+        abs_file_path = os.path.join(script_dir, self.configFile)
+        with open(abs_file_path, 'r') as jsonFile:
+            self.config = json.load(jsonFile)
+
+    def client_version(self):
+        json_parser = self.config["version"]
+        return json_parser
+
+    def parsing_champion_data(self):
+        # key가 "data"인 딕셔너리 가져오기
+        json_parser = self.config["data"]
+        champion_stat = []
+        for key in json_parser.values():
+            dic = dict()
+            dic['id'] = key['id']
+            dic.update(key['stats'])
+            champion_stat.append(dic)
+        return champion_stat
+
+        
+
+
+
+
+
