@@ -1,0 +1,26 @@
+{
+    "champion_stat" : [
+       "id", 
+       "attack",
+       "armor",
+       "armorperlevel",
+       "attackdamage",
+       "attackdamageperlevel",
+       "attackrange",
+       "attackspeed",
+       "attackspeedperlevel",
+       "crit",
+       "critperlevel",
+       "hp",
+       "hpperlevel",
+       "hpregen",
+       "hpregenperlevel",
+       "movespeed",
+       "mp",
+       "mpperlevel",
+       "mpregen",
+       "mpregenperlevel",
+       "spellblock",
+       "spellblockperlevel"   
+    ]
+}
