@@ -24,6 +24,16 @@
     align-items: center;
 }
 
+.custom-table-div {
+    height: 0%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: "#FFFFF0";
+}
+
 a {
     color: #00897B;
 }
@@ -102,4 +112,84 @@ table {
 
 .v-data-table input {
     font-size: medium !important;
+}
+
+div.stat-div {
+    float: left;
+}
+
+div.skill-div{
+    float: right;
+}
+table.stat-table {
+
+    border-collapse: collapse;
+    width: 90%;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.stat-table thead {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background: #e7708d;
+}
+table.stat-table thead th {
+    padding: 5px;
+    width: 50%;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+}
+table.stat-table tbody th {
+    width: 100%;
+    padding: 5px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #fcf1f4;
+}
+table.stat-table td {
+    width: 10%;
+    padding: 5px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+
+
+table.skill-table {
+    border-collapse: collapse;
+    width: 90%;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    margin: 20px 10px;
+}
+
+
+table.skill-table thead {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+        background: #e7708d;
+}
+table.skill-table thead th {
+    padding: 5px;
+    width: 50%;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+}
+table.skill-table tbody th {
+    width: 100%;
+    padding: 5px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #fcf1f4;
+}
+table.skill-table td {
+    width: 10%;
+    padding: 5px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
 }

@@ -8,6 +8,12 @@
                 <router-link to="/friendlist" class="nav-link" exact>
                     Friend list
                 </router-link>
+                <router-link to="/itemlist" class="nav-link" exact>
+                    Items
+                </router-link>
+                <router-link to="/championlist" class="nav-link" exact>
+                    Champions
+                </router-link>
             </nav>
         </div>
     </header>
