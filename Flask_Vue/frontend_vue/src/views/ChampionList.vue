@@ -1,7 +1,7 @@
 <template>
     <div class="custom-home">
         <main role="main" class="inner cover">
-            <h3 class="cover-heading">Friend List
+            <h3 class="cover-heading">Champion
                 <v-icon v-blur @click="fetchDefaults" :class="icons[4].class">
                     {{ icons[4].icon }}
                 </v-icon>   
@@ -11,13 +11,13 @@
                     <template v-slot:default>
                         <thead>
                             <th></th>
-                            <th>Real Name</th>
-                            <th>Nick Name</th>
+                            <th>Champion Name</th>
+                            <th>Champion Title</th>
                             <th style="display: none;">Missing?</th>
                             <th></th>
                         </thead>
                         <tbody v-cloak>
-                            <tr v-for="(item, index) in friend_list"
+                            <tr v-for="(item, index) in champion_list"
                                 :key="index"
                             >
                                 <td>
@@ -31,21 +31,24 @@
                                 </td>
                                 <td>
                                     <input  class="on-fly-input"
-                                            v-model="friend_list[index].real_name"
+                                            v-model="champion_list[index].champion_name"
                                             :style="icons_list[index].style"
+                                            @click.left="wow"
                                             readonly
                                     />
+                                    <router-link to="/championinfo"></router-link>
+                                    <router-view></router-view>
                                 </td>
                                 <td>
                                     <input  class="on-fly-input"
-                                            v-model="friend_list[index].nick_name"
+                                            v-model="champion_list[index].champion_title"
                                             :style="icons_list[index].style"
                                             readonly
                                     />
                                 </td>
                                 <td style="display: none;">
                                     <input  class="on-fly-input"
-                                            v-model="friend_list[index].missing"
+                                            v-model="champion_list[index].missing"
                                             :style="icons_list[index].style"
                                     />
                                 </td>
@@ -67,6 +70,8 @@
                                     </v-icon>
                                 </td>
                             </tr>
+                            <router-link to="/championinfo"></router-link>
+                            <router-view></router-view>
                         </tbody>
                     </template>
                 </v-simple-table>
@@ -77,10 +82,10 @@
 
 <script>
 export default {
-    name: 'friendList',
+    name: 'championList',
     data() {
         return {
-            friend_list: [],
+            champion_list: [],
             icons: [
                 {
                     'icon': 'mdi-checkbox-blank-outline',
@@ -117,22 +122,22 @@ export default {
     methods: {
         fetchDefaults: function () {
 
-            this.friend_list = [
+            this.champion_list = [
                 {
-                    'real_name' : '현상현',
-                    'nick_name' : '휘랑',
+                    'champion_name' : '조이',
+                    'champion_title' : '여명의 성위',
                     'missing' : true
                 },
                 {
-                    'real_name' : '안상원',
-                    'nick_name' : '피곤한통닭',
+                    'champion_name' : '챔피언 이름',
+                    'champion_title' : '챔피언 타이틀',
                     'missing' : true 
                 }
             ];
 
             this.icons_list = [];
-            for (var i = 0; i < this.friend_list.length; i++) {
-                if (this.friend_list[i].missing == true) {
+            for (var i = 0; i < this.champion_list.length; i++) {
+                if (this.champion_list[i].missing == true) {
                     this.icons_list.push(this.icons[0]);
                 } else {
                     this.icons_list.push(this.icons[1]);
@@ -141,14 +146,14 @@ export default {
         },
 
         removeRow: function (index) {
-            this.friend_list.splice(index, 1);
+            this.champion_list.splice(index, 1);
             this.icons_list.splice(index, 1);
         },
 
         addRow: function () {
-            this.friend_list.push({
-                real_name : '',
-                nick_name : '',
+            this.champion_list.push({
+                champion_name : '',
+                champion_title : '',
                 missing : true,
             });
             this.icons_list.push(this.icons[0]);
@@ -156,10 +161,10 @@ export default {
         checkRow: function (index) {
             if (this.icons_list[index].icon == this.icons[0].icon) {
                 this.icons_list[index] = this.icons[1];
-                this.friend_list[index].missing = false;
+                this.champion_list[index].missing = false;
             } else {
                 this.icons_list[index] = this.icons[0];
-                this.friend_list[index].missing = true;
+                this.champion_list[index].missing = true;
             }
         },
 
@@ -169,7 +174,11 @@ export default {
                     el.focus();
                 }
             }
+        },
+
+        wow: function() {
+            this.$router.push('/championinfo')
         }
     }
-};
+}
 </script>

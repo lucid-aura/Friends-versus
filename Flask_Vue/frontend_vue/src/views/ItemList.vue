@@ -1,7 +1,7 @@
 <template>
     <div class="custom-home">
         <main role="main" class="inner cover">
-            <h3 class="cover-heading">Friend List
+            <h3 class="cover-heading">Item
                 <v-icon v-blur @click="fetchDefaults" :class="icons[4].class">
                     {{ icons[4].icon }}
                 </v-icon>   
@@ -33,14 +33,12 @@
                                     <input  class="on-fly-input"
                                             v-model="friend_list[index].real_name"
                                             :style="icons_list[index].style"
-                                            readonly
                                     />
                                 </td>
                                 <td>
                                     <input  class="on-fly-input"
                                             v-model="friend_list[index].nick_name"
                                             :style="icons_list[index].style"
-                                            readonly
                                     />
                                 </td>
                                 <td style="display: none;">
