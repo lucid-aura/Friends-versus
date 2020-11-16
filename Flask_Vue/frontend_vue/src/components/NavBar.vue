@@ -5,7 +5,7 @@
                 <router-link to="/" class="nav-link" exact>
                     Home
                 </router-link>
-                <router-link to="/friendlist" class="nav-link" exact>
+                <router-link v-bind="check_login" to="/friendlist" class="nav-link" tag="button" :disabled="true" v-on:click.native="prevent">
                     Friend list
                 </router-link>
                 <router-link to="/itemlist" class="nav-link" exact>
@@ -18,3 +18,20 @@
         </div>
     </header>
 </template>
+
+<script>
+export default {
+    name: 'NavBar',
+    data() {
+        return{
+            check_login: false
+        }
+    },
+    methods: {
+        prevent: function() {
+            alert('prevented!')
+            this.check_login = false
+        }
+    }
+}
+</script>

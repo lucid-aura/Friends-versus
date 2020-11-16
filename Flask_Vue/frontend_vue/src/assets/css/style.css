@@ -24,6 +24,18 @@
     align-items: center;
 }
 
+.custom-login-input{
+    padding:5px 15px 5px 15px;
+    border:4px solid #4ea0d8;
+    border-radius: 10px;
+    width:500px;
+    height:35px;
+    font-size:15px
+}
+.custom-login-btn{
+    background-color:"#FFFFFF"
+}
+
 .custom-table-div {
     height: 0%;
     width: 50%;
@@ -121,6 +133,33 @@ div.stat-div {
 div.skill-div{
     float: right;
 }
+
+table.champion-info {
+    border-collapse: collapse;
+    width: 90%;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    margin: 20px 10px;
+    white-space: pre;
+}
+table.champion-info thead {
+    border: 1px solid #ccc;
+}
+table.champion-info thead th{
+    border: 1px solid #ccc;
+}
+table.champion-info thead td {
+    border: 1px solid #ccc;
+}
+table.champion-info tbody {
+    border: 1px solid #ccc;
+}
+table.champion-info tbody th {
+    border: 1px solid #ccc;
+}
+table.champion-info tbody td {
+    border: 1px solid #ccc;
+}
 table.stat-table {
 
     border-collapse: collapse;
@@ -128,44 +167,64 @@ table.stat-table {
     line-height: 1.5;
     border: 1px solid #ccc;
     margin: 20px 10px;
+    white-space: pre;
+
 }
+
 table.stat-table thead {
+    width: 100%;
     border-right: 1px solid #ccc;
     border-left: 1px solid #ccc;
     background: #e7708d;
 }
 table.stat-table thead th {
+    width: 55%;
     padding: 5px;
-    width: 50%;
     font-weight: bold;
     vertical-align: top;
     color: #fff;
 }
-table.stat-table tbody th {
+table.stat-table thead td {
     width: 100%;
+    padding: 5px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+
+}
+
+table.stat-table tbody {
+    width: 100%;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background: #3fAFFd;
+}
+table.stat-table tbody th {
+    width: 55%;
     padding: 5px;
     font-weight: bold;
     vertical-align: top;
     border-bottom: 1px solid #ccc;
     background: #fcf1f4;
 }
-table.stat-table td {
-    width: 10%;
+table.stat-table tbody td {
+    width: 45%;
     padding: 5px;
     vertical-align: top;
     border-bottom: 1px solid #ccc;
+    border: 1px solid #ccc;
 }
 
 
 
 table.skill-table {
+    white-space: pre;
     border-collapse: collapse;
     width: 90%;
     line-height: 1.5;
     border: 1px solid #ccc;
     margin: 20px 10px;
-}
 
+}
 
 table.skill-table thead {
     border-right: 1px solid #ccc;
@@ -174,22 +233,31 @@ table.skill-table thead {
 }
 table.skill-table thead th {
     padding: 5px;
-    width: 50%;
+    width: 40%;
     font-weight: bold;
     vertical-align: top;
     color: #fff;
 }
 table.skill-table tbody th {
+    padding: 5px;
+    width: 40%;
+    font-weight: bold;
+    vertical-align: top;
+    color: #000;
+    background: #fcf1f4;
+}
+table.skill-table tbody tr {
     width: 100%;
     padding: 5px;
     font-weight: bold;
     vertical-align: top;
     border-bottom: 1px solid #ccc;
-    background: #fcf1f4;
+    background: #3fAFFd;
 }
-table.skill-table td {
+table.skill-table tbody td {
     width: 10%;
     padding: 5px;
-    vertical-align: top;
+    vertical-align: middle;
+    text-align: center;
     border-bottom: 1px solid #ccc;
 }

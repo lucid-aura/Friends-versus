@@ -33,12 +33,14 @@
                                     <input  class="on-fly-input"
                                             v-model="friend_list[index].real_name"
                                             :style="icons_list[index].style"
+                                            readonly
                                     />
                                 </td>
                                 <td>
                                     <input  class="on-fly-input"
                                             v-model="friend_list[index].nick_name"
                                             :style="icons_list[index].style"
+                                            readonly
                                     />
                                 </td>
                                 <td style="display: none;">

@@ -34,6 +34,7 @@
                                             v-model="champion_list[index].champion_name"
                                             :style="icons_list[index].style"
                                             @click.left="wow"
+                                            readonly
                                     />
                                     <router-link to="/championinfo"></router-link>
                                     <router-view></router-view>
@@ -42,6 +43,7 @@
                                     <input  class="on-fly-input"
                                             v-model="champion_list[index].champion_title"
                                             :style="icons_list[index].style"
+                                            readonly
                                     />
                                 </td>
                                 <td style="display: none;">
@@ -122,13 +124,13 @@ export default {
 
             this.champion_list = [
                 {
-                    'champion_name' : '아트록스',
-                    'champion_title' : '다르킨의 검',
+                    'champion_name' : '조이',
+                    'champion_title' : '여명의 성위',
                     'missing' : true
                 },
                 {
-                    'champion_name' : '조이',
-                    'champion_title' : '여명의 성위',
+                    'champion_name' : '챔피언 이름',
+                    'champion_title' : '챔피언 타이틀',
                     'missing' : true 
                 }
             ];
