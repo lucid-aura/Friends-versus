@@ -1,14 +1,14 @@
 <template>
     <div class="custom-home">
         <main role="main" class="inner cover">
-            <h3 class="cover-heading">Friend List
+            <h3 class="cover-heading" @click="click"> 's Friend List
                 <v-icon v-blur @click="fetchDefaults" :class="icons[4].class">
                     {{ icons[4].icon }}
                 </v-icon>   
             </h3>
             <v-layout justify-center justify-content-center mt-4>
                 <v-simple-table fixed-header>
-                    <template v-slot:default>
+                    <template v-slot:default v-if="isLogin()">
                         <thead>
                             <th></th>
                             <th>Real Name</th>
@@ -80,6 +80,7 @@ export default {
     name: 'friendList',
     data() {
         return {
+            user: '',
             friend_list: [],
             icons: [
                 {
@@ -114,9 +115,18 @@ export default {
     created: function () {
         this.fetchDefaults();
     },
-    methods: {
-        fetchDefaults: function () {
 
+    methods: {
+        isLogin: function () {
+            console.log("this " + this.user)
+            console.log("$ " + this.$route.user)
+            if (this.$route.query.id === 'aaa')
+                return true;
+            else
+                return false;
+        },
+        fetchDefaults: function () {
+            console.log("fetch: " + this.user)
             this.friend_list = [
                 {
                     'real_name' : '현상현',
@@ -163,6 +173,11 @@ export default {
             }
         },
 
+        click: function (){
+            alert(this.$route.query.id)
+            console.log(this.$route.query.id === 'aaa')
+            console.log("$ " + this.$route.user)
+        },
         directives: {
             focus: {
                 inserted (el) {

@@ -5,8 +5,10 @@
                 <router-link to="/" class="nav-link" exact>
                     Home
                 </router-link>
-                <router-link v-bind="check_login" to="/friendlist" class="nav-link" tag="button" :disabled="true" v-on:click.native="prevent">
-                    Friend list
+                <router-link to="/friendlist" exact>
+                    <button id= "login" class="nav-link" :disabled="true">
+                        Friend list
+                    </button>
                 </router-link>
                 <router-link to="/itemlist" class="nav-link" exact>
                     Items
@@ -24,12 +26,21 @@ export default {
     name: 'NavBar',
     data() {
         return{
-            check_login: false
+            check_login: 'false',
+            user_name: ''
         }
+    },
+    able(user) {
+        var btn = document.getElementById('login');
+        btn.disabled= false
+        this.user_name = user
+        //console.log(this.user_name)
+        //onsole.log(user)
     },
     methods: {
         prevent: function() {
-            alert('prevented!')
+            alert(this.check_login)
+            console.log(this.check_login)
             this.check_login = false
         }
     }
