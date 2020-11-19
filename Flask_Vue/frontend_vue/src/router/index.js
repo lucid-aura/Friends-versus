@@ -44,4 +44,19 @@ export default new VueRouter({
         }
     ],
     linkActiveClass: 'active',
-})
+});
+/*
+VueRouter.beforeEach(to, from, next);
+
+function hasQueryParams(route) {
+  return !!Object.keys(route.query).length
+}
+
+function beforeEach(to, from, next) {
+    if(!hasQueryParams(to) && hasQueryParams(from)){
+        next({name: to.name, query: from.query});
+    } else {
+        next();
+    }
+}
+*/

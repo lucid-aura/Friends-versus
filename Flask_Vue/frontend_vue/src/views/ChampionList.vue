@@ -33,7 +33,7 @@
                                     <input  class="on-fly-input"
                                             v-model="champion_list[index].champion_name"
                                             :style="icons_list[index].style"
-                                            @click.left="wow"
+                                            @click="select(index)"
                                             readonly
                                     />
                                     <router-link to="/championinfo"></router-link>
@@ -85,6 +85,7 @@ export default {
     name: 'championList',
     data() {
         return {
+            selected_champion: '',
             champion_list: [],
             icons: [
                 {
@@ -152,8 +153,8 @@ export default {
 
         addRow: function () {
             this.champion_list.push({
-                champion_name : '',
-                champion_title : '',
+                champion_name : 'none',
+                champion_title : 'none',
                 missing : true,
             });
             this.icons_list.push(this.icons[0]);
@@ -168,16 +169,8 @@ export default {
             }
         },
 
-        directives: {
-            focus: {
-                inserted (el) {
-                    el.focus();
-                }
-            }
-        },
-
-        wow: function() {
-            this.$router.push('/championinfo')
+        select: function(idx) {
+            this.$router.push({path:'/championinfo',query:{champ: this.champion_list[idx].champion_name} }); // 쿼리로 챔피언 이름을 넘겨준다.
         }
     }
 }

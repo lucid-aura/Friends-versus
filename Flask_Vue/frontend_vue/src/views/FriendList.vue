@@ -1,7 +1,7 @@
 <template>
     <div class="custom-home">
         <main role="main" class="inner cover">
-            <h3 class="cover-heading" @click="click"> 's Friend List
+            <h3 class="cover-heading">{{ this.user }} 's Friend List
                 <v-icon v-blur @click="fetchDefaults" :class="icons[4].class">
                     {{ icons[4].icon }}
                 </v-icon>   
@@ -78,9 +78,10 @@
 <script>
 export default {
     name: 'friendList',
+    props: ["login_id"],
     data() {
         return {
-            user: '',
+            user: this.login_id,
             friend_list: [],
             icons: [
                 {
@@ -118,15 +119,13 @@ export default {
 
     methods: {
         isLogin: function () {
-            console.log("this " + this.user)
-            console.log("$ " + this.$route.user)
-            if (this.$route.query.id === 'aaa')
+            console.log(this.user)
+            if (this.user === 'aaa')
                 return true;
             else
                 return false;
         },
         fetchDefaults: function () {
-            console.log("fetch: " + this.user)
             this.friend_list = [
                 {
                     'real_name' : '현상현',
@@ -172,19 +171,6 @@ export default {
                 this.friend_list[index].missing = true;
             }
         },
-
-        click: function (){
-            alert(this.$route.query.id)
-            console.log(this.$route.query.id === 'aaa')
-            console.log("$ " + this.$route.user)
-        },
-        directives: {
-            focus: {
-                inserted (el) {
-                    el.focus();
-                }
-            }
-        }
     }
 };
 </script>
