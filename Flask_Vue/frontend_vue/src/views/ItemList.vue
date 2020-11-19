@@ -160,14 +160,6 @@ export default {
                 this.friend_list[index].missing = true;
             }
         },
-
-        directives: {
-            focus: {
-                inserted (el) {
-                    el.focus();
-                }
-            }
-        }
     }
 };
 </script>

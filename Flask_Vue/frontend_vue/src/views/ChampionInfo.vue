@@ -5,7 +5,7 @@
             <table class="champion-info">
                 <thead>
                     <tr>
-                        <td>조이</td>
+                        <td>{{ this.$route.query.champ }}</td>
                         <td>여명의 성위</td>
                     </tr>
                 </thead>
@@ -13,7 +13,6 @@
                     <tr>
                         <td>챔피언 아이콘</td>
                         <td rowspan = "2">챔피언 스킨</td>
-
                     </tr>
                     <tr>
                         <td>챔피언 tags</td>
@@ -108,7 +107,6 @@
                     </thead>
                     <tbody v-cloak>
                         <th>패시브</th>
-                        <!-- <th ref="message" @mouseover="getQMessage">Q</th> -->
                         <th>Q</th>
                         <th>W</th>
                         <th>E</th>
@@ -121,7 +119,7 @@
                             <td id="R">{{skill.R}}</td>
                         </tr>
                         <tr>
-                            <td v-bind:id="result" colspan="5" style:height="100px">{{result}}</td>
+                            <td v-bind:id="result" colspan="5" style:height="100px">{{skill_list[0][result]}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -133,6 +131,7 @@
 <script>
 export default {
     name: 'championInfo',
+    props: ['selected_champion'],
     data() {
         return {
             result: ' ',
@@ -171,12 +170,6 @@ export default {
         this.fetchDefaults();
     },
     methods: {
-        over: function() {
-            alert('over!!')
-        },
-        getQMessage: function() {
-            alert(['skills.Q'])
-        },
         updateSkillInfo: function(event) {
             const targetId = event.target.id;
             this.result = targetId
@@ -190,18 +183,11 @@ export default {
                     'W': '주문도둑',
                     'E': '헤롱헤롱쿨쿨방울',
                     'R': '차원 넘기'
-                },
-                {
-                    'P': '패시브',
-                    'Q': '큐',
-                    'W': '더블유',
-                    'E': '이',
-                    'R': '알'
                 }
             ];
 
             this.icons_list = [];
-            for (var i = 0; i < this.champion_list.length; i++) {
+            for (var i = 0; i < this.skill_list.length; i++) {
                 if (this.skill_list[i].missing == true) {
                     this.icons_list.push(this.icons[0]);
                 } else {
@@ -217,6 +203,7 @@ export default {
 
         addRow: function () {
             this.skill_list.push({
+                P : '',
                 Q : '',
                 W : '',
                 E : '',
@@ -233,14 +220,6 @@ export default {
                 this.skill_list[index].missing = true;
             }
         },
-
-        directives: {
-            focus: {
-                inserted (el) {
-                    el.focus();
-                }
-            }
-        }
     }
 }
 </script>
