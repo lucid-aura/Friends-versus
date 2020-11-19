@@ -1,8 +1,17 @@
-from APIHandler import BaseAPI
-from APIHandler.league_of_legends import SummonerAPI
+from API.BaseAPI import BaseAPI
+from API.league_of_legends.SummonerAPI import SummonerAPI
+
+from Handler.RequestHandler import RequestHandler
+from Handler import (
+    Deserializer,
+    DeserializerAdapter,
+    DictionaryDeserializer
+)
+
+
 
 class LolWatcher:
-    def __init__(self, api_key: str, timeout: int = None):
+    def __init__(self, api_key: str, timeout: int = None, deserialier: Deserializer = DictionaryDeserializer):
         """
         RiotWatcher 클래스 객체 초기화
         :param string api_key
@@ -11,8 +20,11 @@ class LolWatcher:
         if not api_key:
             raise ValueError("api_key must be set!")
 
-        self._base_api = BaseAPI.BaseAPI(api_key)
-        self._summoner = SummonerAPI.SummonerAPI(self._base_api)
+        # handler_chain = [ DeserializerAdapter.DeserializerAdapter(deserialier),]
+        #self._base_api = BaseAPI(api_key, handler_chain)
+        
+        self._base_api = BaseAPI(api_key)
+        self._summoner = SummonerAPI(self._base_api)
 
         @property
         def summoner(self):
