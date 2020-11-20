@@ -4,7 +4,7 @@ from pymongo.cursor import CursorType
 from ..logging.logging import log_time
 from ..config.config import JsonConfig 
 
-host='localhost'
+host='192.168.40.65'
 port=27017
 username='root'
 password='root12345!'
@@ -44,7 +44,7 @@ class MongoDBHandler:
     def delete_item(self, column_name, column_value, db_name, collection_name):
         result, condition = self.find_item(column_name, column_value, db_name, collection_name)
         if result is None:
-            print(f"{condition} - 존재하지 않는 플레이어 이름입니다.")
+            print(f"{condition} - 존재하지 않는 값입니다.")
         else:
             collection  = self.client[db_name][collection_name]
             result = collection.delete_one(condition)
@@ -54,7 +54,7 @@ class MongoDBHandler:
         result, condition = self.find_item(column_name, column_value, db_name, collection_name)
 
         if result is None:
-            print(f"{condition} - 존재하지 않는 플레이어 이름입니다.")
+            print(f"{condition} - 존재하지 않는 플레이어 값입니다.")
         else:
             collection = self.client[db_name][collection_name]
             new_value = {"$set": {update_column: update_value}} 

@@ -1,0 +1,5 @@
+객체변수 변화 감지 https://uxgjs.tistory.com/193
+TypeError: Cannot read property of undefined https://jess2.xyz/vue/data-undefined-error/
+
+https://github.com/HamSungJun/FM.GG
+ - API 설명
