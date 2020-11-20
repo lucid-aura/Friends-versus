@@ -13,7 +13,7 @@ from config import JsonConfig
 #from ..config.config import JsonConfig
 
 
-host='192.168.40.52' #PC 설정에 따라 다르다. window 일경우 C:\Windows\System32\drivers\etc\hosts 파일에 docker 주소 및 포트가 있음.
+host='192.168.40.65' #PC 설정에 따라 다르다. window 일경우 C:\Windows\System32\drivers\etc\hosts 파일에 docker 주소 및 포트가 있음.
 port=27017
 username='root'
 password='root12345!'

@@ -22,5 +22,14 @@
        "mpregenperlevel",
        "spellblock",
        "spellblockperlevel"   
+    ],
+    "Player_data" : [
+       "id", 
+       "accountId",
+       "puuid",
+       "name",
+       "profileIconId",
+       "revisionDate",
+       "summonerLevel"
     ]
 }
