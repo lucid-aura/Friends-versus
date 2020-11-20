@@ -1,3 +1,16 @@
+from LolWatcher import LolWatcher
+from requests import Response
+import json 
+if __name__ == "__main__":
+    lol_watcher = LolWatcher("RGAPI-330711e3-2f76-48c1-b832-6a455f132270")
+    my_region = 'kr'
+
+    my_ranked_stats_response = lol_watcher._summoner.by_name(my_region, "휘랑")
+
+    print(f"Status Code - {my_ranked_stats_response.status_code}")
+    print(f"Response Json - {json.loads(my_ranked_stats_response.text)}")
+
+"""
 import sys 
 import requests 
 import pprint 
@@ -15,3 +28,4 @@ if __name__ == "__main__":
 
     resp = requests.get(sowhansa)
     pprint.pprint(resp.json())
+"""
