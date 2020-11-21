@@ -7,23 +7,22 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/hyh_json_handler")
 from method import JsonParser
 
-
-host='192.168.40.65'
+host='169.254.99.63'
+#host='192.168.40.52'
 port=27017
 username='root'
 password='root12345!'
 
 test = MongoDBHandler(host, port, username, password)
-develop_json = JsonConfig("Develop.json") # Develop Json 파일 열고 로드
 
-###############################champion###################################
 temp_stat = {"id":"Aaatrox", "hp":580,"hpperlevel":90,"mp":0,"mpperlevel":0,"movespeed":345,"armor":38,"armorperlevel":3.25,"spellblock":32.1,"spellblockperlevel":1.25,"attackrange":175,"hpregen":3,"hpregenperlevel":1,"mpregen":0,"mpregenperlevel":0,"crit":0,"critperlevel":0,"attackdamage":60,"attackdamageperlevel":5,"attackspeedperlevel":2.5,"attackspeed":0.651}
 #중복 방지 확인용 임시 테스트 데이터 (id : Aatrox -> Aaatrox)
 
-# get a latest champion status info from champion.json
+# get a latest champion status info form champion.json
+develop_json = JsonConfig("Develop.json") # Develope Json 파일 열고 로드
 champion_json_path = develop_json.config["DATA"]["CHAMPIONSTAT"]
 champion_json = JsonConfig(champion_json_path)
-champion_data = champion_json.config["data"] # json 파일에서 data의 부분만 파싱해온다.
+champion_data = champion_json.config["data"]
 champion_parser = JsonParser(champion_data)
 parsing = champion_parser.parsing_champion_data()
 #test.insert_items("Champion", "Champion_stat", parsing)
@@ -38,25 +37,11 @@ parsing = champion_parser.parsing_champion_data()
 
 # find function test
 find1 = test.find_item("id", "Zoe", "Champion", "Champion_stat") # 검색 기능 확인 1. Zoe 챔피언의 스탯 정보
-#print(find1)
+print(find1)
 find2 = test.find_items("Champion", "Champion_stat", "id") # 검색 기능 확인 2. 테이블의 모든 id (챔피언 이름) 정보
-#print(find2)
-
-###############################player###################################
-
-player_json_path = develop_json.config["DATA"]["PLAYER"]
-player_json = JsonConfig(player_json_path)
-player_data = player_json.config
-#test.insert_item("Player", "Player_data", player_data) insert player_info
-#player_parser = JsonParser(player_data)
-#parsing = player_parser.parsing_player_data()
-
-find_player = test.find_item("name", "휘 랑", "Player", "Player_data") # 검색 기능 확인 1. Zoe 챔피언의 스탯 정보
-#print(find_player)
+print(find2)
 
 
-
-###############################version###################################
 # get a latest version info from version.json
 version_json_path = develop_json.config["DATA"]["VERSION"]
 version_json = JsonConfig(version_json_path)
@@ -72,6 +57,4 @@ elif version_in_db[0] != version: # update version
     print("need to update data")
 else: # aleady latest version
     print("version is latest :" + version_in_db[0] )
-
-
 

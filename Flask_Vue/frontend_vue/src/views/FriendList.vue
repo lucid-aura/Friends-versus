@@ -120,12 +120,12 @@ export default {
     methods: {
         isLogin: function () {
             console.log(this.user)
-            if (this.user === 'aaa')
+            if (this.user === this.user) // 로그인 유지 여부 확인.
                 return true;
             else
                 return false;
         },
-        fetchDefaults: function () {
+        fetchDefaults: function () { // Player_friends 친구 db에 list를 가지고 와야함.
             this.friend_list = [
                 {
                     'real_name' : '현상현',
