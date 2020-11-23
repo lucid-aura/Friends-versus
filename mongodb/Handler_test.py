@@ -8,6 +8,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/hy
 from method import JsonParser
 
 
+
 host='192.168.40.52'
 port=27017
 username='root'
