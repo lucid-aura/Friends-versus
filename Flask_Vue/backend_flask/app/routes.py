@@ -1,10 +1,13 @@
 from flask import jsonify
 from app import app
+from ..logging.logging import log_time
 
 @app.route('/')
+def home():
+    return jsonify("홈입니다")
 
-@app.route('/index')
-def index():
+@app.route('/friendlist')
+def friendlist():
     friend_list = [
         {
             'real_name' : '현상현',

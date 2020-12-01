@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  frontend:
+    container_name: myfront
+    build:
+      context: frontend_vue
+      dockerfile: frontend.Dockerfile
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    volumes:
+      - ./frontend_vue:/app
+
+  backend:
+    container_name: myback
+    build:
+      context: backend_flask
+      dockerfile: backend.Dockerfile
+    expose:
+      - 5000
+    ports:
+      - 5000:5000
+    volumes:
+    - ./backend_flask:/www

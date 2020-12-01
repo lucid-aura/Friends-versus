@@ -15,9 +15,9 @@
 - app mounting
 블록을 가지고 있음
 ## public/index.html
-???
+
 `<div id="app"></div>`
-???
+
 ## App.vue
 기본 HTML과 비슷하다.
 - template
@@ -28,7 +28,17 @@ routes와 Vue view들을 바인딩하는데 route/index.js를 사용한다.
 ## Home.vue
 매우 기본적임, Base component 에 template와 script를 포함한다.
 ## FriendList.vue
-이 애플리케이션의 함수 부분
+이 애플리케이션의 함수 부분, 친구목록을 추가, 삭제, 수정할 수 있다.
+## ItemList.vue
+이 애플리케이션의 함수 부분, 아이템을 조회할 수 있다.
+## ChampionList.vue
+이 애플리케이션의 함수 부분, 챔피언의 목록을 조회할 수 있다.
+## ChampionInfo.vue
+이 애플리케이션의 함수 부분, ChampionList에서 선택된 챔피언의 상세 정보를 확인한다.
+## PlayerInfo.vue
+이 애플리케이션의 함수 부분, 검색된 플레이어의 정보를 확인한다.
+## Login.vue
+이 애플리케이션의 함수 부분, 현재 이용하고 있는 이용자가 로그인 한다.
 ## Vue template
 입력이 리스트이고 루프는 v-for를 사용할 수 있다
 ``` v-for = "(item, index) in friend_list" ```
