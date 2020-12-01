@@ -14,5 +14,8 @@
         "CHAMPIONSTAT" : "../data/champion.json",
         "VERSION" : "../data/version.json"
     }
+    "FLASK" : {
+        "PORT": "4004"
 
+    }
 }
