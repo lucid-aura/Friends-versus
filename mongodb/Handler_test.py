@@ -7,8 +7,8 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/hyh_json_handler")
 from method import JsonParser
 
-host='169.254.99.63'
-#host='192.168.40.52'
+#host='192.168.200.163'
+host='192.168.40.52'
 port=27017
 username='root'
 password='root12345!'
@@ -54,7 +54,7 @@ if len(version_in_db) == 0: # initalize version(insert version info)
     test.insert_item("Version", "Version", {"version": version})
 elif version_in_db[0] != version: # update version
     test.update_item("version", version_in_db[0], "version", version, "Version", "Version")
-    print("need to update data")
+    print("need to update data") # api 통해 데이터 새로 받아와야함. (갱신 필요)
 else: # aleady latest version
     print("version is latest :" + version_in_db[0] )
 

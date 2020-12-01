@@ -33,12 +33,12 @@ export default {
                 return false;
             }
             else if (this.id === '휘 랑'){ // player_data db에서 일치 여부 확인이 필요함. 즉 Home Vue에서 player_info DB 연동 필요
-                console.log(this.$root.$children[0].$children[1]);
+                //console.log(this.$root.$children[0]);
 
                 //login_id = this.id
-                this.$root.$children[0].$children[1].login_id = this.id; //Base 상위 컴포넌트에 login_id 전달
-                this.$root.$children[0].$children[0].check_login = true; // NavBar sibling 컴포넌트에 로그인 정보 전달.
-                this.$root.$children[0].$children[0].user_name = this.id;
+                this.$root.$children[0].$children[0].$children[1].login_id = this.id; //Base 상위 컴포넌트에 login_id 전달
+                this.$root.$children[0].$children[0].$children[0].check_login = true; // NavBar sibling 컴포넌트에 로그인 정보 전달.
+                this.$root.$children[0].$children[0].$children[0].user_name = this.id;
 
                 alert(this.id + "님 반가워요!");
                 return true; // 로그인 성공 시 return true하여 player_info component 보여줌

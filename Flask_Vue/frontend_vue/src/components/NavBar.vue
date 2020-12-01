@@ -1,10 +1,6 @@
 <template>
     <header class="masthead mb-auto site-header">
         <div class="inner">
-            <nav style="float:right">
-                <button class="nav-link" v-if="get_check_login()" @click="logout()">{{ this.user_name }}님 로그아웃</button>
-                <button class="nav-link" v-else @click="need_login()">로그인해라</button>
-            </nav>
             <nav class="nav nav-masthead justify-content-center">
                 <router-link to="/" class="nav-link" exact>
                     Home
@@ -18,7 +14,9 @@
                 <router-link to="/championlist" class="nav-link" exact>
                     Champions
                 </router-link>
-
+                 <router-link to="/login" class="nav-link">
+                    Login
+                </router-link>
             </nav>
 
         </div>
