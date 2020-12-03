@@ -16,7 +16,7 @@
         "PLAYER" : "../data/player.json"
     },
     "FLASK" : {
-        "PORT": "4004"
+        "PORT": "5000"
 
     }
 }
