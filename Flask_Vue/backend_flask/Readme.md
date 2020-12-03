@@ -1,3 +1,16 @@
+## Flask
+Python Simple Backend Server, ( Django )
+우리 시스템에서의 역할 
+- Vue.js 로드
+- MongoDB 컨트롤
+- RiotAPI 컨트롤
+
+
+Vue.js(route : /index) -> Flask( /index) -> MongoDB ( Data Input )     
+Vue.js -> Flask -> MongoDB -> Flask -> Vue.js (Refresh)( Data 조회 )
+
+마크다운 형식...으로 작성하고 있는건데
+
 ## 프로젝트 구조
 ~~~
 app 

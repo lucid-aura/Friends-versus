@@ -34,6 +34,7 @@ class MongoDBHandler:
 
         return results 
     
+    @log_time 
     def find_item(self, column_name, column_value, db_name, collection_name):
         collection  = self.client[db_name][collection_name]
         condition = self.create_condition(column_name, column_value)
@@ -50,6 +51,7 @@ class MongoDBHandler:
             result = collection.delete_one(condition)
         return result 
 
+    @log_time 
     def update_item(self, column_name, column_value, update_column, update_value, db_name, collection_name):
         result, condition = self.find_item(column_name, column_value, db_name, collection_name)
 

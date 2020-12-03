@@ -7,8 +7,9 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/hyh_json_handler")
 from method import JsonParser
 
-host='169.254.99.63'
-#host='192.168.40.52'
+
+
+host='192.168.40.52'
 port=27017
 username='root'
 password='root12345!'
