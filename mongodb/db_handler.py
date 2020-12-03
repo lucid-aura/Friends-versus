@@ -12,19 +12,13 @@ from config import JsonConfig
 #from ..logging.logging import log_time
 #from ..config.config import JsonConfig
 
-host='169.254.99.63'
-#host='192.168.40.52' #PC 설정에 따라 다르다. window 일경우 C:\Windows\System32\drivers\etc\hosts 파일에 docker 주소 및 포트가 있음.
+#host='192.168.200.163'
+host='192.168.40.52' #PC 설정에 따라 다르다. window 일경우 C:\Windows\System32\drivers\etc\hosts 파일에 docker 주소 및 포트가 있음.
 port=27017
 username='root'
 password='root12345!'
 
 class MongoDBHandler:
-    def __init__(self):
-        self.client = MongoClient(host=host,
-                                  port=port,
-                                  username=username,
-                                  password=password)
-
     def __init__(self, host, port, username, password):
         self.host = host
         self.port = port

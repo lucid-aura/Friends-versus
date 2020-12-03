@@ -26,3 +26,37 @@ services: # 서비스 목록을 정의한다.
                     ME_CONFIG_MONGODB_ADMINPASSWORD : root12345!
                 depends_on: 
                         - mongo
+
+        frontend:
+                container_name: myfront
+                build:
+                        context: Flask_Vue/frontend_vue
+                        dockerfile: frontend.Dockerfile
+                expose:
+                        - 8080
+                ports:
+                        - 8080:8080
+                volumes:
+                        - ./Flask_Vue/frontend_vue:/home/data/frontend:cached
+                        - /home/data/frontend/node_modules
+                environment:
+                        - CHOKIDAR_USEPOLLING=true
+                
+
+        backend:
+                container_name: myback
+                build:
+                        context: Flask_Vue/backend_flask
+                        dockerfile: backend.Dockerfile
+                expose:
+                        - 5000
+                ports:
+                        - 5000:5000
+                volumes:
+                        - ./Flask_Vue/backend_flask:/home/data/backend
+                environment:
+                        - CHOKIDAR_USEPOLLING=true
+                links:
+                        - mongo-express
+                depends_on: 
+                        - frontend
