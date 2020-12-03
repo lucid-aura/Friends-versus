@@ -1,10 +1,24 @@
+import flask
 from flask import jsonify
 from app import app
+#from ..logging.logging import log_time
 
-@app.route('/')
+@app.route('/', methods=["GET", "OPTIONS"])
+def home():
+    
+    test = [
+        {
+            'name' : 'test',
+            'value' : 'test'
+        }
+    ]
+    #my_res = flask.Response(jsonify(test[0]))
+    #my_res.headers["Access-Control-Allow-Origin"] = "*"
 
-@app.route('/index')
-def index():
+    return jsonify(test[0])
+
+@app.route('/friendlist')
+def friendlist():
     friend_list = [
         {
             'real_name' : '현상현',

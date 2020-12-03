@@ -6,6 +6,7 @@ import ChampionList from '../views/ChampionList.vue'
 import ItemList from '../views/ItemList.vue'
 import ChampionInfo from '../views/ChampionInfo.vue'
 import PlayerInfo from '../views/PlayerInfo.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,7 @@ export default new VueRouter({
         {
             path: '/friendlist',
             name: 'friendList',
-            component: FriendList
+            component: FriendList,
         },
         {
             path: '/itemlist',
@@ -42,6 +43,11 @@ export default new VueRouter({
             path: '/playerinfo',
             name: 'playerinfo',
             component: PlayerInfo
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login
         },
         {
             path: '*',

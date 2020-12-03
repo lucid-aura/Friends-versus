@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2530fb34-2e61-4a3a-8254-2e3f3e22a097" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Flask_Vue/backend_flask/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Flask_Vue/backend_flask/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Flask_Vue/backend_flask/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Flask_Vue/backend_flask/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Flask_Vue/backend_flask/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/Flask_Vue/backend_flask/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Flask_Vue/frontend_vue/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Flask_Vue/frontend_vue/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Flask_Vue/node_modules/upgrade/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Flask_Vue/node_modules/upgrade/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Flask_Vue/node_modules/upgrade/upgrade.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Flask_Vue/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Flask_Vue/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mongodb/Handler_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/mongodb/Handler_test.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1l3AbgMolRnEseigTOauFRFe2s3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2530fb34-2e61-4a3a-8254-2e3f3e22a097" name="Default Changelist" comment="" />
+      <created>1606815476427</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1606815476427</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="274" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606815520392">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="274" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1606815520392" />
+  </component>
+</project>

@@ -34,7 +34,7 @@
                                             v-model="champion_list[index].champion_name"
                                             :style="icons_list[index].style"
                                             @click="select(index)"
-                                            readonly
+
                                     />
                                     <router-link to="/championinfo"></router-link>
                                     <router-view></router-view>
@@ -43,7 +43,7 @@
                                     <input  class="on-fly-input"
                                             v-model="champion_list[index].champion_title"
                                             :style="icons_list[index].style"
-                                            readonly
+
                                     />
                                 </td>
                                 <td style="display: none;">
