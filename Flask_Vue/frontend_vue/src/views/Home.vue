@@ -1,10 +1,13 @@
 <template>
     <div class="custom-home">
-        <h1>{{ login_id }}  WELCOME!</h1>
+        <h1>{{ login_id }}  WELCOME!!!!!!</h1>
         <form @submit.prevent="check" v-if="login_id === ''">
             <input class="custom-login-input" type="text" v-model="id" placeholder="소환사 이름을 입력해주세요." />
             <button class="custom-login-btn" type="submit">입력</button>
         </form>
+        <div @click="getTest">
+            <p >{{t}}</p>
+        </div>
         <player-info v-if="login_id !== ''" v-bind:id=this.id>
         </player-info>
     </div>
@@ -12,6 +15,7 @@
 
 <script>
 import PlayerInfo from "./PlayerInfo";
+import axios from 'axios';
 export default {
     components: {
         "player-info": PlayerInfo // 케밥 케이스로 컴포넌트 지정 https://kr.vuejs.org/v2/guide/components-props.html
@@ -19,12 +23,32 @@ export default {
     data() {
         return {
             id: '',
-            result: ' '
+            result: ' ',
+            t: []
         }
     },
     props: ['login_id'],
     methods: {
+        getTest() {
+            let path = "http://" + window.location.hostname + ":5000/";
+            axios.get(path).then((res) => {
+                this.t = res.data;
+            }).catch((error) => {
+                console.error(error);
+            });
+            console.log(this.t);
+        },
         check() {
+
+            console.log("test")
+            let path = "http://localhost:5000/";
+            axios.get(path).then((res) => {
+                this.t = res.data;
+            }).catch((error) => {
+                console.error(error);
+            });
+            console.log(this.t);
+            
             // 소환사 이름이 제대로 입력되었는지 확인이 필요함.
             if (this.id.length === 2){ // 2글자 닉네임 시 가운데 공백이 자동으로 들어감.
                 this.id = this.id[0] + ' ' + this.id[1];
@@ -49,7 +73,9 @@ export default {
                 return false;
             }
         },
-
+        created() {
+            this.getTest();
+        }
     }
 }
 </script>

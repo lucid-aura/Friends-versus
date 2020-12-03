@@ -20,11 +20,12 @@ temp_stat = {"id":"Aaatrox", "hp":580,"hpperlevel":90,"mp":0,"mpperlevel":0,"mov
 
 # get a latest champion status info form champion.json
 develop_json = JsonConfig("Develop.json") # Develope Json 파일 열고 로드
-champion_json_path = develop_json.config["DATA"]["CHAMPIONSTAT"]
-champion_json = JsonConfig(champion_json_path)
-champion_data = champion_json.config["data"]
-champion_parser = JsonParser(champion_data)
-parsing = champion_parser.parsing_champion_data()
+# champion_json_path = develop_json.config["DATA"]["CHAMPIONSTAT"]
+# champion_json = JsonConfig(champion_json_path)
+# champion_data = champion_json.config["data"]
+# champion_parser = JsonParser(champion_data)
+# parsing = champion_parser.parsing_champion_data()
+
 #test.insert_items("Champion", "Champion_stat", parsing)
 
 
@@ -36,10 +37,10 @@ parsing = champion_parser.parsing_champion_data()
 #1개 insert는 딕셔너리 타입 / 다수 개 insert는 딕셔너리를 원소로 갖는 list 타입으로 넘김.
 
 # find function test
-find1 = test.find_item("id", "Zoe", "Champion", "Champion_stat") # 검색 기능 확인 1. Zoe 챔피언의 스탯 정보
-print(find1)
-find2 = test.find_items("Champion", "Champion_stat", "id") # 검색 기능 확인 2. 테이블의 모든 id (챔피언 이름) 정보
-print(find2)
+# find1 = test.find_item("id", "Zoe", "Champion", "Champion_stat") # 검색 기능 확인 1. Zoe 챔피언의 스탯 정보
+# print(find1)
+# find2 = test.find_items("Champion", "Champion_stat", "id") # 검색 기능 확인 2. 테이블의 모든 id (챔피언 이름) 정보
+# print(find2)
 
 
 # get a latest version info from version.json
