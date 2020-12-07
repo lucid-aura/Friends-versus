@@ -1,0 +1,207 @@
+각각챔피언.json 모든 챔피언 다 합치면 championFull.json 파일임.
+{
+"type":"champion",
+"format":"standAloneComplex",
+"version":"10.24.1",
+"data":{
+    "Aatrox":{
+        "id":"Aatrox",
+        "key":"266",
+        "name":"아트록스",
+        "title":"다르킨의 검",
+        "image":{
+        "full":"Aatrox.png",
+        "sprite":"champion0.png",
+        "group":"champion",
+        "x":0,
+        "y":0,
+        "w":48,
+        "h":48
+        },
+        "skins":
+            { 개수만큼.
+            "id":"266000",
+            "num":0,
+            "name":"default",
+            "chromas":false
+            }
+        "lore": "한때는 ~~ 복수를 열망한다."
+        "blurb": "한때는 ~~ 복수를..."
+        "allytips": "잘 운전 해보세요! (챔피언 사용할 때 팁)"
+        "enemytips": "잘 상대 해보세요! (챔피언 상대할 때 팁)"
+        "tags":[
+            "Fighter",
+            "Tank"
+            ]
+        "partype":"피의 샘"
+        "info":{
+            "attack":8,
+            "defense":4,
+            "magic":3,
+            "difficulty":4
+            },
+        "stats"
+            "hp":580
+            ...
+            "attackspeed":0.651
+        "spells"
+            "Q"
+            "W"
+            "E"
+            "R"
+        "passive"
+        "recommended":[
+            게임모드마다 추천템
+        ]
+    }
+}
+}
+
+
+-------------------
+"spells": "Q" 상세 설명
+
+"id":"AatroxQ",
+"name":"다르킨의 검",
+"description":"아트록스가 대검을 내리쳐 물리 피해를 줍니다. 세 번까지 휘두를 수 있으며 각 공격은 피해 범위가 다릅니다.",
+"tooltip":"아트록스가 대검을 내리쳐 <physicalDamage>{{ qdamage }}의 물리 피해</physicalDamage>를 입힙니다. 끝에 적중한 적을 잠깐 <status>공중으로</status> 띄워 올리고 <physicalDamage>{{ qedgedamage }}</physicalDamage>의 피해를 입힙니다. 이 스킬은 두 번 <recast>재사용</recast>할 수 있으며 다시 사용할 때마다 범위 모양이 변하고 이전보다 25% 더 많은 피해를 입힙니다.",
+"leveltip":{
+    "label":[
+        "재사용 대기시간",
+        "피해량",
+        "총 공격력 %"
+        ],
+    "effect":[
+        "{{ cooldown }} -> {{ cooldownNL }}",
+        "{{ qbasedamage }} -> {{ qbasedamageNL }}",
+        "{{ qtotaladratio*100.000000 }}% -> {{ qtotaladrationl*100.000000 }}%"
+        ]
+},
+"maxrank":5,
+"cooldown":[
+    14,
+    12,
+    10,
+    8,
+    6
+    ],
+"cooldownBurn":"14/12/10/8/6",
+"cost":[
+    0,
+    0,
+    0,
+    0,
+    0
+    ],
+"costBurn":"0",
+"datavalues":{
+},
+"effect":[
+null,
+[
+0,
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0,
+0
+]
+],
+"effectBurn":[
+null,
+"0",
+"0",
+"0",
+"0",
+"0",
+"0",
+"0",
+"0",
+"0",
+"0"
+],
+"vars":[
+],
+"costType":"소모값 없음",
+"maxammo":"-1",
+"range":[
+25000,
+25000,
+25000,
+25000,
+25000
+],
+"rangeBurn":"25000",
+"image":{
+"full":"AatroxQ.png",
+"sprite":"spell0.png",
+"group":"spell",
+"x":192,
+"y":48,
+"w":48,
+"h":48
+},
+"resource":"소모값 없음"
+},    

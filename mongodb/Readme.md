@@ -17,5 +17,8 @@ pip install pymongp
 python test
 ~~~
 
+## db_handler.py
+- class MongoDBHandler
+
 ## 참고자료
 - https://m.blog.naver.com/wideeyed/221974024860

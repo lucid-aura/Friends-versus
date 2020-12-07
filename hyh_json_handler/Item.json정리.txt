@@ -1,0 +1,138 @@
+{
+"type":"item",
+"version":"10.24.1",
+"basic":{
+    "name":"장화(아이템이름)",
+    "rune":{
+        "isrune":false,
+        "tier":1,
+        "type":"red"
+    },
+    "gold":{
+        "base":0, 조합아이템으로 조합시
+        "total":0, 한번에 구매시
+        "sell":0,
+        "purchasable":false
+    },
+    "group":"",
+    "description":"<mainText><stats>이동 속도 <attention> 25</attention></stats></mainText><br>",
+    "colloq":"똥신;boots;말그대로구어체",
+    "plaintext":"이동속도가 약간 증가합니다.(아이템 설명)",
+    "consumed":false, # 소비아이템
+    "stacks":1, # 소유가능한 개수
+    "depth":1, # 기본아이템1 조합 될수록 1증가.
+    "consumeOnFull":false, 최대 1개(마시거나 설치 - 제어와드, 영약)
+    "from":[
+        "3158",
+        "3000",
+        "재료가 되는 아이템번호"
+    ],
+    "into":[
+        "3158",
+        "3000",
+        "완성될 아이템번호"
+    ],
+    "specialRecipe":0,
+    "inStore":true,
+    "hideFromAll":false,
+    "requiredChampion":"",
+    "requiredAlly":"",
+    "stats":{
+        "FlatMovementSpeedMod":25
+    },
+    "tags":[
+        "Boots"
+    ],
+    "maps":{
+        "11":true,
+        "12":true,
+        "21":true,
+        "22":false
+    }
+    "image":{  //이거는 basic에 없고 data에 있다....
+        "full":"1001.png",
+        "sprite":"item0.png",
+        "group":"item",
+        "x":0,
+        "y":0,
+        "w":48,
+        "h":48
+    }
+        
+},
+"data":{
+    "1001":{
+        "name":"장화"
+        "basic":"에대한 각각의 부분이 들어감"
+    }
+},
+"groups":[
+    "id":"3010"
+    "MaxGroupOwnable":"-1~1"
+],
+"tree":[
+    {
+        "header":"START",
+        "tags":[
+            "LANE",
+            "JUNGLE"
+        ]
+    },
+    {
+        "header":"TOOLS",
+        "tags":[
+            "GOLDPER",
+            "CONSUMABLE",
+            "VISION"
+        ]
+    },
+    {
+        "header":"DEFENSE",
+        "tags":[
+            "HEALTH",
+            "HEALTHREGEN",
+            "ARMOR",
+            "SPELLBLOCK"
+        ]
+    },
+    {
+        "header":"ATTACK",
+        "tags":[
+            "LIFESTEAL",
+            "CRITICALSTRIKE",
+            "ATTACKSPEED",
+            "DAMAGE"
+        ]
+    },
+    {
+        "header":"MAGIC",
+        "tags":[
+            "MANA",
+            "SPELLDAMAGE",
+            "COOLDOWNREDUCTION",
+            "MANAREGEN"
+        ]
+    },
+    {
+        "header":"MOVEMENT",
+        "tags":[
+            "BOOTS",
+            "NONBOOTSMOVEMENT"
+        ]
+    },
+    {
+        "header":"UNCATEGORIZED",
+        "tags":[
+            "ACTIVE",
+            "MAGICPENETRATION",
+            "ARMORPENETRATION",
+            "AURA",
+            "ONHIT",
+            "TRINKET",
+            "SLOW",
+            "STEALTH",
+            "SPELLVAMP",
+            "TENACITY"
+        ]
+    }
+}

@@ -9,11 +9,35 @@ class WatcherHandler:
         self.FULL=False
         self.LOCALE = "ko_KR"
         self.ENCRYPTED_SUMMONER_ID = "DSysYVtTtCikX_KPElUN1FgzRcDzBwBuYOnYZ-rImUlAgg" #휘랑
-        self.SUMMONER_NAME = "휘랑"
+        self.SUMMONER_NAME = "휘랑" #SUMMONER_NAME으로 ID들 받아와야함. test_get_summoner_info_by_name
         self.ENCRYPTED_ACCOUNT_ID = "ocszCxil4hSsLfkm2jds_6p97_UDmFGe_95Fu37j9y7K"
         self.ENCRYPTED_PUUID = "e0wX5c8UW2WFWhC36nKTi1c3NcALQoztvD9qjqgZNNoG97KHNth-acac1-a-BIIhtFN1U3fNH7KZ_w"
         self.CHAMPION_ID = 1
         self.lolwatcher = LolWatcher(self.API_KEY)
+
+    @classmethod
+    def init_by_name(self, name):
+        # 테스트 파라미터
+        self.API_KEY="RGAPI-330711e3-2f76-48c1-b832-6a455f132270"
+        self.lolwatcher = LolWatcher(self.API_KEY)
+        self.REGION = "kr"
+        self.VERSION = "10.24.1"
+        self.FULL=False
+        self.LOCALE = "ko_KR"
+        self.CHAMPION_ID = 1
+        self.ENCRYPTED_SUMMONER_ID = ""
+        self.SUMMONER_NAME = ""
+        self.ENCRYPTED_ACCOUNT_ID = ""
+        self.ENCRYPTED_PUUID = ""
+        player = self.test_get_summoner_info_by_name(self, name)
+        if "name" in player: # name 에 해당하는 player 계정 정보 갱신
+            self.ENCRYPTED_SUMMONER_ID = player["id"] 
+            self.SUMMONER_NAME = player["name"] 
+            self.ENCRYPTED_ACCOUNT_ID = player["accountId"]
+            self.ENCRYPTED_PUUID = player["puuid"]
+        return self()
+        
+
     # 라이엇 json
     def test_get_version(self):
         resp_lol_versions = self.lolwatcher.datadragon.versions_for_region(self.REGION)
@@ -52,10 +76,10 @@ class WatcherHandler:
         print(resp_lol_summoner_info_by_account.json())
         return resp_lol_summoner_info_by_account.json()
 
-    def test_get_summoner_info_by_name(self):
-        resp_lol_summoner_info_by_name = self.lolwatcher.summoner.by_name(self.REGION, self.SUMMONER_NAME)
-        print(resp_lol_summoner_info_by_name.json())
+    def test_get_summoner_info_by_name(self, name):
+        resp_lol_summoner_info_by_name = self.lolwatcher.summoner.by_name(self.REGION, name)
         return resp_lol_summoner_info_by_name.json()
+
 
     def test_get_summoner_info_by_puuid(self):
         resp_lol_summoner_info_by_puuid = self.lolwatcher.summoner.by_puuid(self.REGION, self.ENCRYPTED_PUUID)
@@ -82,7 +106,7 @@ class WatcherHandler:
         return resp_lol_champion_mastery_by_summoner.json()
 
     def test_get_champion_mastery_by_summoner_by_champion(self):
-        resp_lol_champion_mastery_by_summoner_by_champion = self.lolwatcher.championmastery.by_summoner_by_champion(self.REGION, self.ENCRYPTED_SUMMONER_ID, CHAMPION_ID)
+        resp_lol_champion_mastery_by_summoner_by_champion = self.lolwatcher.championmastery.by_summoner_by_champion(self.REGION, self.ENCRYPTED_SUMMONER_ID, self.CHAMPION_ID)
         print(resp_lol_champion_mastery_by_summoner_by_champion.json())
         return resp_lol_champion_mastery_by_summoner_by_champion.json()
 

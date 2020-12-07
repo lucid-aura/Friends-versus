@@ -1,14 +1,13 @@
 <template>
     <div class="custom-home">
-        <h1>{{ login_id }}  WELCOME!!!!!!</h1>
-        <form @submit.prevent="check" v-if="login_id === ''">
-            <input class="custom-login-input" type="text" v-model="id" placeholder="소환사 이름을 입력해주세요." />
-            <button class="custom-login-btn" type="submit">입력</button>
-        </form>
-        <div @click="getTest">
-            <p >{{t}}</p>
+        <h1>{{ id }}  WELCOME!!!!!!</h1>
+        <div  v-if="id == ''">
+            <input class="custom-login-input" type="text" id = "playerinfo" name="playerinfo" placeholder="소환사 이름을 입력해주세요." />
+            <input class="custom-login-btn" @click="getPlayerInfo" type="submit" value="입력">
         </div>
-        <player-info v-if="login_id !== ''" v-bind:id=this.id>
+
+        <player-info v-if="id !== ''" v-bind:id=this.id v-bind:player_info=this.player_info>
+            <!-- v-bind로 자식 컴포넌트인 PlayerInfo.vue 에 player_info 값을 넘겨준다.-->
         </player-info>
     </div>
 </template>
@@ -23,31 +22,44 @@ export default {
     data() {
         return {
             id: '',
+            player_info: [],
             result: ' ',
-            t: []
         }
     },
-    props: ['login_id'],
     methods: {
-        getTest() {
-            let path = "http://" + window.location.hostname + ":5000/";
+        getPlayerInfo() {
+            var n = document.getElementById("playerinfo").value;
+            let path = "http://localhost:5000/?playerinfo=";
+            path += n;
             axios.get(path).then((res) => {
-                this.t = res.data;
+                this.player_info = res.data;
+                this.id = this.player_info['name']
+                console.log(res.data);
             }).catch((error) => {
                 console.error(error);
             });
-            console.log(this.t);
+
+            // let path = "http://localhost:5000/playerinfo";
+            // axios.get(path, {
+            //     playerInfo: '츄랑'
+            // })
+            // .then(function (response) {
+            //     console.log(response);
+            // })
+            // .catch(function (error) {
+            //     console.log(error);
+            // });
         },
         check() {
 
             console.log("test")
             let path = "http://localhost:5000/";
             axios.get(path).then((res) => {
-                this.t = res.data;
+                this.player_info = res.data;
             }).catch((error) => {
                 console.error(error);
             });
-            console.log(this.t);
+            console.log(this.player_info);
             
             // 소환사 이름이 제대로 입력되었는지 확인이 필요함.
             if (this.id.length === 2){ // 2글자 닉네임 시 가운데 공백이 자동으로 들어감.
@@ -60,7 +72,7 @@ export default {
                 //console.log(this.$root.$children[0]);
 
                 //login_id = this.id
-                this.$root.$children[0].$children[0].$children[1].login_id = this.id; //Base 상위 컴포넌트에 login_id 전달
+                //this.$root.$children[0].$children[0].$children[1].login_id = this.id; //Base 상위 컴포넌트에 login_id 전달
                 this.$root.$children[0].$children[0].$children[0].check_login = true; // NavBar sibling 컴포넌트에 로그인 정보 전달.
                 this.$root.$children[0].$children[0].$children[0].user_name = this.id;
 
@@ -73,9 +85,6 @@ export default {
                 return false;
             }
         },
-        created() {
-            this.getTest();
-        }
     }
 }
 </script>

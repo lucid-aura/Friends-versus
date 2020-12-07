@@ -5,24 +5,29 @@ import pymongo
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/hyh_json_handler")
-from method import JsonParser
+from JsonParser import JsonParser
 
 #host='192.168.200.163'
 host='192.168.40.52'
+host='192.168.40.64'
 port=27017
 username='root'
 password='root12345!'
 
 test = MongoDBHandler(host, port, username, password)
+develop_json = JsonConfig("Develop.json") # Develope Json 파일 열고 로드
 
 temp_stat = {"id":"Aaatrox", "hp":580,"hpperlevel":90,"mp":0,"mpperlevel":0,"movespeed":345,"armor":38,"armorperlevel":3.25,"spellblock":32.1,"spellblockperlevel":1.25,"attackrange":175,"hpregen":3,"hpregenperlevel":1,"mpregen":0,"mpregenperlevel":0,"crit":0,"critperlevel":0,"attackdamage":60,"attackdamageperlevel":5,"attackspeedperlevel":2.5,"attackspeed":0.651}
 #중복 방지 확인용 임시 테스트 데이터 (id : Aatrox -> Aaatrox)
 
+player_json_path = develop_json.config["DATA"]["PLAYER"]
+player_json = JsonConfig(player_json_path) # Develop.json에서 얻은 경로로 player.json 파일 로드
+#player_data = champion_json.config["data"] #PlayerDB에서 data collection 로드
+
 # get a latest champion status info form champion.json
-develop_json = JsonConfig("Develop.json") # Develope Json 파일 열고 로드
-# champion_json_path = develop_json.config["DATA"]["CHAMPIONSTAT"]
+# champion_json_path = develop_json.config["DATA"]["CHAMPIONSTAT"] #로드 된 json 파일에서 champion json 찾음.
 # champion_json = JsonConfig(champion_json_path)
-# champion_data = champion_json.config["data"]
+# champion_data = champion_json.config["data"] # championDB에서 data collection 로드
 # champion_parser = JsonParser(champion_data)
 # parsing = champion_parser.parsing_champion_data()
 
