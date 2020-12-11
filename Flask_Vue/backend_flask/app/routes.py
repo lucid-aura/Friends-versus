@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Response, send_file, make_response
 from flask_cors import CORS, cross_origin
 from app import app
 import sys
@@ -7,14 +7,11 @@ import os
 from .RouteHandler import RouteHandler
 import time
 import datetime
-
-
-
+import base64
 #from ..logging.logging import log_time
 
 
 @app.route('/', methods=["GET", "POST"])
-
 def home():
     if request.method == 'GET':
         #language = request.form['language']
@@ -24,15 +21,15 @@ def home():
         #print(framework)
         
         name = request.args.get('playerinfo')
-        print("playerinfo 왔음")
-        print(name)
+
         if name is not None:
-            route_handler = RouteHandler.init_by_name(name)
-            playerinfo = route_handler.searchPlayerInfo(name)
-            print(playerinfo["revisionDate"])
-            playerinfo["revisionDate"] = str(datetime.datetime.fromtimestamp(int(playerinfo["revisionDate"])/1000.0))
-            print(playerinfo["revisionDate"])
-            return playerinfo
+            route_handler = RouteHandler.init_playerinfo_by_name(name)
+            if route_handler is not None:
+                print("존재하는 소환사 이름")
+                playerinfo = route_handler.searchPlayerInfo(name)
+                playerinfo["revisionDate"] = str(datetime.datetime.fromtimestamp(int(playerinfo["revisionDate"])/1000.0))
+                return jsonify(playerinfo)
+            
         #####################################
         # 정말 긴 시간 끝에 알아낸 사실....
         # GET 방식은 request.args.get('name') 으로 받아오고
@@ -47,8 +44,8 @@ def home():
     #my_res = flask.Response(jsonify(test[0]))
     #my_res.headers["Access-Control-Allow-Origin"] = "*"
 
-    a = jsonify({'error':"noting loaded"})
-    return a
+    e = jsonify({'name':""})
+    return e
 
 @app.route('/playerinfo', methods=["GET"])
 def playerinfo():
@@ -61,12 +58,37 @@ def playerinfo():
     if request.method == 'GET': 
         name = request.form['playerinfo']
         print(name)
-        route_handler = RouteHandler.init_by_name(name)
+        route_handler = RouteHandler.init_playerinfo_by_name(name)
         playerinfo = route_handler.searchPlayerInfo(name)
         return playerinfo
             
     return jsonify('')
     
+@app.route('/championlist', methods=["POST"])
+def championlist():
+    if request.method == 'POST':
+        route_handler = RouteHandler()
+        if route_handler.countSummaryChampions() == 0:
+            route_handler.createSummaryChampions()
+            route_handler.createChampioninfoData()
+        result = route_handler.getSummaryChampions()
+        return jsonify(result)
+
+    e = jsonify({'erroring':"noting loaded..."})
+    return e
+
+@app.route('/championinfo', methods=["GET"])
+def championinfo():
+    print("enter championinfo")
+    if request.method == 'GET':
+        id = request.args.get('championinfo')
+        print("championinfo GET")
+        route_handler = RouteHandler()
+        result = route_handler.getChampioninfoData(id)
+        return jsonify(result)
+    
+    e = jsonify({'erroring':"noting loaded!"})
+    return e
 
 @app.route('/friendlist')
 def friendlist():
@@ -86,3 +108,17 @@ def friendlist():
             'friend_list' : friend_list
         }
     )
+
+@app.route('/itemlist', methods=["GET"])
+def itemlist():
+    #if request.method == 'GET':
+    route_handler = RouteHandler()
+
+    # if route_handler.checkSummaryChampions() == 0:
+    #     print("요약에 챔피언 넣습니다.")
+    #     route_handler.createSummaryChampions()
+
+    # route_handler.insert_loading_image_by_champion_skin_id("Zoe", "Zoe_19")
+    binary_image = route_handler.get_loading_image_by_champion_skin_id("Zoe_19")['img']
+    payload= base64.b64encode(binary_image).decode('utf-8')
+    return jsonify({"raw":payload})

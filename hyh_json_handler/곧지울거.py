@@ -1,19 +1,38 @@
 import time
 import datetime
 
-a = int(round(time.time() * 1000))
-print(a)
-b = datetime.datetime.fromtimestamp(1606613151000/1000.0, tz=datetime.timezone.utc)
-print(b)
-c = datetime.datetime.fromtimestamp(1606613151000/1000.0)
-print(c)
+## importing socket module 내 localhost 확인하기
+# import socket
+# s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# try:
+#     # doesn't even have to be reachable
+#     s.connect(('10.255.255.255', 1))
+#     IP = s.getsockname()[0]
+# except:
+#     IP = '127.0.0.1'
+# finally:
+#     s.close()
+# print(IP)
+# print(socket.gethostbyname(socket.gethostname()))
 
-# 이미지를 mongoDB에 미리 저장을 해놔야 하는가?????
-#  RiotApi를 통해 이미지도 얻을 수 있는가?
 
-a = {'a':'a', 'b':'b', 'c':'c'}
-k = a.items
-print(list(a.keys()))
+# a = int(round(time.time() * 1000))
+# print(a)
+# b = datetime.datetime.fromtimestamp(1606613151000/1000.0, tz=datetime.timezone.utc)
+# print(b)
+# c = datetime.datetime.fromtimestamp(1606613151000/1000.0)
+# print(c)
+
+# # 이미지를 mongoDB에 미리 저장을 해놔야 하는가?????
+# #  RiotApi를 통해 이미지도 얻을 수 있는가?
+
+# a = {'a':'a', 'b':'b', 'c':'c'}
+# k = a.items
+# print(list(a.keys()))
+
+
+
+
 
 
 # ## RiotAPI - mongoDB  연동

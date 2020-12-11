@@ -1,8 +1,10 @@
 <template>
     <div class="custom-home">
+        
+        <img src="http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/588.png">
         <h1>{{ id }}  WELCOME!!!!!!</h1>
         <div  v-if="id == ''">
-            <input class="custom-login-input" type="text" id = "playerinfo" name="playerinfo" placeholder="소환사 이름을 입력해주세요." />
+            <input class="custom-login-input" type="text" id="playerinfo" name="playerinfo" placeholder="소환사 이름을 입력해주세요." />
             <input class="custom-login-btn" @click="getPlayerInfo" type="submit" value="입력">
         </div>
 

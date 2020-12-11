@@ -1,17 +1,29 @@
 from LolWatcher import LolWatcher
 
+# # 테스트 파라미터
+#         self.API_KEY="RGAPI-330711e3-2f76-48c1-b832-6a455f132270"
+#         self.REGION = "kr"
+#         self.VERSION = "10.24.1"
+#         self.FULL=False
+#         self.LOCALE = "ko_KR"
+#         self.ENCRYPTED_SUMMONER_ID = "DSysYVtTtCikX_KPElUN1FgzRcDzBwBuYOnYZ-rImUlAgg" #휘랑
+#         self.SUMMONER_NAME = "휘랑" #SUMMONER_NAME으로 ID들 받아와야함. test_get_summoner_info_by_name
+#         self.ENCRYPTED_ACCOUNT_ID = "ocszCxil4hSsLfkm2jds_6p97_UDmFGe_95Fu37j9y7K"
+#         self.ENCRYPTED_PUUID = "e0wX5c8UW2WFWhC36nKTi1c3NcALQoztvD9qjqgZNNoG97KHNth-acac1-a-BIIhtFN1U3fNH7KZ_w"
+#         self.CHAMPION_ID = 1
+#         self.lolwatcher = LolWatcher(self.API_KEY)
+
 class WatcherHandler:
     def __init__(self):
-        # 테스트 파라미터
         self.API_KEY="RGAPI-330711e3-2f76-48c1-b832-6a455f132270"
         self.REGION = "kr"
         self.VERSION = "10.24.1"
         self.FULL=False
         self.LOCALE = "ko_KR"
-        self.ENCRYPTED_SUMMONER_ID = "DSysYVtTtCikX_KPElUN1FgzRcDzBwBuYOnYZ-rImUlAgg" #휘랑
-        self.SUMMONER_NAME = "휘랑" #SUMMONER_NAME으로 ID들 받아와야함. test_get_summoner_info_by_name
-        self.ENCRYPTED_ACCOUNT_ID = "ocszCxil4hSsLfkm2jds_6p97_UDmFGe_95Fu37j9y7K"
-        self.ENCRYPTED_PUUID = "e0wX5c8UW2WFWhC36nKTi1c3NcALQoztvD9qjqgZNNoG97KHNth-acac1-a-BIIhtFN1U3fNH7KZ_w"
+        self.ENCRYPTED_SUMMONER_ID = ""
+        self.SUMMONER_NAME = ""
+        self.ENCRYPTED_ACCOUNT_ID = ""
+        self.ENCRYPTED_PUUID = ""
         self.CHAMPION_ID = 1
         self.lolwatcher = LolWatcher(self.API_KEY)
 
@@ -35,7 +47,9 @@ class WatcherHandler:
             self.SUMMONER_NAME = player["name"] 
             self.ENCRYPTED_ACCOUNT_ID = player["accountId"]
             self.ENCRYPTED_PUUID = player["puuid"]
-        return self()
+            return self()
+        else:
+            return None
         
 
     # 라이엇 json
@@ -115,9 +129,20 @@ class WatcherHandler:
         print(resp_lol_champion_mastery_scores_by_summoner.json())
         return resp_lol_champion_mastery_scores_by_summoner.json()
 
+    def test_get_champion_json(self):
+        resp_lol_champions = self.lolwatcher.datadragon.champions(self.VERSION, self.FULL, self.LOCALE)
+        print(resp_lol_champions)
+        return resp_lol_champions.json()
 
+    def test_get_champion_data_by_champion_id(self, champion_id):
+        resp_lol_champion = self.lolwatcher.datadragon.champion(self.VERSION, self.LOCALE, champion_id)
+        #resp_lol_champion = self.lolwatcher.datadragon.champions(self.VERSION, self.LOCALE)
+        print(resp_lol_champion)
+        return resp_lol_champion.json()
 
-
+    def test_get_champion_loading_img_by_champion_skin_id(self, champion_skin_id):
+        resp_lol_champion_loading_img = self.lolwatcher.datadragon.loading_img(champion_skin_id)
+        return resp_lol_champion_loading_img
 
 if __name__ == "__main__":    
     """

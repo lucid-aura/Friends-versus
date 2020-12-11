@@ -1,2 +1,11 @@
 *.pyc
 __pycache__
+dragontail-10.24.1/
+*.wt
+/mongodb/diagnostic.data/
+/mongodb/journal/
+/mongodb/WiredTiger
+/mongodb/WiredTiger.*
+/mongodb/storage.bson
+/mongodb/mongod.lock
+/mongodb/mongod.cfg
