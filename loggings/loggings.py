@@ -5,11 +5,13 @@ from time import time
 def log_time(func):
     # 함수 실행 시간을 로그로 남김
     def wrapper(*args, **kwargs):
+        print("wrapper")
         start = time()
         val = func(*args, **kwargs)
         end = time()
 
         duration = end - start 
+        #print(f"{func.__name__}'s parameter *args - {*args}, **kwargs - {**kwargs}")
         print(f"{func.__name__} time {duration} seconds to run")
 
         return val 

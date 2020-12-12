@@ -2,6 +2,7 @@ version: "3.2" # 버전 정보를 작성한다.
 
 services: # 서비스 목록을 정의한다.
         mongo: # 서비스의 이름을 정의한다.
+                #command: /data/db/mongod.cfg
                 image : mongo # 해당 서비스에서 사용할 이미지
                 restart : always # container를 실행할 때 항상 이미 수행중이라면 재시작
                 environment: # 환경 변수를 정의한다

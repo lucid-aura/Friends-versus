@@ -5,6 +5,7 @@
                 <v-icon v-blur @click="fetchDefaults" :class="icons[4].class">
                     {{ icons[4].icon }}
                 </v-icon>   
+                
             </h3>
             <v-layout justify-center justify-content-center mt-4>
                 <v-simple-table fixed-header>

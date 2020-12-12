@@ -17,7 +17,7 @@
 }
 
 .custom-home {
-    height: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -130,7 +130,7 @@ div.stat-div {
     float: left;
 }
 
-div.skill-div{
+div.spell-div{
     float: right;
 }
 
@@ -216,29 +216,31 @@ table.stat-table tbody td {
 
 
 
-table.skill-table {
+table.spell-table {
+    
+    position: relative;
     white-space: pre;
     border-collapse: collapse;
     width: 90%;
     line-height: 1.5;
     border: 1px solid #ccc;
     margin: 20px 10px;
-
+    
 }
 
-table.skill-table thead {
+table.spell-table thead {
     border-right: 1px solid #ccc;
     border-left: 1px solid #ccc;
         background: #e7708d;
 }
-table.skill-table thead th {
+table.spell-table thead th {
     padding: 5px;
     width: 40%;
     font-weight: bold;
     vertical-align: top;
     color: #fff;
 }
-table.skill-table tbody th {
+table.spell-table tbody th {
     padding: 5px;
     width: 40%;
     font-weight: bold;
@@ -246,7 +248,7 @@ table.skill-table tbody th {
     color: #000;
     background: #fcf1f4;
 }
-table.skill-table tbody tr {
+table.spell-table tbody tr {
     width: 100%;
     padding: 5px;
     font-weight: bold;
@@ -254,7 +256,8 @@ table.skill-table tbody tr {
     border-bottom: 1px solid #ccc;
     background: #3fAFFd;
 }
-table.skill-table tbody td {
+table.spell-table tbody td {
+    word-break: break-all;
     width: 10%;
     padding: 5px;
     vertical-align: middle;

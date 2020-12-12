@@ -1,21 +1,28 @@
 <template style="background-color:#000000">
     <div class="custom-home">
         <div>
-            <div>챔피언 상세정보</div>
             <table class="champion-info">
                 <thead>
                     <tr>
-                        <td>{{ this.$route.query.champ }}</td>
-                        <td>여명의 성위</td>
+                        <td>{{ info_list[0] }}</td>
+                        <td>{{ info_list[1] }}</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>챔피언 아이콘</td>
-                        <td rowspan = "2">챔피언 스킨</td>
+                        <td> {{ info_list[2] }} </td>
+                        <td> 챔피언 태그 </td>
+                        <td> 챔피언 인포 </td>
                     </tr>
                     <tr>
-                        <td>챔피언 tags</td>
+                        <td colspan = "3">
+                            챔피언 스킨
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan = "3">
+                            챔피언 스킨
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -37,69 +44,69 @@
                     <tbody>
                         <tr>
                         <th scope="row">체력</th>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
+                            <td>{{ stat_list['hp'] }}</td>
+                            <td>{{ stat_list['hpperlevel'] }}</td>
+                            <td>{{ stat_list['hp'] + stat_list['hpperlevel'] * 17  }}</td>
                         </tr>
                         <tr>
                         <th scope="row">체력 재생</th>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
+                            <td>{{ stat_list['hpregen'] }}</td>
+                            <td>{{ stat_list['hpregenperlevel'] }}</td>
+                            <td>{{ stat_list['hpregen'] + stat_list['hpregenperlevel'] * 17 }}</td>
                         </tr>
                         <tr>
                         <th scope="row">마나</th>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
+                            <td>{{ stat_list['mp'] }}</td>
+                            <td>{{ stat_list['mpperlevel'] }}</td>
+                            <td>{{ stat_list['mp'] + stat_list['mpperlevel'] * 17 }}</td>
                         </tr>
                         <tr>
                         <th scope="row">마나 재생</th>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
+                            <td>{{ stat_list['mpregen'] }}</td>
+                            <td>{{ stat_list['mpregenperlevel'] }}</td>
+                            <td>{{ stat_list['mpregen'] + stat_list['mpregenperlevel'] * 17 }}</td>
                         </tr>
                         <tr>
                         <th scope="row">공격력</th>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
+                            <td>{{ stat_list['attackdamage'] }}</td>
+                            <td>{{ stat_list['attackdamageperlevel'] }}</td>
+                            <td>{{ stat_list['attackdamage'] + stat_list['attackdamageperlevel'] * 17 }}</td>
                         </tr>
                         <tr>
                         <th scope="row">공격 속도</th>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
+                            <td>{{ stat_list['attackspeed'] }}</td>
+                            <td>{{ stat_list['attackspeedperlevel'] }}</td>
+                            <td>{{ stat_list['attackspeed'] + stat_list['attackspeedperlevel'] * 17 }}</td>
                         </tr>
                         <tr>
                         <th scope="row">방어력</th>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
+                            <td>{{ stat_list['armor'] }}</td>
+                            <td>{{ stat_list['armorperlevel'] }}</td>
+                            <td>{{ stat_list['armor'] + stat_list['armorperlevel'] * 17 }}</td>
                         </tr>
                         <tr>
                         <th scope="row">마법저항력</th>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
+                            <td>{{ stat_list['spellblock'] }}</td>
+                            <td>{{ stat_list['spellblockperlevel'] }}</td>
+                            <td>{{ stat_list['spellblock'] + stat_list['spellblockperlevel'] * 17 }}</td>
                         </tr>
                         <tr>
                         <th scope="row">사거리</th>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
+                            <td>{{ stat_list['attackrange'] }}</td>
+                            <td>{{ stat_list['attackrange'] }}</td>
+                            <td>{{ stat_list['attackrange'] }}</td>
                         </tr>
                         <tr>
                         <th scope="row">이동 속도</th>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
+                            <td>{{ stat_list['movespeed'] }}</td>
+                            <td>{{ stat_list['movespeed'] }}</td>
+                            <td>{{ stat_list['movespeed'] }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="skill-div" id="app">
-                <table class="skill-table">
+            <div class="spell-div" id="app">
+                <table class="spell-table">
                     <thead>
                         <tr>
                         <th colspan = "6">챔피언 스킬 정보</th>
@@ -111,114 +118,64 @@
                         <th>W</th>
                         <th>E</th>
                         <th>R</th>
-                        <tr @mouseover="updateSkillInfo($event)" v-for="(skill, index) in skill_list" :key="index">
-                            <td id="P">{{skill.P}}</td>
-                            <td id="Q">{{skill.Q}}</td>
-                            <td id="W">{{skill.W}}</td>
-                            <td id="E">{{skill.E}}</td>
-                            <td id="R">{{skill.R}}</td>
+                        <tr @mouseover="updateSkillInfo($event)">
+                            <td id="0">{{ spell_list[0] }}</td>
+                            <td id="1">{{ spell_list[1] }}</td>
+                            <td id="2">{{ spell_list[2] }}</td>
+                            <td id="3">{{ spell_list[3] }}</td>
+                            <td id="4">{{ spell_list[4] }}</td>
                         </tr>
                         <tr>
-                            <td v-bind:id="result" colspan="5" style:height="100px">{{skill_list[0][result]}}</td>
+                            <td v-bind:id="result" colspan="5" style:height="100px">{{ spell_content[result] }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        <div style="height:300px">
+                {{ test_list }}
+            </div>
+            
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'championInfo',
     props: ['selected_champion'],
     data() {
         return {
+            test_list: [],
+            info_list: [],
+            stat_list: [],
+            spell_list: [],
+            spell_content: [],
+
             result: ' ',
-            skill_list: [],
-            icons: [
-                {
-                    'icon': 'mdi-checkbox-blank-outline',
-                    'class': '',
-                    'style': 'text-decoration:none;color:unset;'
-                },
-                {
-                    'icon': 'mdi-checkbox-mark-outline',
-                    'class': 'v-icon-highlighted',
-                    'style': 'text-decoration:line-through;color:#adb7bbd1;'
-                },
-                {
-                    'icon': 'mdi-close',
-                    'class': '',
-                    'style': ''
-                },
-                {
-                    'icon': 'mdi-plus',
-                    'class': 'v-icon-highlighted',
-                    'style': ''
-                },
-                {
-                    'icon': 'mdi-refresh',
-                    'class': 'v-icon-highlighted pl-1 pb-1',
-                    'style': ''
-                }
-            ],
-            icon_list: []
         }
     },
     created: function () {
-        this.fetchDefaults();
+        let path = "http://localhost:5000/championinfo?championinfo=";
+        path += this.$route.query.championinfo;
+        console.log(path)
+        axios.get(path).then((res) => {
+            this.info_list = res.data[0];
+            this.stat_list = res.data[1];
+            this.spell_list = res.data[2];
+            this.spell_content = res.data[3];
+            console.log(this.info_list);
+        }).catch((error) => {
+            console.error(error);
+        });
+    },
+    mounted() {
+        
     },
     methods: {
         updateSkillInfo: function(event) {
             const targetId = event.target.id;
             this.result = targetId
-        },
-        fetchDefaults: function () {
-
-            this.skill_list = [
-                {
-                    'P': '반짝반짝!',
-                    'Q': '통통별',
-                    'W': '주문도둑',
-                    'E': '헤롱헤롱쿨쿨방울',
-                    'R': '차원 넘기'
-                }
-            ];
-
-            this.icons_list = [];
-            for (var i = 0; i < this.skill_list.length; i++) {
-                if (this.skill_list[i].missing == true) {
-                    this.icons_list.push(this.icons[0]);
-                } else {
-                    this.icons_list.push(this.icons[1]);
-                }
-            }
-        },
-
-        removeRow: function (index) {
-            this.skill_list.splice(index, 1);
-            this.icons_list.splice(index, 1);
-        },
-
-        addRow: function () {
-            this.skill_list.push({
-                P : '',
-                Q : '',
-                W : '',
-                E : '',
-                R : ''
-            });
-            this.icons_list.push(this.icons[0]);
-        },
-        checkRow: function (index) {
-            if (this.icons_list[index].icon == this.icons[0].icon) {
-                this.icons_list[index] = this.icons[1];
-                this.skill_list[index].missing = false;
-            } else {
-                this.icons_list[index] = this.icons[0];
-                this.skill_list[index].missing = true;
-            }
         },
     }
 }

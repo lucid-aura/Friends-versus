@@ -1,5 +1,6 @@
 import json
 import os
+import socket
 
 class JsonConfig:
     #def __init__(self, configFile="../data/Champion_one.json"):
@@ -19,5 +20,23 @@ class JsonConfig:
             self.config = json.load(jsonFile)
         
 
+class FlaskConfig(object):
+    def __init__(self, configFile):
+        self.SECRET_KEY = os.environ.get('SECRET>_KEY') or "my_secret_key"
 
 
+class MongoDBConfig(object):
+    def __init__(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            # doesn't even have to be reachable
+            s.connect(('10.255.255.255', 1))
+            IP = s.getsockname()[0]
+        except:
+            IP = '127.0.0.1'
+        finally:
+            s.close()
+        self.host=IP
+        self.port=27017
+        self.username='root'
+        self.password='root12345!'

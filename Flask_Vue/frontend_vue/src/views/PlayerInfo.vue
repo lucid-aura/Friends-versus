@@ -2,23 +2,24 @@
     <div class="custom-home">
         <table>
             <thead>
-                <h3 colspan="3"> 플레이어 정보</h3>
+                <h3 colspan="3"> {{ player_info['name'] }} </h3>
             </thead>
             <tbody>
                 <tr>
                     <td rowspan = "2">
-                        <p>{{ player_data[0].profileIconId }}</p>
+                        <img :src=this.url   id="player_icon" style="width: 50%; height: 50%"/>
+                        
                     </td>
                     <td>
-                        <p>닉네임 {{ id }}</p>
+                        <p>닉네임 {{ player_info['name'] }}</p>
                     </td>
                     <td>
-                        <p>Level.{{ player_data[0].summonerLevel }}</p>
+                        <p>Level.{{ player_info['summonerLevel'] }}</p>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <p>최근 경기 시간 : {{ player_data[0].revisionDate }} </p>
+                        <p>최근 경기 시간 : {{ player_info['revisionDate'] }} </p>
                     </td>
                 </tr>
             </tbody>
@@ -30,26 +31,52 @@
 </template>
 
 <script>
-
 export default {
     props: {
-        id: String
+        id: String,
+        player_info: Object
     },
-    name: 'championList',
     data() { // DB로 받아오는 과정이 필요함. 스크립트 내 저장된 데이터를 쓰는 것이 아니라...
         return {
-            player_data: [
-                {
-                    "id": "DSysYVtTtCikX_KPElUN1FgzRcDzBwBuYOnYZ-rImUlAgg",
-                    "accountId": "ocszCxil4hSsLfkm2jds_6p97_UDmFGe_95Fu37j9y7K",
-                    "puuid": "e0wX5c8UW2WFWhC36nKTi1c3NcALQoztvD9qjqgZNNoG97KHNth-acac1-a-BIIhtFN1U3fNH7KZ_w",
-                    "name": "휘 랑",
-                    "profileIconId": 4626,
-                    "revisionDate": 1605589023000,
-                    "summonerLevel": 358
-                }
-            ],
+            url: "",
         }
     },
+    method:{
+        geturl(){
+            return this.url
+        },
+        resolve_img_url(){
+            
+            let path = "http://ddragon.leagueoflegends.com/cdn/10.24.1/img/";
+            //path += picture_src;
+            //path += ".png";
+            path = "http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/588.png";
+            return path
+        },
+        test(){
+            var path = 'http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/';
+            path += this.player_info['profileIconId'];
+            path += '.png'
+            document.getElementById("player_icon").src =path;
+            return path
+        },
+
+    },
+    mounted() {
+        var path = 'http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/';
+        path += this.player_info['profileIconId'];
+        path += '.png'
+        this.url = path
+        document.getElementById("player_icon").src =path;
+        console.log("mounted");
+    },
+    created() {
+        
+        //icon.setAttribute("src", "http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/588.png");
+        //icon.src = "http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/588.png";
+    
+        console.log("created");
+    },
+
 }
 </script>

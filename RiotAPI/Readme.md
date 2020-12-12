@@ -18,5 +18,3 @@ __call__ 함수를 이용해서 객체의 생성 및 종료와 관계없이 객�
 NamedEndpoint를 상속받아서 사용. 초기화 파라미터로 BaseApi 객체를 넣는다.
 [깃헙 참고 아닌 복사본 링크](https://github.com/pseudonym117/Riot-Watcher/blob/master/src/riotwatcher/_apis/league_of_legends/SummonerApiV4.py)
 
-
-

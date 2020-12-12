@@ -4,7 +4,8 @@
             <h3 class="cover-heading">Item
                 <v-icon v-blur @click="fetchDefaults" :class="icons[4].class">
                     {{ icons[4].icon }}
-                </v-icon>   
+                </v-icon> 
+                <img :src=this.url />  
             </h3>
             <v-layout justify-center justify-content-center mt-4>
                 <v-simple-table fixed-header>
@@ -74,10 +75,12 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'friendList',
     data() {
         return {
+            url: "data:image/jpeg;base64,",
             friend_list: [],
             icons: [
                 {
@@ -111,6 +114,16 @@ export default {
     },
     created: function () {
         this.fetchDefaults();
+    },
+    mounted: function () {
+        let path = "http://localhost:5000/itemlist";
+        axios.get(path).then((res) => {
+            var results = res.data
+            console.log(results)
+            this.url += results['raw'];
+        }).catch((error) => {
+            console.error(error);
+        });
     },
     methods: {
         fetchDefaults: function () {

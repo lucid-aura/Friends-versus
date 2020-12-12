@@ -1,6 +1,5 @@
 import json
 
-
 class JsonParser:
     def __init__(self, loaded_data):
         self.data = loaded_data

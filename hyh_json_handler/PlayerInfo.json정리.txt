@@ -1,0 +1,29 @@
+### 선행되어야 하는 것
+- RiotAPI의 test_get_summoner_info_by_name() method로 닉네임("name")을 통해 계정 정보 받아옴
+
+#### test_get_summoner_info_by_name() 반환값
+```
+{
+  "accountId": "ocszCxil4hSsLfkm2jds_6p97_UDmFGe_95Fu37j9y7K", 
+  "id": "DSysYVtTtCikX_KPElUN1FgzRcDzBwBuYOnYZ-rImUlAgg", 
+  "name": "휘 랑", 
+  "profileIconId": 4626, 
+  "puuid": "e0wX5c8UW2WFWhC36nKTi1c3NcALQoztvD9qjqgZNNoG97KHNth-acac1-a-BIIhtFN1U3fNH7KZ_w", 
+  "revisionDate": 1606613151000, 
+  "summonerLevel": 359
+}
+```
+
+### 추가 정보 사항.
+- 이 json 정보를 mongoDB에 맞춰서 넣는다.
+- revisionDate는 milliseconds since epoch 값이다.
+- 파이썬에서는 int(round(time.time() * 1000)) 로 구한다고 한다.
+- import datetime
+- datetime.datetime.fromtimestamp(1606613151000/1000.0)
+
+### 활용하는 내용
+- 이 name으로 mongoDB에 값을 찾고 revisionDate로 mongoDB와 비교해서 변화가 있으면 갱신.
+- mongoDB에 json값은 /data/player.json에 있음.
+
+### 미정 사항
+- 정기적으로 RiotAPI를 통한 MongoDB의 갱신을 할것인지 아니면 비동기적으로 매번 값 변경을 확인하여 갱신할 것인지.
