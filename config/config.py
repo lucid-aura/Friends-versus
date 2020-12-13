@@ -8,21 +8,23 @@ class JsonConfig:
     def __init__(self, configFile):
         assert configFile != ""
         self.configFile = configFile
-        self.config = None 
         self.load()
         
-
     def load(self):
         # 설정 파일을 로딩한다.
         script_dir = os.path.dirname(__file__)
         abs_file_path = os.path.join(script_dir, self.configFile)
         with open(abs_file_path, 'r') as jsonFile:
             self.config = json.load(jsonFile)
-        
+        print("Load File ", self.config)   
+        self.__dict__ = self.config
 
-class FlaskConfig(object):
+class FlaskConfig(JsonConfig):
+    SECRET_KEY = os.environ.get('SECRET>_KEY', "my_secret_key")
+    MAINTAINER = "HSH"
+
     def __init__(self, configFile):
-        self.SECRET_KEY = os.environ.get('SECRET>_KEY') or "my_secret_key"
+        super(FlaskConfig, self).__init__(configFile)
 
 
 class MongoDBConfig(object):

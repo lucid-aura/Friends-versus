@@ -1,12 +1,12 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/../../mongodb")
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/../../../mongodb")
 from MongoDBHandler import MongoDBHandler
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/../../RiotAPI")
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/../../../RiotAPI")
 from WatcherHandler import WatcherHandler
     
 
-class RouteHandler:
+class RiotService:
     def __init__(self):
         self.dbHandler = MongoDBHandler()
         self.apiHandler = WatcherHandler()
