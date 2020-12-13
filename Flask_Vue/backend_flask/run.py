@@ -1,5 +1,5 @@
-from app import app 
-from flask_cors import CORS, cross_origin
+from app import create_app
+
 if __name__ == "__main__":
-    CORS(app, resources={r'*': {'origins': '*'}})
+    app = create_app()
     app.run(host='0.0.0.0', debug=True)
