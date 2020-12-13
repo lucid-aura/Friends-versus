@@ -1,10 +1,10 @@
 from flask import (
-    Blueprint
+    Blueprint,
     render_template
 )
 
-bp = Blueprint('main', __name__, url_prefix='/')
-
-@bp.route('/') 
-def index():
-    return render_template('index.html')
+class MainView:
+    main_app = Blueprint('main_app', __name__, url_prefix='/')
+    @main_app.route('/') 
+    def index():
+        return render_template('index.html')
