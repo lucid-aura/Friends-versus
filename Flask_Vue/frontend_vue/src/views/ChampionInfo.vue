@@ -10,7 +10,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td> {{ info_list[2] }} </td>
+                        <td> <img :src=this.champion_square /> </td>
                         <td> 챔피언 태그 </td>
                         <td> 챔피언 인포 </td>
                     </tr>
@@ -146,6 +146,7 @@ export default {
     props: ['selected_champion'],
     data() {
         return {
+            champion_square: "data:image/png;base64,",
             test_list: [],
             info_list: [],
             stat_list: [],
@@ -164,6 +165,7 @@ export default {
             this.stat_list = res.data[1];
             this.spell_list = res.data[2];
             this.spell_content = res.data[3];
+            this.champion_square += this.info_list[2];
             console.log(this.info_list);
         }).catch((error) => {
             console.error(error);
