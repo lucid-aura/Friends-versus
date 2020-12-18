@@ -19,16 +19,28 @@ class DataDragonVersionLocaleEndpoint(DataDragonEndpoint):
         nurl = f"/cdn/{{version}}/data/{{locale}}{url}"
         super().__init__(nurl, **kwargs)
 
-class DataDragonImgEndpoint(DataDragonEndpoint):
+class DataDragonChampionImgEndpoint(DataDragonEndpoint):
     def __init__(self, url, **kwargs):
-        nurl = f"/cdn/{{version}}/img/{{target}}{url}"
+        nurl = f"/cdn/{{version}}/img/champion/{url}"
+        super().__init__(nurl, **kwargs)
+
+class DataDragonSpellImgEndpoint(DataDragonEndpoint):
+    def __init__(self, url, **kwargs):
+        nurl = f"/cdn/{{version}}/img/spell/{url}"
+        super().__init__(nurl, **kwargs)
+
+class DataDragonPassiveImgEndpoint(DataDragonEndpoint):
+    def __init__(self, url, **kwargs):
+        nurl = f"/cdn/{{version}}/img/passive/{url}"
         super().__init__(nurl, **kwargs)
 
 class DataDragonUrls:
     versions = DataDragonEndpoint("/realms/{region}.json")
     img_champion_loading = DataDragonEndpoint("/cdn/img/champion/loading/{skin_id}.jpg")
-    img_champion_splash = DataDragonImgEndpoint("champion/splash/")
-    img_champion_tiles = DataDragonImgEndpoint("champion/tiles/")
+    img_champion_splash = DataDragonEndpoint("/cdn/img/champion/splash/{skin_id}.jpg")
+    img_champion_square = DataDragonChampionImgEndpoint("{champion_id}.png")
+    img_champion_spell = DataDragonChampionImgEndpoint("{spell_id}")
+    img_champion_passive = DataDragonChampionImgEndpoint("{passive_id}")
     championsFull = DataDragonVersionLocaleEndpoint("/championFull.json")
     champions = DataDragonVersionLocaleEndpoint("/champion.json")
     champion = DataDragonVersionLocaleEndpoint("/champion/")
@@ -52,6 +64,26 @@ class DataDragonAPI:
         #skin_id = re.sub(r"\s", "", skin_id)
         url, query = DataDragonUrls.img_champion_loading(skin_id=skin_id)
         print(url, " TT ")
+        return self._base_api.raw_request_static(url, query)
+
+    def splash_img(self, skin_id: str):
+        url, query = DataDragonUrls.img_champion_loading(skin_id=skin_id)
+        print(url, " SP ")
+        return self._base_api.raw_request_static(url, query)
+
+    def square_img(self, version:str, champion_id):
+        url, query = DataDragonUrls.img_champion_square(version=version, champion_id=champion_id)
+        print(url, " SQ ")
+        return self._base_api.raw_request_static(url, query)
+        
+    def spell_img(self, version:str, spell_id):
+        url, query = DataDragonUrls.img_champion_spell(version=version, spell_id=spell_id)
+        print(url, " SK ")
+        return self._base_api.raw_request_static(url, query)
+
+    def passive_img(self, version:str, passive_id):
+        url, query = DataDragonUrls.img_champion_passive(version=version, passive_id=passive_id)
+        print(url, " PS ")
         return self._base_api.raw_request_static(url, query)
 
     def versions_for_region(self, region: str):

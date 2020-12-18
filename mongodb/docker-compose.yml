@@ -9,7 +9,7 @@ services: # 서비스 목록을 정의한다.
                         MONGO_INITDB_ROOT_USERNAME : root
                         MONGO_INITDB_ROOT_PASSWORD : root12345!
                 volumes: 
-                        - /c/Users/SAMSUNG/Desktop/hsh/git/Friends-versus/mongodb:/data/db
+                        - /c/Users/현상현/Desktop/hsh/git/Friends-versus/mongodb:/data/db
                 container_name: "mongodb_friendversus"
                 ports : 
                         - 27017:27017
@@ -21,7 +21,7 @@ services: # 서비스 목록을 정의한다.
                 ports:
                     - 8081:8081
                 volumes:
-                    - /c/Users/SAMSUNG/Desktop/hsh/git/Friends-versus/mongodb:/data/db
+                    - /c/Users/현상현/Desktop/hsh/git/Friends-versus/mongodb:/data/db
                 environment: 
                     ME_CONFIG_MONGODB_ADMINUSERNAME : root 
                     ME_CONFIG_MONGODB_ADMINPASSWORD : root12345!

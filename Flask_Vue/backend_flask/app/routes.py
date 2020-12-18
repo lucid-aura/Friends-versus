@@ -112,13 +112,22 @@ def friendlist():
 @app.route('/itemlist', methods=["GET"])
 def itemlist():
     #if request.method == 'GET':
+
+    # 첫 실행 시.
     route_handler = RouteHandler()
+    # res = route_handler.create_loading_images()
+    # res = route_handler.create_splash_images()
+    # res = route_handler.create_square_images()
+    res = route_handler.create_champion_spell_images()
 
     # if route_handler.checkSummaryChampions() == 0:
     #     print("요약에 챔피언 넣습니다.")
     #     route_handler.createSummaryChampions()
-
+    # print(res)
+    # DB 체크가 필요하다.
     # route_handler.insert_loading_image_by_champion_skin_id("Zoe", "Zoe_19")
-    binary_image = route_handler.get_loading_image_by_champion_skin_id("Zoe_19")['img']
-    payload= base64.b64encode(binary_image).decode('utf-8')
+
+    if route_handler.count_loading_champion_image() != 0:
+        binary_image = route_handler.get_loading_image_by_champion_skin_id("Zoe_19")['img']
+        payload= base64.b64encode(binary_image).decode('utf-8')
     return jsonify({"raw":payload})
