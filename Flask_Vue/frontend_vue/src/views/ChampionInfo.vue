@@ -147,6 +147,7 @@ export default {
     data() {
         return {
             champion_square: "data:image/png;base64,",
+            test_list: [],
             info_list: [],
             stat_list: [],
             spell_list: [],
