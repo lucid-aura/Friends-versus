@@ -147,7 +147,6 @@ class MongoDBHandler:
         result = self.find_item("DATA", "CHAMPION", "id", champion_id)
         return result
 
-
     def find_playerInfo_by_name(self, name):
         result = self.find_item("DATA", "PLAYER", "name", name)
         #print(result)
@@ -183,7 +182,6 @@ class MongoDBHandler:
         result = self.find_item("IMG", "LOADING", 'champion_skin_id', champion_skin_id)
         return result
 
-
     def find_champion_splash_images_by_skin_number(self, skin_number):
         result = self.find_item("IMG", "SPLASH", "champion_skin_number", skin_number)
         return result
@@ -198,7 +196,6 @@ class MongoDBHandler:
         result = self.find_item("IMG", "SPLASH", 'champion_skin_number', champion_skin_number)
         return result
 
-    
     def insert_champion_square_image(self, input_data):
         result = self.find_item("IMG", "SQAURE", "champion_name", input_data['champion_name'])
         if result is None:
