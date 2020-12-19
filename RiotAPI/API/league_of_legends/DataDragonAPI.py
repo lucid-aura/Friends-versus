@@ -19,9 +19,14 @@ class DataDragonVersionLocaleEndpoint(DataDragonEndpoint):
         nurl = f"/cdn/{{version}}/data/{{locale}}{url}"
         super().__init__(nurl, **kwargs)
 
-class DataDragonImgEndpoint(DataDragonEndpoint):
+class DataDragonSpellImgEndpoint(DataDragonEndpoint):
     def __init__(self, url, **kwargs):
-        nurl = f"/cdn/{{version}}/img/{{target}}{url}"
+        nurl = f"/cdn/{{version}}/img/spell/{url}"
+        super().__init__(nurl, **kwargs)
+
+class DataDragonPassiveImgEndpoint(DataDragonEndpoint):
+    def __init__(self, url, **kwargs):
+        nurl = f"/cdn/{{version}}/img/passive/{url}"
         super().__init__(nurl, **kwargs)
 
 class DataDragonChampionImgEndpoint(DataDragonEndpoint):
@@ -42,7 +47,6 @@ class DataDragonPassiveImgEndpoint(DataDragonEndpoint):
 class DataDragonUrls:
     versions = DataDragonEndpoint("/realms/{region}.json")
     img_champion_loading = DataDragonEndpoint("/cdn/img/champion/loading/{skin_id}.jpg")
-    
     img_champion_splash = DataDragonEndpoint("/cdn/img/champion/splash/{skin_id}.jpg")
     img_champion_square = DataDragonChampionImgEndpoint("{champion_id}.png")
     img_champion_spell = DataDragonChampionImgEndpoint("{spell_id}")
@@ -81,7 +85,7 @@ class DataDragonAPI:
         url, query = DataDragonUrls.img_champion_square(version=version, champion_id=champion_id)
         print(url, " SQ ")
         return self._base_api.raw_request_static(url, query)
-
+        
     def spell_img(self, version:str, spell_id):
         url, query = DataDragonUrls.img_champion_spell(version=version, spell_id=spell_id)
         print(url, " SK ")

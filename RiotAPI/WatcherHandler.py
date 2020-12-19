@@ -138,7 +138,7 @@ class WatcherHandler:
         resp_lol_champion = self.lolwatcher.datadragon.champion(self.VERSION, self.LOCALE, champion_id)
         #resp_lol_champion = self.lolwatcher.datadragon.champions(self.VERSION, self.LOCALE)
         print(resp_lol_champion)
-        return resp_lol_champion.json()
+        return resp_lol_champion.json()        
 
     def test_get_champion_loading_img_by_champion_skin_number(self, champion_skin_number):
         resp_lol_champion_loading_img = self.lolwatcher.datadragon.loading_img(champion_skin_number)
