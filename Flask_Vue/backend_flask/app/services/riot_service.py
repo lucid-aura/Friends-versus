@@ -1,5 +1,6 @@
 import sys
 import os
+import base64
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/../../../mongodb")
 from MongoDBHandler import MongoDBHandler
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/../../../RiotAPI")
@@ -108,7 +109,9 @@ class RiotService:
         champion_info = []
         champion_info.append(result['name'])
         champion_info.append(result['title'])
-        champion_info.append(result['image']['full']) # DB에 이미지 파일이 있다고 가정 하면 경로가 바뀌어야함.
+        binary_image = self.get_square_image_by_champion_id(result['id'])['img']
+        payload= base64.b64encode(binary_image).decode('utf-8')
+        champion_info.append(payload) # DB에 이미지 파일이 있다고 가정 하면 경로가 바뀌어야함.
         champion_info.append(result['tags'])
         champion_info.append(result['info'])
         champion_info.append(result['skins'])
@@ -144,3 +147,99 @@ class RiotService:
     def get_loading_image_by_champion_skin_id(self, champion_skin_id):
         db_result = self.dbHandler.get_champion_loading_skin(champion_skin_id)
         return db_result
+
+    def create_splash_images(self):
+        # db_result = self.dbHandler.get_champion_skin_ids("Zoe")
+        champion_id_list = self.dbHandler.get_champion_ids()
+        for champion_id in champion_id_list:
+            champion_skin_numbers = self.dbHandler.get_champion_skin_number(champion_id)
+            for chmapion_skin_number in champion_skin_numbers:
+                skin_numbering = champion_id + "_" + chmapion_skin_number
+                self.insert_splash_image_by_champion_skin_number(champion_id, skin_numbering)
+
+    def insert_splash_image_by_champion_skin_number(self, champion_name, champion_skin_number):
+        if self.dbHandler.find_champion_splash_images_by_skin_number(champion_skin_number) is None:
+            api_result = self.apiHandler.test_get_champion_splash_img_by_champion_skin_number(champion_skin_number)
+            inputdata = {'chmapion_name' : champion_name, 'champion_skin_number':champion_skin_number, 'img':api_result.content}
+            db_result = self.dbHandler.insert_champion_splash_skin(inputdata)
+
+    def find_champion_splash_images_by_skin_number(self, champion_skin_number):
+        db_result = self.dbHandler.find_champion_splash_images_by_skin_id(champion_skin_number)
+        return db_result
+
+    def get_splash_image_by_champion_skin_id(self, champion_skin_id):
+        db_result = self.dbHandler.get_champion_splash_skin(champion_skin_id)
+        return db_result
+
+    def count_splash_champion_image(self):
+        cnt = self.dbHandler.count_document("IMG", "SPLASH")
+        return cnt
+
+    def create_square_images(self):
+        champion_id_list = self.dbHandler.get_champion_ids()
+        for champion_id in champion_id_list:
+            self.insert_square_image_by_champion_id(champion_id)
+
+    def insert_square_image_by_champion_id(self, champion_id):
+        if self.dbHandler.find_champion_square_image_by_champion_id(champion_id) is None:
+            api_result = self.apiHandler.test_get_champion_square_img_by_champion_id(champion_id)
+            inputdata = {'champion_name' : champion_id, 'img':api_result.content}
+            db_result = self.dbHandler.insert_champion_square_image(inputdata)
+
+    def find_champion_square_image_by_champion_id(self, champion_id):
+        db_result = self.dbHandler.find_champion_square_image_by_champion_id(champion_skin_number)
+        return db_result
+
+    def get_square_image_by_champion_id(self, champion_id):
+        db_result = self.dbHandler.get_champion_square_image(champion_id)
+        return db_result
+
+    def count_square_champion_image(self):
+        cnt = self.dbHandler.count_document("IMG", "SQAURE")
+        return cnt
+        
+
+    def create_champion_spell_images(self):
+        champion_id_list = self.dbHandler.get_champion_ids()
+        for champion_id in champion_id_list:
+            self.insert_spell_images_by_champion_id(champion_id)
+
+    def insert_spell_images_by_champion_id(self, champion_id):
+        db_result = self.dbHandler.find_item("DATA", "CHAMPION", "id", champion_id)
+        if self.dbHandler.find_champion_spell_images_by_champion_id(champion_id) is None:
+            spell_id_list = []
+            P = db_result['passive']['image']['full']
+            Q = db_result['spells'][0]['image']['full']
+            W = db_result['spells'][1]['image']['full']
+            E = db_result['spells'][2]['image']['full']
+            R = db_result['spells'][3]['image']['full']
+            spell_id_list.append(P)
+            spell_id_list.append(Q)
+            spell_id_list.append(W)
+            spell_id_list.append(E)
+            spell_id_list.append(R)
+
+            inputdata = {}
+            inputdata['champion_id'] = champion_id
+            inputdata['spell_id_list'] = spell_id_list
+            inputdata['P'] = self.apiHandler.test_get_champion_passive_img_by_champion_passive_id(P)
+            inputdata['Q'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(Q)
+            inputdata['W'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(W)
+            inputdata['E'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(E)
+            inputdata['R'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(R)
+            db_result = self.dbHandler.insert_champion_spell_images(inputdata)
+
+    def find_champion_spell_images_by_champion_id(self, champion_id):
+        db_result = self.dbHandler.find_champion_spell_images_by_champion_id(champion_id)
+        return db_result
+
+    def get_champion_spell_images_by_champion_id(self, champion_id):
+        db_result = self.dbHandler.get_champion_spell_images_by_champion_id(champion_id)
+        return db_result
+
+    def count_spell_champion_image(self):
+        cnt = self.dbHandler.count_document("IMG2", "SPELLS")
+        return cnt
+
+    def testFunction(self, champion_id):
+        api_result = self.apiHandler.test_get_champion_loading_img_by_champion_skin_number(champion_skin_id)

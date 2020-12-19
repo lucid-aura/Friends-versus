@@ -140,9 +140,25 @@ class WatcherHandler:
         print(resp_lol_champion)
         return resp_lol_champion.json()
 
-    def test_get_champion_loading_img_by_champion_skin_id(self, champion_skin_id):
-        resp_lol_champion_loading_img = self.lolwatcher.datadragon.loading_img(champion_skin_id)
+    def test_get_champion_loading_img_by_champion_skin_number(self, champion_skin_number):
+        resp_lol_champion_loading_img = self.lolwatcher.datadragon.loading_img(champion_skin_number)
         return resp_lol_champion_loading_img
+
+    def test_get_champion_splash_img_by_champion_skin_number(self, champion_skin_number):
+        resp_lol_champion_splash_img = self.lolwatcher.datadragon.splash_img(champion_skin_number)
+        return resp_lol_champion_splash_img
+
+    def test_get_champion_square_img_by_champion_id(self, champion_id):
+        resp_lol_champion_square_img = self.lolwatcher.datadragon.square_img(self.VERSION, champion_id)
+        return resp_lol_champion_square_img
+
+    def test_get_champion_spell_img_by_champion_spell_id(self, spell_id):
+        resp_lol_champion_spell_img = self.lolwatcher.datadragon.spell_img(self.VERSION, spell_id)
+        return resp_lol_champion_spell_img
+
+    def test_get_champion_passive_img_by_champion_passive_id(self, passive_id):
+        resp_lol_champion_passive_img = self.lolwatcher.datadragon.passive_img(self.VERSION, passive_id)
+        return resp_lol_champion_passive_img
 
 if __name__ == "__main__":    
     """

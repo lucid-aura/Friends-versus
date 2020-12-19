@@ -134,6 +134,10 @@ class MongoDBHandler:
         summary_json = json.dumps(summary_list, default=json_util.default, ensure_ascii = False)
         return summary_json
 
+    def get_champion_ids(self):
+        result = self.find_items("DATA", "CHAMPIONS_SUMMARY", "id")
+        return result
+
     def insert_champion_data(self, champion_data):
         result = self.find_item("DATA", "CHAMPION", "id", champion_data['id'])
         if result is None:
@@ -149,13 +153,87 @@ class MongoDBHandler:
         #print(result)
         return result
 
+    def get_champion_skin_ids(self, champion_id):
+        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
+        if result == None:
+            return None
+        res = []
+        for i in result["skins"]:
+            res.append(i["id"])
+        return(res)
+
+    def get_champion_skin_number(self, champion_id):
+        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
+        res = []
+        for i in result["skins"]:
+            res.append(str(i["num"]))
+        return(res)
+
+    def find_champion_loading_images_by_skin_number(self, skin_number):
+        result = self.find_item("IMG", "LOADING", "champion_skin_number", skin_number)
+        return result
+
     def insert_champion_loading_skin(self, input_data):
-        result = self.find_item("IMG", "LOADING", "champion_skin_id", input_data['champion_skin_id'])
+        result = self.find_item("IMG", "LOADING", "champion_skin_number", input_data['champion_skin_number'])
         if result is None:
             result = self.insert_item("IMG", "LOADING", input_data)
         return result
 
-    def get_champion_loading_skin(self, champion_skin_id):
-        result = self.find_item("IMG", "LOADING", 'champion_skin_id', champion_skin_id)
+    def get_champion_loading_skin(self, champion_skin_number):
+        result = self.find_item("IMG", "LOADING", 'champion_skin_number', champion_skin_number)
         return result
-            
+
+
+    def find_champion_splash_images_by_skin_number(self, skin_number):
+        result = self.find_item("IMG", "SPLASH", "champion_skin_number", skin_number)
+        return result
+
+    def insert_champion_splash_skin(self, input_data):
+        result = self.find_item("IMG", "SPLASH", "champion_skin_number", input_data['champion_skin_number'])
+        if result is None:
+            result = self.insert_item("IMG", "SPLASH", input_data)
+        return result
+
+    def get_champion_splash_skin(self, champion_skin_number):
+        result = self.find_item("IMG", "SPLASH", 'champion_skin_number', champion_skin_number)
+        return result
+
+    
+    def insert_champion_square_image(self, input_data):
+        result = self.find_item("IMG", "SQAURE", "champion_name", input_data['champion_name'])
+        if result is None:
+            result = self.insert_item("IMG", "SQUARE", input_data)
+        return result
+
+    def get_champion_square_image(self, champion_id):
+        result = self.find_item("IMG", "SQUARE", 'champion_name', champion_id)
+        return result
+
+    def find_champion_square_image_by_champion_id(self, champion_id):
+        result = self.find_item("IMG", "SQAURE", "champion_name", champion_id)
+        return result
+
+    def insert_champion_spell_images(self, input_data):
+        result = self.find_item("IMG", "SPELLS", "champion_id", input_data['champion_id'])
+        if result is None:
+            # temp = {}
+            # temp['champion_id'] = input_data['champion_id']
+            # temp['spell_id_list'] = input_data['spell_id_list']
+            # temp['P'] = ""
+            # temp['Q'] = ""
+            # temp['W'] = ""
+            # temp['E'] = ""
+            # temp['R'] = ""
+            # result = self.insert_item("IMG", "SPELLS", temp)
+            # self.update_item("champion_id", input_data['champion_id'], "P", input_data['P'], "IMG", "SPELLS")
+            # def update_item(self, column_name, column_value, update_column, update_value, db_name, collection_name):
+            # self.update_row("champion_id", input_data['champion_id'], input_data, "IMG", "SPELLS")
+            return result
+
+    def get_champion_spell_images_by_champion_id(self, champion_id):
+        result = self.find_item("IMG", "SPELLS", 'champion_id', champion_id)
+        return result
+
+    def find_champion_spell_images_by_champion_id(self, champion_id):
+        result = self.find_item("IMG", "SPELLS", 'champion_id', champion_id)
+        return result 

@@ -5,13 +5,13 @@
                 <router-link to="/" class="nav-link" exact>
                     Home
                 </router-link>
-                <router-link to="/friendlist" class="nav-link" :disabled=!get_check_login() :event="get_check_login() ? 'click' : ''" exact>
+                <router-link to="/riot/friendlist" class="nav-link" :disabled=!get_check_login() :event="get_check_login() ? 'click' : ''" exact>
                     Friend list
                 </router-link>
-                <router-link to="/itemlist" class="nav-link" exact>
+                <router-link to="/riot/itemlist" class="nav-link" exact>
                     Items
                 </router-link>
-                <router-link to="/championlist" class="nav-link" exact>
+                <router-link to="/riot/championlist" class="nav-link" exact>
                     Champions
                 </router-link>
                  <router-link to="/login" class="nav-link">

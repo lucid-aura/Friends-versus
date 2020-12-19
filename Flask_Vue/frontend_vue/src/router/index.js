@@ -20,27 +20,27 @@ export default new VueRouter({
             component: Home
         },
         {
-            path: '/friendlist',
+            path: '/riot/friendlist',
             name: 'friendList',
             component: FriendList,
         },
         {
-            path: '/itemlist',
+            path: '/riot/itemlist',
             name: 'itemList',
             component: ItemList
         },
         {
-            path: '/championlist',
+            path: '/riot/championlist',
             name: 'championList',
             component: ChampionList,
         },
         {
-            path: '/championinfo',
+            path: '/riot/championinfo',
             name: 'championInfo',
             component: ChampionInfo
         },
         {
-            path: '/playerinfo',
+            path: '/riot/playerinfo',
             name: 'playerinfo',
             component: PlayerInfo
         },
