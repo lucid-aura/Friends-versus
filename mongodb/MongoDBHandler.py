@@ -153,33 +153,13 @@ class MongoDBHandler:
         #print(result)
         return result
 
-    def get_champion_skin_ids(self, champion_id):
-        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
-        if result == None:
-            return None
-        res = []
-        for i in result["skins"]:
-            res.append(i["id"])
-        return(res)
-
-    def get_champion_skin_number(self, champion_id):
-        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
-        res = []
-        for i in result["skins"]:
-            res.append(str(i["num"]))
-        return(res)
-
-    def find_champion_loading_images_by_skin_number(self, skin_number):
-        result = self.find_item("IMG", "LOADING", "champion_skin_number", skin_number)
-        return result
-
     def insert_champion_loading_skin(self, input_data):
         result = self.find_item("IMG", "LOADING", "champion_skin_id", input_data['champion_skin_id'])
         if result is None:
             result = self.insert_item("IMG", "LOADING", input_data)
         return result
 
-   def get_champion_loading_skin(self, champion_skin_id):
+    def get_champion_loading_skin(self, champion_skin_id):
         result = self.find_item("IMG", "LOADING", 'champion_skin_id', champion_skin_id)
         return result
 
@@ -237,3 +217,24 @@ class MongoDBHandler:
     def find_champion_spell_images_by_champion_id(self, champion_id):
         result = self.find_item("IMG", "SPELLS", 'champion_id', champion_id)
         return result 
+
+    def get_champion_skin_ids(self, champion_id):
+        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
+        if result == None:
+            return None
+        res = []
+        for i in result["skins"]:
+            res.append(i["id"])
+        return(res)
+
+    def get_champion_skin_number(self, champion_id):
+        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
+        res = []
+        for i in result["skins"]:
+            res.append(str(i["num"]))
+        return(res)
+
+    def find_champion_loading_images_by_skin_number(self, skin_number):
+        result = self.find_item("IMG", "LOADING", "champion_skin_number", skin_number)
+        return result
+
