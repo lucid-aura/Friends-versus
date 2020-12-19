@@ -21,9 +21,9 @@ class DataDragonVersionLocaleEndpoint(DataDragonEndpoint):
 
 class DataDragonImgEndpoint(DataDragonEndpoint):
     def __init__(self, url, **kwargs):
-        nurl = f"/cdn/{{version}}/img/champion/{url}"
+        nurl = f"/cdn/{{version}}/img/{{target}}{url}"
         super().__init__(nurl, **kwargs)
-        
+
 class DataDragonChampionImgEndpoint(DataDragonEndpoint):
     def __init__(self, url, **kwargs):
         nurl = f"/cdn/{{version}}/img/champion/{url}"
