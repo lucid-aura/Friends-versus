@@ -42,6 +42,8 @@ class DataDragonPassiveImgEndpoint(DataDragonEndpoint):
 class DataDragonUrls:
     versions = DataDragonEndpoint("/realms/{region}.json")
     img_champion_loading = DataDragonEndpoint("/cdn/img/champion/loading/{skin_id}.jpg")
+    img_champion_splash = DataDragonImgEndpoint("champion/splash/")
+    img_champion_tiles = DataDragonImgEndpoint("champion/tiles/")
     img_champion_splash = DataDragonEndpoint("/cdn/img/champion/splash/{skin_id}.jpg")
     img_champion_square = DataDragonChampionImgEndpoint("{champion_id}.png")
     img_champion_spell = DataDragonChampionImgEndpoint("{spell_id}")
