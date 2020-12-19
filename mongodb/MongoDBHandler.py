@@ -172,6 +172,26 @@ class MongoDBHandler:
         result = self.find_item("IMG", "LOADING", "champion_skin_number", skin_number)
         return result
 
+    def get_champion_skin_ids(self, champion_id):
+        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
+        if result == None:
+            return None
+        res = []
+        for i in result["skins"]:
+            res.append(i["id"])
+        return(res)
+
+    def get_champion_skin_number(self, champion_id):
+        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
+        res = []
+        for i in result["skins"]:
+            res.append(str(i["num"]))
+        return(res)
+
+    def find_champion_loading_images_by_skin_number(self, skin_number):
+        result = self.find_item("IMG", "LOADING", "champion_skin_number", skin_number)
+        return result
+
     def insert_champion_loading_skin(self, input_data):
         result = self.find_item("IMG", "LOADING", "champion_skin_number", input_data['champion_skin_number'])
         if result is None:
@@ -197,6 +217,19 @@ class MongoDBHandler:
         result = self.find_item("IMG", "SPLASH", 'champion_skin_number', champion_skin_number)
         return result
 
+    def find_champion_splash_images_by_skin_number(self, skin_number):
+        result = self.find_item("IMG", "SPLASH", "champion_skin_number", skin_number)
+        return result
+
+    def insert_champion_splash_skin(self, input_data):
+        result = self.find_item("IMG", "SPLASH", "champion_skin_number", input_data['champion_skin_number'])
+        if result is None:
+            result = self.insert_item("IMG", "SPLASH", input_data)
+        return result
+
+    def get_champion_splash_skin(self, champion_skin_number):
+        result = self.find_item("IMG", "SPLASH", 'champion_skin_number', champion_skin_number)
+        return result
 
     def insert_champion_square_image(self, input_data):
         result = self.find_item("IMG", "SQAURE", "champion_name", input_data['champion_name'])
@@ -207,11 +240,11 @@ class MongoDBHandler:
     def get_champion_square_image(self, champion_id):
         result = self.find_item("IMG", "SQUARE", 'champion_name', champion_id)
         return result
- 
+
     def find_champion_square_image_by_champion_id(self, champion_id):
         result = self.find_item("IMG", "SQAURE", "champion_name", champion_id)
         return result
-    
+
     def insert_champion_spell_images(self, input_data):
         result = self.find_item("IMG", "SPELLS", "champion_id", input_data['champion_id'])
         if result is None:
@@ -227,6 +260,7 @@ class MongoDBHandler:
             # self.update_item("champion_id", input_data['champion_id'], "P", input_data['P'], "IMG", "SPELLS")
             # def update_item(self, column_name, column_value, update_column, update_value, db_name, collection_name):
             # self.update_row("champion_id", input_data['champion_id'], input_data, "IMG", "SPELLS")
+            return result
             
         return result
 
@@ -236,4 +270,4 @@ class MongoDBHandler:
 
     def find_champion_spell_images_by_champion_id(self, champion_id):
         result = self.find_item("IMG", "SPELLS", 'champion_id', champion_id)
-        return result
+        return result 

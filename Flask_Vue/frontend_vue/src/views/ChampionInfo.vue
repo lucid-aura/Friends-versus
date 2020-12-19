@@ -157,7 +157,7 @@ export default {
         }
     },
     created: function () {
-        let path = "http://localhost:5000/championinfo?championinfo=";
+        let path = "http://localhost:5000/riot/championinfo?championinfo=";
         path += this.$route.query.championinfo;
         console.log(path)
         axios.get(path).then((res) => {

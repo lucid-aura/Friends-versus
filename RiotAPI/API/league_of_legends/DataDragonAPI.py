@@ -19,6 +19,16 @@ class DataDragonVersionLocaleEndpoint(DataDragonEndpoint):
         nurl = f"/cdn/{{version}}/data/{{locale}}{url}"
         super().__init__(nurl, **kwargs)
 
+class DataDragonSpellImgEndpoint(DataDragonEndpoint):
+    def __init__(self, url, **kwargs):
+        nurl = f"/cdn/{{version}}/img/spell/{url}"
+        super().__init__(nurl, **kwargs)
+
+class DataDragonPassiveImgEndpoint(DataDragonEndpoint):
+    def __init__(self, url, **kwargs):
+        nurl = f"/cdn/{{version}}/img/passive/{url}"
+        super().__init__(nurl, **kwargs)
+
 class DataDragonChampionImgEndpoint(DataDragonEndpoint):
     def __init__(self, url, **kwargs):
         nurl = f"/cdn/{{version}}/img/champion/{url}"
@@ -105,11 +115,6 @@ class DataDragonAPI:
             version,
             locale,
         )
-        # return self._request(
-        #     DataDragonUrls.champions,
-        #     version,
-        #     locale,
-        # )
 
     def items(self, version: str, locale: str = None):
         return self._request(DataDragonUrls.items, version, locale)

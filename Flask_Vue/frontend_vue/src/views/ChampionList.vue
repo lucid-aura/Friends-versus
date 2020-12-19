@@ -24,7 +24,7 @@
                                             v-model="item['name']"
                                             readonly=true
                                     />
-                                    <router-link to="/championinfo"></router-link>
+                                    <router-link to="/riot/championinfo"></router-link>
                                     <router-view></router-view>
                                 </td>
                                 <td>
@@ -34,7 +34,7 @@
                                     />
                                 </td>
                             </tr>
-                            <router-link to="/championinfo"></router-link>
+                            <router-link to="/riot/championinfo"></router-link>
                             <router-view></router-view>
                         </tbody>
                     </template>
@@ -56,7 +56,7 @@ export default {
         }
     },
     mounted() {
-        let path = "http://localhost:5000/championlist";
+        let path = "http://localhost:5000/riot/championlist";
         axios.post(path).then((res) => {
             var results = JSON.parse(res.data);
             this.champion_list = results;
@@ -101,7 +101,7 @@ export default {
         */
 
         select(id) {
-            this.$router.push({path:'/championinfo',query:{championinfo: id} }); // 쿼리로 챔피언 이름을 넘겨준다.
+            this.$router.push({path:'/riot/championinfo',query:{championinfo: id} }); // 쿼리로 챔피언 이름을 넘겨준다.
         }
     }
 }

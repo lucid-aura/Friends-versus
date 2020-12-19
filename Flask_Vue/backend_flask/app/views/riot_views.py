@@ -17,67 +17,68 @@ from ..services.riot_service import RiotService
 class RiotView:
     riot_app = Blueprint('riot_app', __name__, url_prefix='/riot')
 
-    @riot_app.route('/', methods=["GET", "POST"])
-    def home():
-        if request.method == 'GET':
-            #language = request.form['language']
-            #framework = request.args.get('framework')
-            #framework = request.form['framework']
-            #print(language)
-            #print(framework)
+    # @riot_app.route('/', methods=["GET", "POST"])
+    # def home():
+    #     if request.method == 'GET':
+    #         #language = request.form['language']
+    #         #framework = request.args.get('framework')
+    #         #framework = request.form['framework']
+    #         #print(language)
+    #         #print(framework)
             
-            name = request.args.get('playerinfo')
-
-            if name is not None:
-                route_handler = RouteHandler.init_playerinfo_by_name(name)
-                if route_handler is not None:
-                    print("존재하는 소환사 이름")
-                    playerinfo = route_handler.searchPlayerInfo(name)
-                    playerinfo["revisionDate"] = str(datetime.datetime.fromtimestamp(int(playerinfo["revisionDate"])/1000.0))
-                    return jsonify(playerinfo)
+    #         name = request.args.get('playerinfo')
+            
+    #         if name is not None:
+    #             riot_service = RiotService.init_playerinfo_by_name(name)
+    #             if riot_service is not None:
+    #                 print("존재하는 소환사 이름")
+    #                 playerinfo = riot_service.searchPlayerInfo(name)
+    #                 playerinfo["revisionDate"] = str(datetime.datetime.fromtimestamp(int(playerinfo["revisionDate"])/1000.0))
+    #                 return jsonify(playerinfo)
                 
-            #####################################
-            # 정말 긴 시간 끝에 알아낸 사실....
-            # GET 방식은 request.args.get('name') 으로 받아오고
-            # POST는 request.form['name'] 으로 받아온다....
-            # 문제는 form 형식이 아닐때는 어떻게 받아오는가??
-            #  -> axios로 request 날린다.
-            #####################################
+    #         #####################################
+    #         # 정말 긴 시간 끝에 알아낸 사실....
+    #         # GET 방식은 request.args.get('name') 으로 받아오고
+    #         # POST는 request.form['name'] 으로 받아온다....
+    #         # 문제는 form 형식이 아닐때는 어떻게 받아오는가??
+    #         #  -> axios로 request 날린다.
+    #         #####################################
 
 
-            # nickname = request.form['nickname']
-            # print(nickname)
-        #my_res = flask.Response(jsonify(test[0]))
-        #my_res.headers["Access-Control-Allow-Origin"] = "*"
+    #         # nickname = request.form['nickname']
+    #         # print(nickname)
+    #     #my_res = flask.Response(jsonify(test[0]))
+    #     #my_res.headers["Access-Control-Allow-Origin"] = "*"
 
-        e = jsonify({'name':""})
-        return e
+    #     return render_template('index.html')
 
     @riot_app.route('/playerinfo', methods=["GET"])
     def playerinfo():
         # name = request.form['data']
-        # rH = routeHandler.init_by_name(name)
+        # rH = RiotService.init_by_name(name)
         # playerinfo = rH.test(name)
         # return playerinfo
         # data = request.get_json()
         # print(data)
         if request.method == 'GET': 
-            name = request.form['playerinfo']
+            name = request.args.get('name')
             print(name)
-            route_handler = RouteHandler.init_playerinfo_by_name(name)
-            playerinfo = route_handler.searchPlayerInfo(name)
+            riot_service = RiotService.init_playerinfo_by_name(name)
+            playerinfo = riot_service.searchPlayerInfo(name)
+            playerinfo["revisionDate"] = str(datetime.datetime.fromtimestamp(int(playerinfo["revisionDate"])/1000.0))
             return playerinfo
                 
         return jsonify('')
     
     @riot_app.route('/championlist', methods=["POST"])
     def championlist():
+        print("championList")
         if request.method == 'POST':
-            route_handler = RouteHandler()
-            if route_handler.countSummaryChampions() == 0:
-                route_handler.createSummaryChampions()
-                route_handler.createChampioninfoData()
-            result = route_handler.getSummaryChampions()
+            riot_service = RiotService()
+            if riot_service.countSummaryChampions() == 0:
+                riot_service.createSummaryChampions()
+                riot_service.createChampioninfoData()
+            result = riot_service.getSummaryChampions()
             return jsonify(result)
 
         e = jsonify({'erroring':"noting loaded..."})
@@ -89,11 +90,9 @@ class RiotView:
         if request.method == 'GET':
             id = request.args.get('championinfo')
             print("championinfo GET")
-            route_handler = RouteHandler()
-            result = route_handler.getChampioninfoData(id)
+            riot_service = RiotService()
+            result = riot_service.getChampioninfoData(id)
             return jsonify(result)
-        
-        e = jsonify({'erroring':"noting loaded!"})
         return e
 
     @riot_app.route('/friendlist')
@@ -118,13 +117,13 @@ class RiotView:
     @riot_app.route('/itemlist', methods=["GET"])
     def itemlist():
         #if request.method == 'GET':
-        route_handler = RouteHandler()
+        riot_service = RiotService()
 
-        # if route_handler.checkSummaryChampions() == 0:
+        # if riot_service.checkSummaryChampions() == 0:
         #     print("요약에 챔피언 넣습니다.")
-        #     route_handler.createSummaryChampions()
+        #     riot_service.createSummaryChampions()
 
-        # route_handler.insert_loading_image_by_champion_skin_id("Zoe", "Zoe_19")
-        binary_image = route_handler.get_loading_image_by_champion_skin_id("Zoe_19")['img']
+        # riot_service.insert_loading_image_by_champion_skin_id("Zoe", "Zoe_19")
+        binary_image = riot_service.get_loading_image_by_champion_skin_id("Zoe_19")['img']
         payload= base64.b64encode(binary_image).decode('utf-8')
         return jsonify({"raw":payload})

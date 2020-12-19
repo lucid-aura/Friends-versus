@@ -116,7 +116,7 @@ export default {
         this.fetchDefaults();
     },
     mounted: function () {
-        let path = "http://localhost:5000/itemlist";
+        let path = "http://localhost:5000/riot/itemlist";
         axios.get(path).then((res) => {
             var results = res.data
             console.log(results)
