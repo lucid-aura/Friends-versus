@@ -105,11 +105,6 @@ class DataDragonAPI:
             version,
             locale,
         )
-        # return self._request(
-        #     DataDragonUrls.champions,
-        #     version,
-        #     locale,
-        # )
 
     def items(self, version: str, locale: str = None):
         return self._request(DataDragonUrls.items, version, locale)
