@@ -174,7 +174,7 @@ class MongoDBHandler:
         return result
 
     def insert_champion_loading_skin(self, input_data):
-        result = self.find_item("IMG", "LOADING", "champion_skin_number", input_data['champion_skin_number'])
+        result = self.find_item("IMG", "LOADING", "champion_skin_id", input_data['champion_skin_id'])
         if result is None:
             result = self.insert_item("IMG", "LOADING", input_data)
         return result
