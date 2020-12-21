@@ -9,11 +9,7 @@ from bson import json_util
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/loggings")
 from loggings import log_time
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/config")
-from config import JsonConfig
 from config import MongoDBConfig
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/data")
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/hyh_json_handler")
-from JsonParser import JsonParser
 
 print(os.path.dirname(__file__))
 # #host='192.168.200.163'
@@ -36,8 +32,6 @@ class MongoDBHandler:
                                   username=self.username,
                                   password=self.password)
         
-        self.develop_json = JsonConfig("Develop.json") # Develope Json 파일 열고 로드
-
     @log_time
     def insert_item(self, db_name, collection_name, input_data):
         collection = self.client[db_name][collection_name]
