@@ -5,6 +5,9 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/..
 from MongoDBHandler import MongoDBHandler
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/../../../RiotAPI")
 from WatcherHandler import WatcherHandler
+
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/../../../mongodb/services")
+from data_service import DataService
     
 
 class RiotService:
@@ -44,7 +47,6 @@ class RiotService:
     def getSummaryChampions(self):
         return self.dbHandler.get_champions_summary()
 
-
     def searchPlayerInfo(self, name):
         #print(self.apiHandler.test_get_summoner_info_by_account()) #이상
 
@@ -76,27 +78,9 @@ class RiotService:
             result.pop('recommended')
             self.dbHandler.insert_champion_data(result)
 
-        # for index in db_result:
-        #     print(index)
-            # api_result = self.apiHandler.test_get_champion_data_by_champion_id(index['id']) 
-            # print(api_result)
-            # refine = api_result
-            # refine.pop('recommended')
-            # result = self.dbHandler.insert_item("CHAMPION", "DATA", refine)
-            # print(refine)
-            
-        
-
 
     def getChampioninfoData(self, champion_name):
-        # 데이터를 api로 요청해서 가지고 오는 것과 DB에 저장해서 가지고 오는 것 둘다 구현해야 할 것 같다.
-        # api_result = self.apiHandler.test_get_champion_data_by_champion_id(champion_name)
-        # raw_result = api_result['data'][champion_name]
-        # result = raw_result.pop('recommended') # 지금은 필요없는 데이터(추천) 삭제
-
-        # db에 넣기.. 이후에 제거 or 수정해줘야함. 한번만 넣고 변동사항있을때만 변경
-        # db_result = self.dbHandler.insert_item("CHAMPION", "DATA", inputtest) #
-
+        # createChampioninfoData 함수가 반드시 호출 된 이후에 호출 된다.(검사 여기서 안함)
         db_result = self.dbHandler.find_item("DATA", "CHAMPION", "id", champion_name)
         result = []
         result.append(self.getChampioninfo_ChampionInfo(db_result))

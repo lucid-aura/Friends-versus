@@ -1,17 +1,20 @@
 # https://popcorn16.tistory.com/122
-from pymongo import MongoClient
-from pymongo.cursor import CursorType
-import pymongo
+# from pymongo import MongoClient
+# import pymongo
 import sys
 import os
-import json
-from bson import json_util
+# import json
+# from bson import json_util
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/loggings")
 from loggings import log_time
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/config")
-from config import MongoDBConfig
+# sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/config")
+# from config import MongoDBConfig
 
-print(os.path.dirname(__file__))
+from model.data_dao import DataDAO
+from services.data_service import DataService
+from services.image_service import ImageService
+
+# print(os.path.dirname(__file__))
 # #host='192.168.200.163'
 # host='192.168.40.52' #PC 설정에 따라 다르다. window 일경우 C:\Windows\System32\drivers\etc\hosts 파일에 docker 주소 및 포트가 있음.
 # host='http://host.docker.internal'
@@ -21,247 +24,109 @@ print(os.path.dirname(__file__))
 
 class MongoDBHandler:
     def __init__(self):
-        self.mongodbconfig = MongoDBConfig()
-        self.host = self.mongodbconfig.host
-        self.port = self.mongodbconfig.port
-        self.username = self.mongodbconfig.username
-        self.password = self.mongodbconfig.password
+        self.data_dao = DataDAO()
+        self.data_service = DataService()
+        self.image_service = ImageService()
 
-        self.client = MongoClient(host=self.host,
-                                  port=self.port,
-                                  username=self.username,
-                                  password=self.password)
-        
     @log_time
     def insert_item(self, db_name, collection_name, input_data):
-        collection = self.client[db_name][collection_name]
-        res = collection.insert_one(input_data)  # insert element
-        results = list()
-        results.append(res)
-        return results
-
+        return self.data_dao.insert_item(db_name, collection_name, input_data)
 
     def insert_items(self, db_name, collection_name, input_data):
-        collection = self.client[db_name][collection_name]
-        res = collection.insert_many(input_data)
-        results = list()
-        results.append(res)
-        return results
-
+        return self.data_dao.insert_items(db_name, collection_name, input_data)
 
     def find_item(self, db_name, collection_name, column_name, column_value):
-        collection = self.client[db_name][collection_name]
-        condition = self.create_condition(column_name, column_value)
-        res = collection.find_one(condition)
-        #result = json.dumps(res, default=)
-        #print("타입은 ", type(result))
-        #return json.dumps(res, ensure_ascii=False)
-        return res
+        return self.data_dao.find_item(db_name, collection_name, column_name, column_value)
 
     def find_items(self, db_name, collection_name, name):
-        collection = self.client[db_name][collection_name]
-        values = list()
-        for doc in collection.find():
-            value = str(doc[name])
-            values.append(value)
-        return values
+        return self.data_dao.find_itemsdb_name, collection_name, name()
 
     def delete_item(self, column_name, column_value, db_name, collection_name):
-        result, condition = self.find_item(db_name, collection_name, column_name, column_value)
-        if result is None:
-            print(f"{condition} - 존재하지 않는 이름입니다.")
-        else:
-            collection = self.client[db_name][collection_name]
-            result = collection.delete_one(condition)
-        return result
+        return self.data_dao.delete_item(column_name, column_value, db_name, collection_name)
 
     def update_item(self, column_name, column_value, update_column, update_value, db_name, collection_name):
-        result, condition = self.find_item(db_name, collection_name, column_name, column_value)
-
-        if result is None:
-            print(f"{condition} - 존재하지 않는 이름입니다.")
-        else:
-            collection = self.client[db_name][collection_name]
-            new_value = {"$set": {update_column: update_value}}
-            result = collection.update_one(condition, new_value)
-        return result
+        return self.data_dao.update_item(column_name, column_value, update_column, update_value, db_name, collection_name)
 
     def update_row(self, column_name, column_value, update_values , db_name, collection_name):
-        result, condition = self.find_item(db_name, collection_name, column_name, column_value)
-        if result is None:
-            print(f"{condition} - 존재하지 않는 이름입니다.")
-        else:
-            collection = self.client[db_name][collection_name]
-            row_list = list(update_values.keys())
-            for update_column in row_list:
-                new_value = {"$set": {update_column: update_values[update_column]}}
-                result = collection.update_one(condition, new_value)
-        return result
+        return self.data_dao.update_row(column_name, column_value, update_values , db_name, collection_name)
 
     def count_document(self, db_name, collection_name):
-        collection = self.client[db_name][collection_name]
-        cnt = collection.find().count()
-        return cnt
+        return self.data_dao.count_document(db_name, collection_name)
+
 
     def update_player(self, name, update_values):
-        self.update_row("name", name, update_values, "DATA", "PLAYER")
+        self.data_dao.update_row("name", name, update_values, "DATA", "PLAYER")
 
-    def create_condition(self, column_name, column_value):
-        return {str(column_name): str(column_value)}
 
     def check_duplicate(self, db_name, collection_name, key):
         collection = self.client[db_name][collection_name]
         collection.create_index([(key, pymongo.ASCENDING)], unique=True)
 
+
+
     def insert_playerInfo(self, playerInfo):
-        result = self.insert_item("DATA", "PLAYER", playerInfo)
-        #print(result)
-        return result
+        return self.data_service.insert_playerInfo("DATA", "PLAYER", playerInfo)
 
     def insert_champions_summary(self, champion_summary):
-        return self.insert_item("DATA", "CHAMPIONS_SUMMARY", champion_summary)
+        return self.data_service.insert_champions_summary("DATA", "CHAMPIONS_SUMMARY", champion_summary)
 
     def get_champions_summary(self):
-        collection = self.client["DATA"]["CHAMPIONS_SUMMARY"]
-        #print(list(collection.find()))
-        summary_list = list(collection.find())
-        summary_json = json.dumps(summary_list, default=json_util.default, ensure_ascii = False)
-        return summary_json
+        return self.data_service.get_champions_summary()
 
     def get_champion_ids(self):
-        result = self.find_items("DATA", "CHAMPIONS_SUMMARY", "id")
-        return result
+        return self.data_service.get_champion_ids()
 
     def insert_champion_data(self, champion_data):
-        result = self.find_item("DATA", "CHAMPION", "id", champion_data['id'])
-        if result is None:
-            return self.insert_item("DATA", "CHAMPION", champion_data)
+        return self.data_service.insert_champion_data(champion_data)
 
     def get_champion_data(self, champion_id):
         result = self.find_item("DATA", "CHAMPION", "id", champion_id)
         return result
 
     def find_playerInfo_by_name(self, name):
-        result = self.find_item("DATA", "PLAYER", "name", name)
-        #print(result)
-        return result
- 
-    def get_champion_skin_ids(self, champion_id):
-        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
-        if result == None:
-            return None
-        res = []
-        for i in result["skins"]:
-            res.append(i["id"])
-        return(res)
+        return self.data_service.find_playerInfo_by_name(name)
+
+
+
 
     def get_champion_skin_number(self, champion_id):
-        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
-        res = []
-        for i in result["skins"]:
-            res.append(str(i["num"]))
-        return(res)
-        
-    def find_champion_loading_images_by_skin_number(self, skin_number):
-        result = self.find_item("IMG", "LOADING", "champion_skin_number", skin_number)
-        return result
+        return self.image_service.get_champion_skin_number(champion_id)
 
     def get_champion_skin_ids(self, champion_id):
-        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
-        if result == None:
-            return None
-        res = []
-        for i in result["skins"]:
-            res.append(i["id"])
-        return(res)
-
-    def get_champion_skin_number(self, champion_id):
-        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
-        res = []
-        for i in result["skins"]:
-            res.append(str(i["num"]))
-        return(res)
+        return self.image_service.get_champion_skin_ids(champion_id)
 
     def find_champion_loading_images_by_skin_number(self, skin_number):
-        result = self.find_item("IMG", "LOADING", "champion_skin_number", skin_number)
-        return result
+        return self.image_service.find_champion_loading_images_by_skin_number(skin_number)
 
     def insert_champion_loading_skin(self, input_data):
-        result = self.find_item("IMG", "LOADING", "champion_skin_number", input_data['champion_skin_number'])
-        if result is None:
-            result = self.insert_item("IMG", "LOADING", input_data)
-        return result
+        return self.image_service.insert_champion_loading_skin(input_data)
 
     def get_champion_loading_skin(self, champion_skin_number):
-        result = self.find_item("IMG", "LOADING", 'champion_skin_number', champion_skin_number)
-        return result
+        return self.image_service.get_champion_loading_skin(champion_skin_number)
            
-           
-    def find_champion_splash_images_by_skin_number(self, skin_number):
-        result = self.find_item("IMG", "SPLASH", "champion_skin_number", skin_number)
-        return result
-
     def insert_champion_splash_skin(self, input_data):
-        result = self.find_item("IMG", "SPLASH", "champion_skin_number", input_data['champion_skin_number'])
-        if result is None:
-            result = self.insert_item("IMG", "SPLASH", input_data)
-        return result
+        return self.image_service.insert_champion_splash_skin(input_data)
 
     def get_champion_splash_skin(self, champion_skin_number):
-        result = self.find_item("IMG", "SPLASH", 'champion_skin_number', champion_skin_number)
-        return result
+        return self.image_service.get_champion_splash_skin(champion_skin_number)
 
     def find_champion_splash_images_by_skin_number(self, skin_number):
-        result = self.find_item("IMG", "SPLASH", "champion_skin_number", skin_number)
-        return result
-
-    def insert_champion_splash_skin(self, input_data):
-        result = self.find_item("IMG", "SPLASH", "champion_skin_number", input_data['champion_skin_number'])
-        if result is None:
-            result = self.insert_item("IMG", "SPLASH", input_data)
-        return result
-
-    def get_champion_splash_skin(self, champion_skin_number):
-        result = self.find_item("IMG", "SPLASH", 'champion_skin_number', champion_skin_number)
-        return result
+        return self.image_service.find_champion_splash_images_by_skin_number(skin_number)
 
     def insert_champion_square_image(self, input_data):
-        result = self.find_item("IMG", "SQAURE", "champion_name", input_data['champion_name'])
-        if result is None:
-            result = self.insert_item("IMG", "SQUARE", input_data)
-        return result
+        return self.image_service.insert_champion_square_image(input_data)
 
     def get_champion_square_image(self, champion_id):
-        result = self.find_item("IMG", "SQUARE", 'champion_name', champion_id)
-        return result
+        return self.image_service.get_champion_square_image(champion_id)
 
     def find_champion_square_image_by_champion_id(self, champion_id):
-        result = self.find_item("IMG", "SQAURE", "champion_name", champion_id)
-        return result
+        return self.image_service.find_champion_square_image_by_champion_id(champion_id)
 
     def insert_champion_spell_images(self, input_data):
-        result = self.find_item("IMG", "SPELLS", "champion_id", input_data['champion_id'])
-        if result is None:
-            # temp = {}
-            # temp['champion_id'] = input_data['champion_id']
-            # temp['spell_id_list'] = input_data['spell_id_list']
-            # temp['P'] = ""
-            # temp['Q'] = ""
-            # temp['W'] = ""
-            # temp['E'] = ""
-            # temp['R'] = ""
-            # result = self.insert_item("IMG", "SPELLS", temp)
-            # self.update_item("champion_id", input_data['champion_id'], "P", input_data['P'], "IMG", "SPELLS")
-            # def update_item(self, column_name, column_value, update_column, update_value, db_name, collection_name):
-            # self.update_row("champion_id", input_data['champion_id'], input_data, "IMG", "SPELLS")
-            return result
-            
-        return result
+        return self.image_service.insert_champion_spell_images(input_data)
 
     def get_champion_spell_images_by_champion_id(self, champion_id):
-        result = self.find_item("IMG", "SPELLS", 'champion_id', champion_id)
-        return result
+        return self.image_service.get_champion_spell_images_by_champion_id(champion_id)
 
     def find_champion_spell_images_by_champion_id(self, champion_id):
-        result = self.find_item("IMG", "SPELLS", 'champion_id', champion_id)
-        return result 
+        return self.image_service.find_champion_spell_images_by_champion_id(champion_id) 

@@ -17,49 +17,8 @@ from ..services.riot_service import RiotService
 class RiotView:
     riot_app = Blueprint('riot_app', __name__, url_prefix='/riot')
 
-    # @riot_app.route('/', methods=["GET", "POST"])
-    # def home():
-    #     if request.method == 'GET':
-    #         #language = request.form['language']
-    #         #framework = request.args.get('framework')
-    #         #framework = request.form['framework']
-    #         #print(language)
-    #         #print(framework)
-            
-    #         name = request.args.get('playerinfo')
-            
-    #         if name is not None:
-    #             riot_service = RiotService.init_playerinfo_by_name(name)
-    #             if riot_service is not None:
-    #                 print("존재하는 소환사 이름")
-    #                 playerinfo = riot_service.searchPlayerInfo(name)
-    #                 playerinfo["revisionDate"] = str(datetime.datetime.fromtimestamp(int(playerinfo["revisionDate"])/1000.0))
-    #                 return jsonify(playerinfo)
-                
-    #         #####################################
-    #         # 정말 긴 시간 끝에 알아낸 사실....
-    #         # GET 방식은 request.args.get('name') 으로 받아오고
-    #         # POST는 request.form['name'] 으로 받아온다....
-    #         # 문제는 form 형식이 아닐때는 어떻게 받아오는가??
-    #         #  -> axios로 request 날린다.
-    #         #####################################
-
-
-    #         # nickname = request.form['nickname']
-    #         # print(nickname)
-    #     #my_res = flask.Response(jsonify(test[0]))
-    #     #my_res.headers["Access-Control-Allow-Origin"] = "*"
-
-    #     return render_template('index.html')
-
     @riot_app.route('/playerinfo', methods=["GET"])
     def playerinfo():
-        # name = request.form['data']
-        # rH = RiotService.init_by_name(name)
-        # playerinfo = rH.test(name)
-        # return playerinfo
-        # data = request.get_json()
-        # print(data)
         if request.method == 'GET': 
             name = request.args.get('name')
             print(name)
