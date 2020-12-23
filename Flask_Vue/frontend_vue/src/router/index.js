@@ -8,7 +8,9 @@ import ChampionInfo from '../views/ChampionInfo.vue'
 import PlayerInfo from '../views/PlayerInfo.vue'
 import Login from '../views/Login.vue'
 
+
 Vue.use(VueRouter)
+
 
 export default new VueRouter({
     mode: 'history',
@@ -54,7 +56,6 @@ export default new VueRouter({
             redirect: '/'
         }
     ],
-    linkActiveClass: 'active',
 });
 /*
 VueRouter.beforeEach(to, from, next);
