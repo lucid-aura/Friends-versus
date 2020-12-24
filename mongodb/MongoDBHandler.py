@@ -56,6 +56,8 @@ class MongoDBHandler:
         collection = self.client[db_name][collection_name]
         collection.create_index([(key, pymongo.ASCENDING)], unique=True)
 
+
+
     def insert_playerInfo(self, playerInfo):
         return self.data_service.insert_playerInfo("DATA", "PLAYER", playerInfo)
 
