@@ -5,7 +5,7 @@
                 <router-link to="/" class="nav-link" exact>
                     Home
                 </router-link>
-                <router-link to="/riot/friendlist" class="nav-link" :disabled=!get_check_login() :event="get_check_login() ? 'click' : ''" exact>
+                <router-link to="/user/friendlist" class="nav-link" :disabled=!get_check_login() :event="get_check_login() ? 'click' : ''" exact>
                     Friend list
                 </router-link>
                 <router-link to="/riot/itemlist" class="nav-link" exact>

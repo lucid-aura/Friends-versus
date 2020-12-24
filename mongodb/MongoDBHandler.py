@@ -8,6 +8,7 @@ from loggings import log_time
 from model.data_dao import DataDAO
 from services.data_service import DataService
 from services.image_service import ImageService
+from services.user_service import UserService
 
 # #host='192.168.200.163'
 # host='192.168.40.52' #PC 설정에 따라 다르다. window 일경우 C:\Windows\System32\drivers\etc\hosts 파일에 docker 주소 및 포트가 있음.
@@ -21,8 +22,10 @@ class MongoDBHandler:
         self.data_dao = DataDAO()
         self.data_service = DataService()
         self.image_service = ImageService()
+        self.user_service = UserService()
 
     @log_time
+    # Data DAO Method
     def insert_item(self, db_name, collection_name, input_data):
         return self.data_dao.insert_item(db_name, collection_name, input_data)
 
@@ -56,8 +59,7 @@ class MongoDBHandler:
         collection = self.client[db_name][collection_name]
         collection.create_index([(key, pymongo.ASCENDING)], unique=True)
 
-
-
+    # Data Service Method
     def insert_playerInfo(self, playerInfo):
         return self.data_service.insert_playerInfo("DATA", "PLAYER", playerInfo)
 
@@ -79,6 +81,7 @@ class MongoDBHandler:
     def find_playerInfo_by_name(self, name):
         return self.data_service.find_playerInfo_by_name(name)
  
+    # Image Service Method   
     def get_champion_skin_ids(self, champion_id):
         return self.image_service.get_champion_skin_ids(champion_id)
 
@@ -93,7 +96,6 @@ class MongoDBHandler:
 
     def get_champion_loading_skin(self, champion_skin_number):
         return self.image_service.get_champion_loading_skin(champion_skin_number)
-           
            
     def find_champion_splash_images_by_skin_number(self, skin_number):
         return self.image_service.find_champion_splash_images_by_skin_number(skin_number)
@@ -121,3 +123,8 @@ class MongoDBHandler:
 
     def find_champion_spell_images_by_champion_id(self, champion_id):
         return self.image_service.find_champion_spell_images_by_champion_id(champion_id) 
+
+    # User Service Method
+    def insert_userinfo(self, userInfo):
+        return self.user_service.insert_userinfo(userInfo)
+        

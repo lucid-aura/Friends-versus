@@ -22,7 +22,7 @@ export default new VueRouter({
             component: Home
         },
         {
-            path: '/riot/friendlist',
+            path: '/user/friendlist',
             name: 'friendList',
             component: FriendList,
         },

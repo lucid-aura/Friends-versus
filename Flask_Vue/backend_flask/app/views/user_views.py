@@ -4,7 +4,9 @@ import json
 from flask import (
     request,
     Blueprint,
-    jsonify
+    jsonify,
+    redirect,
+    url_for
 )
 from flask_jwt_extended import *
 
@@ -19,10 +21,45 @@ class UserView:
         pw = info['pw']
         print(id)
 
-        user_service.authenticate(username, password)
-        
+        token = user_service.authenticate(id, pw)
+        cur_user = get_jwt_identity()
+        print(cur_user)
+        return token
+        return redirect(url_for('user_app.friendlist'), token = token[result])
 
-        # return response, 200
+    @user_app.route('/friendlist', methods=['POST'])
+    @jwt_required
+    def friendlist():
+        return jsonify({'a':'b'})
+        info = json.loads(request.get_data())
+        friend_list = [
+            {
+                'real_name' : 'a',
+                'nick_name' : 'b',
+            },
+            {
+                'real_name' : 'c',
+                'nick_name' : 'd'
+            }
+        ]
+
+        cur_user = get_jwt_identity()
+        if cur_user is None:
+            return "User Only!"
+        else:
+            return jsonify(
+                {
+                    'friend_list' : friend_list,
+                }
+            )
+
+        return response, 200
+
+        return jsonify(
+            {
+                'friend_list' : friend_list,
+            }
+        )
 
     # @user_app.route('/sign-up', methods=['POST'])
 

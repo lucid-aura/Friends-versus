@@ -35,7 +35,7 @@ def create_app():
     print(colored(app.config['RIOTAPI'], 'blue'))
     print(colored(app.config['DATA'], 'yellow'))
 
-    CORS(app, resources={r'*': {'origins': '*'}})
+    CORS(app, supports_credentials=True, resources={r'*': {'origins': '*'}})
 
     app.register_blueprint(main_views.MainView.main_app)
     app.register_blueprint(user_views.UserView.user_app)
