@@ -13,8 +13,10 @@
                         <thead>
                             <th></th>
                             <th>Real Name</th>
-                            <th>Nick Name</th>
+                            <th>Lol Name</th>
+                            <th>Memo</th>
                             <th style="display: none;">Missing?</th>
+                            <th></th>
                             <th></th>
                         </thead>
                         <tbody v-cloak>
@@ -32,13 +34,19 @@
                                 </td>
                                 <td>
                                     <input  class="on-fly-input"
-                                            v-model="friend_list[index].real_name"
+                                            v-model="friend_list[index].realname"
                                             :style="icons_list[index].style"
                                     />
                                 </td>
                                 <td>
                                     <input  class="on-fly-input"
-                                            v-model="friend_list[index].nick_name"
+                                            v-model="friend_list[index].lolname"
+                                            :style="icons_list[index].style"
+                                    />
+                                </td>
+                                <td>
+                                    <input  class="on-fly-input"
+                                            v-model="friend_list[index].memo"
                                             :style="icons_list[index].style"
                                     />
                                 </td>
@@ -47,6 +55,14 @@
                                             v-model="friend_list[index].missing"
                                             :style="icons_list[index].style"
                                     />
+                                </td>
+                                <!-- <td style="display: none;"> -->
+                                <td>
+                                    <v-icon v-blur
+                                            @click="saveRow(index)"
+                                    >
+                                        {{  icons[5].icon   }}
+                                    </v-icon>
                                 </td>
                                 <td>
                                     <v-icon v-blur
@@ -75,12 +91,15 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'friendList',
     props: ["login_id"],
     data() {
         return {
             user: this.login_id,
+            id : '',
+            token : '',
             friend_list: [],
             icons: [
                 {
@@ -105,6 +124,11 @@ export default {
                 },
                 {
                     'icon': 'mdi-refresh',
+                    'class': 'v-icon-highlighted',
+                    'style': '' 
+                },
+                {
+                    'icon': 'mdi-content-save',
                     'class': 'v-icon-highlighted pl-1 pb-1',
                     'style': '' 
                 }
@@ -113,7 +137,34 @@ export default {
         }
     },
     created: function () {
-        this.fetchDefaults();
+        // this.friend_list = [
+        //         {
+        //             'realname' : '',
+        //             'lolname' : '',
+        //             'memo' : '',
+        //             'missing' : true
+        //         },
+        // ];
+        this.friend_list = [];
+        this.icons_list = [];
+
+        this.id = this.$route.query.id;
+        let token = sessionStorage.getItem('jtw-token') || '';
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        axios.post('http://localhost:5000/user/friendlist', { 'id': this.id }, { withCredentials: true, crossorigin: true }).then(res => {
+            console.log("post")
+            console.log(res.data);
+            for (var i = 0; i < res.data.length; i++) {
+                res.data[i]['missing'] = true;
+                this.icons_list.push(this.icons[0]);
+                this.friend_list.push(res.data[i])
+                console.log(res.data[i]);
+            }
+            console.log(this.friend_list.length);
+        });
+    },
+    mounted: function () {   
+        
     },
 
     methods: {
@@ -124,29 +175,6 @@ export default {
             else
                 return false;
         },
-        fetchDefaults: function () { // Player_friends 친구 db에 list를 가지고 와야함.
-            this.friend_list = [
-                {
-                    'real_name' : '현상현',
-                    'nick_name' : '휘랑',
-                    'missing' : true
-                },
-                {
-                    'real_name' : '안상원',
-                    'nick_name' : '피곤한통닭',
-                    'missing' : true 
-                }
-            ];
-
-            this.icons_list = [];
-            for (var i = 0; i < this.friend_list.length; i++) {
-                if (this.friend_list[i].missing == true) {
-                    this.icons_list.push(this.icons[0]);
-                } else {
-                    this.icons_list.push(this.icons[1]);
-                }
-            }
-        },
 
         removeRow: function (index) {
             this.friend_list.splice(index, 1);
@@ -155,8 +183,9 @@ export default {
 
         addRow: function () {
             this.friend_list.push({
-                real_name : '',
-                nick_name : '',
+                realname : '',
+                lolname : '',
+                memo : '',
                 missing : true,
             });
             this.icons_list.push(this.icons[0]);
@@ -170,6 +199,34 @@ export default {
                 this.friend_list[index].missing = true;
             }
         },
+        saveRow: function (index) {
+            let token = sessionStorage.getItem('jtw-token') || '';
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            // axios.post('http://localhost:5000/user/friendlist', loginInfo,  { withCredentials: true, crossorigin: true }).then(res => {
+
+            // }
+            console.log("index")
+            console.log(index)
+            console.log(this.friend_list[index])
+            axios.get('http://localhost:5000/user/friendlist', { 
+                params: {
+                    'call' : "insert",
+                    'id' : this.id,
+                    'realname': this.friend_list[index]['realname'], 
+                    'lolname': this.friend_list[index]['lolname'],
+                    'memo': this.friend_list[index]['memo'] 
+                    }}, { withCredentials: true, crossorigin: true }
+                ).then(res => {
+                console.log("get")
+                console.log(res.data)
+                if (res.data == null){
+                    alert("오류발생")
+                }
+                else {   
+                    //this.friend_list = res.data
+                }
+            });
+        }
     }
 };
 </script>

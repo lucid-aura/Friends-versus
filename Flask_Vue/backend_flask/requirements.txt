@@ -7,3 +7,4 @@ mongoengine
 flask_jwt_extended
 flask_restful
 security
+urllib2

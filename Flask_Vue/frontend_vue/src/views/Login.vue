@@ -19,8 +19,8 @@ axios.defaults.withCredentials = true;
           id: '',
           pw: '',
         },
-        token: { },
         show:true,
+        validate:false,
       }
     },
     methods: {
@@ -30,19 +30,24 @@ axios.defaults.withCredentials = true;
             id: this.form.id,
             pw: this.form.pw
         }
-        axios.post('http://localhost:5000/user/sign-in', loginInfo,  { withCredentials: true, crossorigin: true }).then(res => {
-            this.token['access_token'] = res.data['access_token'];
-            this.token['result'] = res.data['result'];
+        axios.post('http://localhost:5000/user/sign-in', loginInfo).then(res => {
             console.log(res.data);
-            this.token = res.data
-            console.log("ASD");
-            console.log(this.token);
+            if (res.data['result'] == 'success'){
+              sessionStorage.setItem('jtw-token', res.data['access_token']);
+              this.$router.push({ path: '/user/friendlist', query: { 'id': this.form.id } });
+              this.validate = true;
+            }
+            else {
+              alert("아이디와 비밀번호가 올바르지 않습니다.")
+            }
             //const { accessToken } = res.data;
-            axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
             }).catch(error => {
               // ... 에러 처리
               console.log(error)
             });
+
+        //this.getList()
+
 
         // axios.post('http://localhost:5000/user/friendlist', loginInfo,  { withCredentials: true, crossorigin: true }).then(res => {
         //     console.log(res.data);
@@ -86,7 +91,7 @@ axios.defaults.withCredentials = true;
             console.log(response.data);
             //"http://localhost:5000/?playerinfo=";
         })
-      }
+      },
     }
   }
 </script>

@@ -76,6 +76,8 @@ class DataDAO:
 
     def update_row(self, column_name, column_value, update_values , db_name, collection_name):
         result, condition = self.find_item(db_name, collection_name, column_name, column_value)
+        print("update")
+        print(result)
         if result is None:
             print(f"{condition} - 존재하지 않는 이름입니다.")
         else:
@@ -84,6 +86,13 @@ class DataDAO:
             for update_column in row_list:
                 new_value = {"$set": {update_column: update_values[update_column]}}
                 result = collection.update_one(condition, new_value)
+        return result
+
+    def update_friendslist(self, id, friendInfo):
+        collection = self.client["USER"]["INFO"]
+        condition = self.create_condition('userid', id)
+        new_value = {"$set": friendInfo}
+        result = collection.update_one(condition, new_value)
         return result
 
     def count_document(self, db_name, collection_name):

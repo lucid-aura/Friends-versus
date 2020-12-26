@@ -125,6 +125,16 @@ class MongoDBHandler:
         return self.image_service.find_champion_spell_images_by_champion_id(champion_id) 
 
     # User Service Method
-    def insert_userinfo(self, userInfo):
+    def insert_userinfo(self, userInfo): #회원 가입 후
         return self.user_service.insert_userinfo(userInfo)
+
+    def get_userinfo_by_userid(self, userId):
+        return self.user_service.get_userinfo_by_userid(userId)
+
+    def save_friend_info(self, id, friendInfo):
+        return self.user_service.save_friend_info(id, friendInfo)
+
+    def get_friendslist_by_id(self, userId):
+        return self.user_service.get_userinfo_by_userid(userId)['friendslist']
+        
         
