@@ -27,6 +27,44 @@ class UserView:
         return token
         # return redirect(url_for('user_app.friendlist'), token = token[result])
 
+    @user_app.route('/sign-up', methods=['POST'])
+    def signup():
+        print("signup")
+        user_service = UserService()
+        info = json.loads(request.get_data())
+        print(info)
+        check = info['check'] # id, pw, lolname, nickname, submit
+        if check == 'id':
+            id = info['id']
+            if user_service.check_duplicate_id(id) is True:        
+                return {'result':'success'}
+            else:
+                return {'result':'fail'}
+        elif check == 'nickname':
+            nickname = info['nickname']
+            if user_service.check_duplicate_nickname(nickname) is True:        
+                return {'result':'success'}
+            else:
+                return {'result':'fail'}
+        elif check == 'lolname':
+            lolname = info['lolname']
+            if user_service.check_duplicate_lolname(lolname) is True:        
+                return {'result':'success'}
+            else:
+                return {'result':'fail'}
+        else: # submit
+            userInfo = dict()
+            userInfo['userid'] = info['id']
+            userInfo['password'] = info['pw']
+            userInfo['nickname'] = info['nickname']
+            userInfo['lolname'] = info['lolname']
+            userInfo['friendslist'] = []
+            res = user_service.create_new_user(userInfo)
+            if res is not None:
+                return {'result':'success'}
+            else:
+                return {'result':'fail'}
+
     @user_app.route('/friendlist', methods=['GET', 'POST'])
     @jwt_required
     def friendlist():

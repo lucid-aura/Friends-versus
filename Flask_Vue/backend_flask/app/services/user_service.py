@@ -18,8 +18,18 @@ class UserService:
     def __init__(self):
         self.dbHandler = MongoDBHandler()
 
-    def create_new_user(self,new_user):
-        return jsonify(new_user)
+    def check_duplicate_id(self, submit_id):
+        return self.dbHandler.check_duplicate_id(submit_id)
+
+    def check_duplicate_nickname(self, submit_nickname):
+        return self.dbHandler.check_duplicate_nickname(submit_nickname)
+
+    def check_duplicate_lolname(self, submit_lolname):
+        return self.dbHandler.check_duplicate_lolname(submit_lolname)
+
+    def create_new_user(self, userInfo):
+        print(userInfo)
+        return self.dbHandler.insert_userinfo(userInfo)
 
     def authenticate(self, id, pw):
         # lol name 2글자면 가운데 공백 변환 필요

@@ -4,6 +4,7 @@
         <input class="custom-login-input" id="id" name="id" v-model="form.id" placeholder="id"/>
         <input class="custom-login-input" type='password' id="pw" name="pw" v-model="form.pw" placeholder="pw"/>
         <input class="custom-login-btn" type='submit' value='login' />
+        <button class="custom-login-btn" type='button' @click="signUp">SignUp</button>
     </form>
   </div>
 </template>
@@ -82,16 +83,9 @@ axios.defaults.withCredentials = true;
           this.show = true
         })
       },
-      login: function () {
-        let loginInfo = {
-            id: this.form.username,
-            pw: this.form.password
-        }
-        this.axios.post('/user/sign-in', loginInfo).then((response) => {
-            console.log(response.data);
-            //"http://localhost:5000/?playerinfo=";
-        })
-      },
+      signUp: function () {
+        this.$router.push({ path: '/signup' });
+      }
     }
   }
 </script>

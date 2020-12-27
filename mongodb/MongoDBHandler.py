@@ -126,10 +126,20 @@ class MongoDBHandler:
 
     # User Service Method
     def insert_userinfo(self, userInfo): #회원 가입 후
+        print(userInfo)
         return self.user_service.insert_userinfo(userInfo)
 
     def get_userinfo_by_userid(self, userId):
         return self.user_service.get_userinfo_by_userid(userId)
+
+    def check_duplicate_id(self, submit_id):
+        return self.user_service.check_duplicate_id(submit_id)
+
+    def check_duplicate_nickname(self, submit_nickname):
+        return self.user_service.check_duplicate_nickname(submit_nickname)
+
+    def check_duplicate_lolname(self, submit_lolname):
+        return self.user_service.check_duplicate_lolname(submit_lolname)
 
     def save_friend_info(self, id, friendInfo):
         return self.user_service.save_friend_info(id, friendInfo)

@@ -35,11 +35,18 @@
     font-size:15px
 }
 .custom-login-btn{
+    margin:2px;
     padding:5px 15px 5px 15px;
-    background-color: #e9eeef38;
+    background-color: #3de97185;
     
 }
 
+.custom-method-btn{
+    margin:2px;
+    padding:5px 15px 5px 15px;
+    background-color: #43b2e685;
+    
+}
 
 .custom-search-input{
     padding:5px 15px 5px 15px;

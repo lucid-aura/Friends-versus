@@ -9,7 +9,32 @@ class UserService:
     def __init__(self):
         self.data_dao = DataDAO()
     
+    def check_duplicate_id(self, submit_id):
+        result = self.data_dao.find_item("USER", "INFO", "userid", submit_id)
+        print(result)
+        if result is None:
+            return True
+        else:
+            return False
+
+    def check_duplicate_nickname(self, submit_nickname):
+        result = self.data_dao.find_item("USER", "INFO", "nickname", submit_nickname)
+        print(result)
+        if result is None:
+            return True
+        else:
+            return False
+
+    def check_duplicate_lolname(self, submit_lolname):
+        result = self.data_dao.find_item("USER", "INFO", "lolname", submit_lolname)
+        print(result)
+        if result is None:
+            return True
+        else:
+            return False
+
     def insert_userinfo(self, userInfo):
+        print(userInfo)
         result = self.data_dao.insert_item("USER", "INFO", userInfo)
         return result
 
