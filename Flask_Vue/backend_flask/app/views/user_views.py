@@ -69,45 +69,28 @@ class UserView:
         user_service = UserService()
         if request.method == 'POST':
             print("frinedlist come")
-            if current_user is None:
-                return jsonify({'a':'b'})
-            else:
-                id = get_jwt_identity()
-                user = user_service.get_userinfo_by_userid(id)
-                nickname = user['nickname']
-                print(nickname)
-                # user_service.get_friendslist_by_id(id)
-                return jsonify(nickname, user_service.get_friendslist_by_id(id))
-                #token = token_data['token']
-
-                
-
-
-            # cur_user = get_jwt_identity()
-            # if cur_user is None:
-            #     return "User Only!"
-            # else:
-            #     return jsonify(
-            #         {
-            #             'friend_list' : friend_list,
-            #         }
-            #     )
+            id = get_jwt_identity()
+            user = user_service.get_userinfo_by_userid(id)
+            nickname = user['nickname']
+            print(nickname)
+            return jsonify(nickname, user_service.get_friendslist_by_id(id))
         else:
             func = request.args.get('call')
             if func == 'insert':
                 print("Insert 실행")
-                id = request.args.get('id') 
+                id = get_jwt_identity()
                 friend_info = dict()
                 friend_info['realname'] = request.args.get('realname')
                 friend_info['lolname'] = request.args.get('lolname')
                 friend_info['memo'] = request.args.get('memo') 
                 check = user_service.get_friendslist_by_id(id)
-                if len(check) != 0:
+                # if check is None:
+                if len(check) != 0: # 중복검사
                     for i in check:
                         if i['lolname'] == request.args.get('lolname'):
                             print("이미 존재하는 롤 친구입니다. (lol name 중복!) - flask/user_views")
-                            return None
-                    user_service.save_friend_info(id, friend_info)
+                            return jsonify(user_service.get_friendslist_by_id(id))
+                user_service.save_friend_info(id, friend_info)
             elif func == 'delete':
                 print("Delete 실행")
                 id = request.args.get('id')
