@@ -2,7 +2,7 @@
     <div class="custom-home">
         <main role="main" class="inner cover">
             <h3 class="cover-heading">{{ this.user }} 's Friend List
-                <v-icon v-blur @click="fetchDefaults" :class="icons[4].class">
+                <v-icon v-blur :class="icons[4].class">
                     {{ icons[4].icon }}
                 </v-icon>   
                 
@@ -177,6 +177,24 @@ export default {
         },
 
         removeRow: function (index) {
+            let token = sessionStorage.getItem('jtw-token') || '';
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            axios.get('http://localhost:5000/user/friendlist', { 
+                params: {
+                    'call' : "delete",
+                    'id' : this.id,
+                    'lolname': this.friend_list[index]['lolname'],
+                    }}, { withCredentials: true, crossorigin: true }
+                ).then(res => {
+                console.log("get")
+                console.log(res.data)
+                if (res.data == null){
+                    alert("오류발생")
+                }
+                else {   
+                    //this.friend_list = res.data
+                }
+            });
             this.friend_list.splice(index, 1);
             this.icons_list.splice(index, 1);
         },

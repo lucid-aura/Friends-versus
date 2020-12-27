@@ -95,6 +95,16 @@ class DataDAO:
         result = collection.update_one(condition, new_value)
         return result
 
+    def delete_friendslist(self, id, lolname):
+        collection = self.client["USER"]["INFO"]
+        condition = self.create_condition('userid', id)
+        res = collection.find_one(condition)
+        friendslist = res['friendslist']
+        for i, item in enumerate(friendslist):
+            if item["lolname"] == lolname:
+                friendslist.pop(i)
+        return self.update_friendslist(id, res)
+
     def count_document(self, db_name, collection_name):
         collection = self.client[db_name][collection_name]
         cnt = collection.find().count()

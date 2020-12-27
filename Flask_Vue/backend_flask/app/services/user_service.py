@@ -51,3 +51,6 @@ class UserService:
 
     def save_friend_info(self, id, friend_info):
         return self.dbHandler.save_friend_info(id, friend_info)
+
+    def delete_friend_info(self, id, lolname):
+        return self.dbHandler.delete_friend_info(id, lolname)

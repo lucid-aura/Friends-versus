@@ -34,6 +34,9 @@ class UserService:
         #return self.data_dao.update_item("userid", userInfo['userid'], "friendslist", new, "USER", 'INFO')
         # return self.data_dao.update_friendslist(id, friendslist)
 
+    def delete_friend_info(self, id, lolname):
+        return self.data_dao.delete_friendslist(id, lolname)
+
     def find_friend_in_friendlist_by_realname(self, friendlist, realname):
         for idx in range(len(friendlist)):
             if friendlist[idx]['realname'] == realname:

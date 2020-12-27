@@ -14,7 +14,6 @@ class UserView:
     user_app = Blueprint('user_app', __name__, url_prefix='/user')
 
     @user_app.route('/sign-in', methods=['POST'])
-    @jwt_required
     def signin():
         user_service = UserService()
         info = json.loads(request.get_data())
@@ -70,7 +69,12 @@ class UserView:
                             print("이미 존재하는 롤 친구입니다. (lol name 중복!) - flask/user_views")
                             return None
                     user_service.save_friend_info(id, friend_info)
-                return jsonify(user_service.get_friendslist_by_id(id))
+            elif func == 'delete':
+                print("Delete 실행")
+                id = request.args.get('id')
+                lolname = request.args.get('lolname')
+                user_service.delete_friend_info(id, lolname)
+            return jsonify(user_service.get_friendslist_by_id(id))
             # return jsonify(
             #     {
             #         'realname' : realName,

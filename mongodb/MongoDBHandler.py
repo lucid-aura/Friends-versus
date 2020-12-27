@@ -134,6 +134,9 @@ class MongoDBHandler:
     def save_friend_info(self, id, friendInfo):
         return self.user_service.save_friend_info(id, friendInfo)
 
+    def delete_friend_info(self, id, lolname):
+        return self.user_service.delete_friend_info(id, lolname)
+
     def get_friendslist_by_id(self, userId):
         return self.user_service.get_userinfo_by_userid(userId)['friendslist']
         
