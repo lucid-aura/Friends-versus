@@ -40,7 +40,6 @@ class UserService:
 
     def get_userinfo_by_userid(self, userId):
         result = self.data_dao.find_item("USER", "INFO", "userid", userId)
-        #print(list(collection.find()))
         return result
 
     def insert_friend_info(self, friendInfo):
