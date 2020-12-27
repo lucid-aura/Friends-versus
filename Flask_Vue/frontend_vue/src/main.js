@@ -8,7 +8,6 @@ import '@/assets/css/style.css'
 import Bootstrap4Vue from 'bootstrap4-vue'
 import vuetify from '@/plugins/vuetify'
 
-
 // settings
 Vue.use(Bootstrap4Vue); 
 Vue.config.productionTip = false

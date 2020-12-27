@@ -1,20 +1,15 @@
-# https://popcorn16.tistory.com/122
-# from pymongo import MongoClient
-# import pymongo
 import sys
 import os
 # import json
 # from bson import json_util
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/loggings")
 from loggings import log_time
-# sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/config")
-# from config import MongoDBConfig
 
 from model.data_dao import DataDAO
 from services.data_service import DataService
 from services.image_service import ImageService
+from services.user_service import UserService
 
-# print(os.path.dirname(__file__))
 # #host='192.168.200.163'
 # host='192.168.40.52' #PC 설정에 따라 다르다. window 일경우 C:\Windows\System32\drivers\etc\hosts 파일에 docker 주소 및 포트가 있음.
 # host='http://host.docker.internal'
@@ -27,13 +22,17 @@ class MongoDBHandler:
         self.data_dao = DataDAO()
         self.data_service = DataService()
         self.image_service = ImageService()
+        self.user_service = UserService()
 
     @log_time
+    # Data DAO Method
     def insert_item(self, db_name, collection_name, input_data):
         return self.data_dao.insert_item(db_name, collection_name, input_data)
 
+
     def insert_items(self, db_name, collection_name, input_data):
         return self.data_dao.insert_items(db_name, collection_name, input_data)
+
 
     def find_item(self, db_name, collection_name, column_name, column_value):
         return self.data_dao.find_item(db_name, collection_name, column_name, column_value)
@@ -53,22 +52,19 @@ class MongoDBHandler:
     def count_document(self, db_name, collection_name):
         return self.data_dao.count_document(db_name, collection_name)
 
-
     def update_player(self, name, update_values):
         self.data_dao.update_row("name", name, update_values, "DATA", "PLAYER")
-
 
     def check_duplicate(self, db_name, collection_name, key):
         collection = self.client[db_name][collection_name]
         collection.create_index([(key, pymongo.ASCENDING)], unique=True)
 
-
-
+    # Data Service Method
     def insert_playerInfo(self, playerInfo):
-        return self.data_service.insert_playerInfo("DATA", "PLAYER", playerInfo)
+        return self.data_service.insert_playerInfo(playerInfo)
 
     def insert_champions_summary(self, champion_summary):
-        return self.data_service.insert_champions_summary("DATA", "CHAMPIONS_SUMMARY", champion_summary)
+        return self.data_service.insert_champions_summary(champion_summary)
 
     def get_champions_summary(self):
         return self.data_service.get_champions_summary()
@@ -80,21 +76,18 @@ class MongoDBHandler:
         return self.data_service.insert_champion_data(champion_data)
 
     def get_champion_data(self, champion_id):
-        result = self.find_item("DATA", "CHAMPION", "id", champion_id)
-        return result
+        return self.data_service.get_champion_data(champion_id)
 
     def find_playerInfo_by_name(self, name):
         return self.data_service.find_playerInfo_by_name(name)
-
-
-
-
-    def get_champion_skin_number(self, champion_id):
-        return self.image_service.get_champion_skin_number(champion_id)
-
+ 
+    # Image Service Method   
     def get_champion_skin_ids(self, champion_id):
         return self.image_service.get_champion_skin_ids(champion_id)
 
+    def get_champion_skin_number(self, champion_id):
+         return self.image_service.get_champion_skin_number(champion_id)
+        
     def find_champion_loading_images_by_skin_number(self, skin_number):
         return self.image_service.find_champion_loading_images_by_skin_number(skin_number)
 
@@ -104,14 +97,14 @@ class MongoDBHandler:
     def get_champion_loading_skin(self, champion_skin_number):
         return self.image_service.get_champion_loading_skin(champion_skin_number)
            
+    def find_champion_splash_images_by_skin_number(self, skin_number):
+        return self.image_service.find_champion_splash_images_by_skin_number(skin_number)
+
     def insert_champion_splash_skin(self, input_data):
         return self.image_service.insert_champion_splash_skin(input_data)
 
     def get_champion_splash_skin(self, champion_skin_number):
         return self.image_service.get_champion_splash_skin(champion_skin_number)
-
-    def find_champion_splash_images_by_skin_number(self, skin_number):
-        return self.image_service.find_champion_splash_images_by_skin_number(skin_number)
 
     def insert_champion_square_image(self, input_data):
         return self.image_service.insert_champion_square_image(input_data)
@@ -130,3 +123,31 @@ class MongoDBHandler:
 
     def find_champion_spell_images_by_champion_id(self, champion_id):
         return self.image_service.find_champion_spell_images_by_champion_id(champion_id) 
+
+    # User Service Method
+    def insert_userinfo(self, userInfo): #회원 가입 후
+        print(userInfo)
+        return self.user_service.insert_userinfo(userInfo)
+
+    def get_userinfo_by_userid(self, userId):
+        return self.user_service.get_userinfo_by_userid(userId)
+
+    def check_duplicate_id(self, submit_id):
+        return self.user_service.check_duplicate_id(submit_id)
+
+    def check_duplicate_nickname(self, submit_nickname):
+        return self.user_service.check_duplicate_nickname(submit_nickname)
+
+    def check_duplicate_lolname(self, submit_lolname):
+        return self.user_service.check_duplicate_lolname(submit_lolname)
+
+    def save_friend_info(self, id, friendInfo):
+        return self.user_service.save_friend_info(id, friendInfo)
+
+    def delete_friend_info(self, id, lolname):
+        return self.user_service.delete_friend_info(id, lolname)
+
+    def get_friendslist_by_id(self, userId):
+        return self.user_service.get_userinfo_by_userid(userId)['friendslist']
+        
+        

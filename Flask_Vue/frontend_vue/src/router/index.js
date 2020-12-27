@@ -7,8 +7,11 @@ import ItemList from '../views/ItemList.vue'
 import ChampionInfo from '../views/ChampionInfo.vue'
 import PlayerInfo from '../views/PlayerInfo.vue'
 import Login from '../views/Login.vue'
+import SignUp from '../views/SignUp.vue'
+
 
 Vue.use(VueRouter)
+
 
 export default new VueRouter({
     mode: 'history',
@@ -20,7 +23,7 @@ export default new VueRouter({
             component: Home
         },
         {
-            path: '/riot/friendlist',
+            path: '/user/friendlist',
             name: 'friendList',
             component: FriendList,
         },
@@ -50,11 +53,15 @@ export default new VueRouter({
             component: Login
         },
         {
+            path: '/signup',
+            name: 'signup',
+            component: SignUp
+        },
+        {
             path: '*',
             redirect: '/'
         }
     ],
-    linkActiveClass: 'active',
 });
 /*
 VueRouter.beforeEach(to, from, next);

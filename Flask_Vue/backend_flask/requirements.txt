@@ -4,3 +4,6 @@ requests
 pymongo
 termcolor
 mongoengine
+flask_jwt_extended
+flask_restful
+security
