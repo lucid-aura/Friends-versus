@@ -28,6 +28,11 @@ export default {
             result: ' ',
         }
     },
+    mounted: function() {
+        this.$root.$on('home', (text) => {
+            this.id = text 
+        });
+    },
     methods: {
         getPlayerInfo() {
             var n = document.getElementById("playerinfo").value;

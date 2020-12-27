@@ -1,7 +1,7 @@
 <template>
     <div class="custom-home">
         <main role="main" class="inner cover">
-            <h3 class="cover-heading">{{ this.user }} 's Friend List
+            <h3 class="cover-heading">{{ this.nickname }} 's Friend List
                 <v-icon v-blur :class="icons[4].class">
                     {{ icons[4].icon }}
                 </v-icon>   
@@ -99,6 +99,7 @@ export default {
         return {
             user: this.login_id,
             id : '',
+            nickname : '',
             token : '',
             friend_list: [],
             icons: [
@@ -147,21 +148,31 @@ export default {
         // ];
         this.friend_list = [];
         this.icons_list = [];
-
-        this.id = this.$route.query.id;
         let token = sessionStorage.getItem('jtw-token') || '';
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        axios.post('http://localhost:5000/user/friendlist', { 'id': this.id }, { withCredentials: true, crossorigin: true }).then(res => {
-            console.log("post")
-            console.log(res.data);
-            for (var i = 0; i < res.data.length; i++) {
-                res.data[i]['missing'] = true;
-                this.icons_list.push(this.icons[0]);
-                this.friend_list.push(res.data[i])
-                console.log(res.data[i]);
-            }
-            console.log(this.friend_list.length);
-        });
+        console.log("토큰은")
+        console.log(typeof(token))
+        if (token == ''){
+            alert("먼저 로그인을 해주세요.")
+            this.$router.push({ path: '/login' });
+        }
+        else {
+            this.id = this.$route.query.id;
+            this.nickname = this.$route.query.nickname;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            axios.post('http://localhost:5000/user/friendlist', { 'id': this.id }, { withCredentials: true, crossorigin: true }).then(res => {
+                console.log("post")
+                console.log(res.data);
+                this.nickname = res.data[0]
+                for (var i = 0; i < res.data[1].length; i++) {
+                    res.data[1][i]['missing'] = true;
+                    this.icons_list.push(this.icons[0]);
+                    this.friend_list.push(res.data[1][i])
+                    console.log(res.data[1][i]);
+                }
+                console.log(this.friend_list.length);
+            });
+        }
+        
     },
     mounted: function () {   
         

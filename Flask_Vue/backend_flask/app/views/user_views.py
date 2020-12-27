@@ -22,8 +22,6 @@ class UserView:
         print(id)
 
         token = user_service.authenticate(id, pw)
-        cur_user = get_jwt_identity()
-        print(cur_user)
         return token
         # return redirect(url_for('user_app.friendlist'), token = token[result])
 
@@ -71,14 +69,19 @@ class UserView:
         user_service = UserService()
         if request.method == 'POST':
             print("frinedlist come")
-            login_id = json.loads(request.get_data())
-            id = login_id['id']
-            # user_service.get_friendslist_by_id(id)
-            return jsonify(user_service.get_friendslist_by_id(id))
-            #token = token_data['token']
+            if current_user is None:
+                return jsonify({'a':'b'})
+            else:
+                id = get_jwt_identity()
+                user = user_service.get_userinfo_by_userid(id)
+                nickname = user['nickname']
+                print(nickname)
+                # user_service.get_friendslist_by_id(id)
+                return jsonify(nickname, user_service.get_friendslist_by_id(id))
+                #token = token_data['token']
 
-            
-            return jsonify({'a':'b'})
+                
+
 
             # cur_user = get_jwt_identity()
             # if cur_user is None:
@@ -93,13 +96,11 @@ class UserView:
             func = request.args.get('call')
             if func == 'insert':
                 print("Insert 실행")
-                id = request.args.get('id')
-                
+                id = request.args.get('id') 
                 friend_info = dict()
                 friend_info['realname'] = request.args.get('realname')
                 friend_info['lolname'] = request.args.get('lolname')
                 friend_info['memo'] = request.args.get('memo') 
-                print(friend_info)
                 check = user_service.get_friendslist_by_id(id)
                 if len(check) != 0:
                     for i in check:

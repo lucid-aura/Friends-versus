@@ -35,6 +35,7 @@ axios.defaults.withCredentials = true;
             console.log(res.data);
             if (res.data['result'] == 'success'){
               sessionStorage.setItem('jtw-token', res.data['access_token']);
+              this.$root.$emit('login', 'logout');
               this.$router.push({ path: '/user/friendlist', query: { 'id': this.form.id } });
               this.validate = true;
             }

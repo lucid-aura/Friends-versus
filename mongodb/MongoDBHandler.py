@@ -61,10 +61,10 @@ class MongoDBHandler:
 
     # Data Service Method
     def insert_playerInfo(self, playerInfo):
-        return self.data_service.insert_playerInfo("DATA", "PLAYER", playerInfo)
+        return self.data_service.insert_playerInfo(playerInfo)
 
     def insert_champions_summary(self, champion_summary):
-        return self.data_service.insert_champions_summary("DATA", "CHAMPIONS_SUMMARY", champion_summary)
+        return self.data_service.insert_champions_summary(champion_summary)
 
     def get_champions_summary(self):
         return self.data_service.get_champions_summary()
