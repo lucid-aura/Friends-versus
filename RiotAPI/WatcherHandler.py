@@ -27,29 +27,29 @@ class WatcherHandler:
         self.CHAMPION_ID = 1
         self.lolwatcher = LolWatcher(self.API_KEY)
 
-    @classmethod
-    def init_by_name(self, name):
-        # 테스트 파라미터
-        self.API_KEY="RGAPI-330711e3-2f76-48c1-b832-6a455f132270"
-        self.lolwatcher = LolWatcher(self.API_KEY)
-        self.REGION = "kr"
-        self.VERSION = "10.24.1"
-        self.FULL=False
-        self.LOCALE = "ko_KR"
-        self.CHAMPION_ID = 1
-        self.ENCRYPTED_SUMMONER_ID = ""
-        self.SUMMONER_NAME = ""
-        self.ENCRYPTED_ACCOUNT_ID = ""
-        self.ENCRYPTED_PUUID = ""
-        player = self.test_get_summoner_info_by_name(self, name)
-        if "name" in player: # name 에 해당하는 player 계정 정보 갱신
-            self.ENCRYPTED_SUMMONER_ID = player["id"] 
-            self.SUMMONER_NAME = player["name"] 
-            self.ENCRYPTED_ACCOUNT_ID = player["accountId"]
-            self.ENCRYPTED_PUUID = player["puuid"]
-            return self()
-        else:
-            return None
+    # @classmethod
+    # def init_by_name(self, name):
+    #     # 테스트 파라미터
+    #     self.API_KEY="RGAPI-330711e3-2f76-48c1-b832-6a455f132270"
+    #     self.lolwatcher = LolWatcher(self.API_KEY)
+    #     self.REGION = "kr"
+    #     self.VERSION = "10.24.1"
+    #     self.FULL=False
+    #     self.LOCALE = "ko_KR"
+    #     self.CHAMPION_ID = 1
+    #     self.ENCRYPTED_SUMMONER_ID = ""
+    #     self.SUMMONER_NAME = ""
+    #     self.ENCRYPTED_ACCOUNT_ID = ""
+    #     self.ENCRYPTED_PUUID = ""
+    #     player = self.test_get_summoner_info_by_name(self, name)
+    #     if "name" in player: # name 에 해당하는 player 계정 정보 갱신
+    #         self.ENCRYPTED_SUMMONER_ID = player["id"] 
+    #         self.SUMMONER_NAME = player["name"] 
+    #         self.ENCRYPTED_ACCOUNT_ID = player["accountId"]
+    #         self.ENCRYPTED_PUUID = player["puuid"]
+    #         return self()
+    #     else:
+    #         return None
         
 
     # 라이엇 json

@@ -14,12 +14,5 @@
     },
     "RIOTAPI" : {
         "APIKEY" : ""
-    },
-    "DATA" : {
-        "CHAMPIONSTAT" : "../data/champion.json",
-        "VERSION" : "../data/version.json",
-        "PLAYER" : "../data/player.json"
     }
-
-    
 }

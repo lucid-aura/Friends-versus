@@ -22,10 +22,16 @@ class RiotView:
         if request.method == 'GET': 
             name = request.args.get('name')
             print(name)
-            riot_service = RiotService.init_playerinfo_by_name(name)
+            riot_service = RiotService()
             playerinfo = riot_service.searchPlayerInfo(name)
-            playerinfo["revisionDate"] = str(datetime.datetime.fromtimestamp(int(playerinfo["revisionDate"])/1000.0))
-            return playerinfo
+            if "name" in playerinfo:
+                if playerinfo['profileIconId'] == -1:
+                    return jsonify({'status': {'status_code':'405','message':'올바르지 않은 롤 닉네임'}})
+                else:
+                    playerinfo["revisionDate"] = str(datetime.datetime.fromtimestamp(int(playerinfo["revisionDate"])/1000.0))
+                    return playerinfo
+            else:
+                return playerinfo
                 
         return jsonify('')
     

@@ -33,7 +33,6 @@ def create_app():
     print(colored(app.config, 'green'))
     print(colored(app.config['DATABASE'], 'red'))
     print(colored(app.config['RIOTAPI'], 'blue'))
-    print(colored(app.config['DATA'], 'yellow'))
 
     CORS(app, supports_credentials=True, resources={r'*': {'origins': '*'}})
 

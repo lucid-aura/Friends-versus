@@ -39,9 +39,15 @@ export default {
             let path = "http://localhost:5000/?playerinfo=";
             path += n;
             axios.get(path).then((res) => {
-                this.player_info = res.data;
-                this.id = this.player_info['name']
-                console.log(res.data);
+                if (res.data['status'] == null) {
+                    this.player_info = res.data;
+                    this.id = this.player_info['name']
+                    console.log(res.data);
+                }
+                else {
+                    console.log(res.data);
+                    alert(res.data['status']['message'])
+                }
             }).catch((error) => {
                 console.error(error);
             });

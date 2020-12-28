@@ -13,10 +13,12 @@ from flask_jwt_extended import (
 from flask_restful import Resource, Api, reqparse
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/../../../mongodb")
 from MongoDBHandler import MongoDBHandler
-
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"/../../../RiotAPI")
+from WatcherHandler import WatcherHandler
 class UserService:
     def __init__(self):
         self.dbHandler = MongoDBHandler()
+        self.apiHandler = WatcherHandler()
 
     def check_duplicate_id(self, submit_id):
         return self.dbHandler.check_duplicate_id(submit_id)
@@ -26,6 +28,15 @@ class UserService:
 
     def check_duplicate_lolname(self, submit_lolname):
         return self.dbHandler.check_duplicate_lolname(submit_lolname)
+
+    def check_exist_lolname(self, submit_lolname):
+        api_result = self.apiHandler.test_get_summoner_info_by_name(submit_lolname)
+        print("let's check")
+        print(api_result)
+        if "name" in api_result:
+            return True
+        else:
+            return False
 
     def create_new_user(self, userInfo):
         print(userInfo)

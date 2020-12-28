@@ -2,8 +2,8 @@
     <div class="custom-home">
         <main role="main" class="inner cover">
             <h3 class="cover-heading">{{ this.nickname }} 's Friend List
-                <v-icon v-blur :class="icons[4].class">
-                    {{ icons[4].icon }}
+                <v-icon v-blur :class="icons[3].class">
+                    {{ icons[3].icon }}
                 </v-icon>   
                 
             </h3>
@@ -25,11 +25,10 @@
                             >
                                 <td>
                                     <v-icon v-blur
-                                            :class="icons_list[index].class"
-                                            @click="checkRow(index)"
-                                            v-model="icons_list[index]"
+                                            @click="checkRow(friend_list[index])"
+                                            :class="icons[0].class"
                                     >
-                                        {{ icons_list[index].icon }}
+                                        {{ icons[0].icon }}
                                     </v-icon>
                                 </td>
                                 <td>
@@ -60,15 +59,17 @@
                                 <td>
                                     <v-icon v-blur
                                             @click="saveRow(index)"
+                                            :class="icons[4].class"
                                     >
-                                        {{  icons[5].icon   }}
+                                        {{  icons[4].icon   }}
                                     </v-icon>
                                 </td>
                                 <td>
                                     <v-icon v-blur
                                             @click="removeRow(index)"
+                                            :class="icons[1].class"
                                     >
-                                        {{  icons[2].icon   }}
+                                        {{  icons[1].icon   }}
                                     </v-icon>
                                 </td>
                             </tr>
@@ -76,9 +77,9 @@
                                 <td>
                                     <v-icon v-blur
                                             @click="addRow"
-                                            :class="icons[3].class"
+                                            :class="icons[2].class"
                                     >
-                                        {{  icons[3].icon   }}
+                                        {{  icons[2].icon   }}
                                     </v-icon>
                                 </td>
                             </tr>
@@ -87,14 +88,21 @@
                 </v-simple-table>
             </v-layout>
         </main>
+        <player-info v-if="clicked_id !== ''" v-bind:id=this.clicked_id v-bind:player_info=this.player_info>
+        <!-- v-bind로 자식 컴포넌트인 PlayerInfo.vue 에 player_info 값을 넘겨준다.-->
+        </player-info>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import PlayerInfo from "./PlayerInfo";
 export default {
     name: 'friendList',
     props: ["login_id"],
+    components: {
+        "player-info": PlayerInfo // 케밥 케이스로 컴포넌트 지정 https://kr.vuejs.org/v2/guide/components-props.html
+    },
     data() {
         return {
             user: this.login_id,
@@ -102,20 +110,17 @@ export default {
             nickname : '',
             token : '',
             friend_list: [],
+            clicked_id: '',
+            player_info: [],
             icons: [
                 {
-                    'icon': 'mdi-checkbox-blank-outline',
-                    'class': '',
-                    'style': 'text-decoration:none;color:unset;' 
-                },
-                {
-                    'icon': 'mdi-checkbox-mark-outline',
+                    'icon': 'mdi-card-text-outline',
                     'class': 'v-icon-highlighted',
-                    'style': 'text-decoration:line-through;color:#adb7bbd1;' 
+                    'style': '',
                 },
                 {
                     'icon': 'mdi-close',
-                    'class': '',
+                    'class': 'v-icon-highlighted',
                     'style': '' 
                 },
                 {
@@ -219,16 +224,27 @@ export default {
             });
             this.icons_list.push(this.icons[0]);
         },
-        checkRow: function (index) {
-            if (this.icons_list[index].icon == this.icons[0].icon) {
-                this.icons_list[index] = this.icons[1];
-                this.friend_list[index].missing = false;
-            } else {
-                this.icons_list[index] = this.icons[0];
-                this.friend_list[index].missing = true;
-            }
+        checkRow: function (friend) {
+            this.clicked_id = ''
+            let path = "http://localhost:5000/?playerinfo=";
+            path += friend['lolname'];
+            axios.get(path).then((res) => {
+                console.log(res.data)
+                if (res.data['status'] == null) {
+                    this.clicked_id = friend['lolname']
+                    this.player_info = res.data;
+                }
+                else {
+                    console.log(res.data);
+                    alert(res.data['status']['message'])
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
         },
         saveRow: function (index) {
+            let before = this.friend_list.length;
+            console.log(before)
             let token = sessionStorage.getItem('jtw-token') || '';
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             // axios.post('http://localhost:5000/user/friendlist', loginInfo,  { withCredentials: true, crossorigin: true }).then(res => {
@@ -246,13 +262,16 @@ export default {
                     'memo': this.friend_list[index]['memo'] 
                     }}, { withCredentials: true, crossorigin: true }
                 ).then(res => {
-                console.log("get")
+                console.log(before)
+                console.log(res.data.length)
                 console.log(res.data)
-                if (res.data == null){
-                    alert("오류발생")
+                if (res.data['error'] != null){
+                    // alert("값이 제대로 입력되지 않았습니다.")
+                    alert(res.data['error'])
+                    //this.removeRow(before-1)
                 }
                 else {   
-                    //this.friend_list = res.data
+                    this.friend_list = res.data
                 }
             });
         }

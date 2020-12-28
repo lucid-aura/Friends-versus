@@ -57,16 +57,19 @@ class RiotService:
         #print(self.apiHandler.test_get_summoner_info_by_id())
 
         api_result = self.apiHandler.test_get_summoner_info_by_name(name)
-        db_result = self.dbHandler.find_playerInfo_by_name(api_result["name"])
-        if db_result is None: # DB에 들어가있지 않은 상태
-            self.dbHandler.insert_playerInfo(api_result)
-            print("검색한 Player의 DB 추가")
-        elif api_result["revisionDate"] != db_result["revisionDate"]:
-            self.dbHandler.update_player(db_result["name"], api_result)
-            print("검색한 Player의 DB 갱신")
-        db_result = self.dbHandler.find_playerInfo_by_name(api_result["name"])
-        db_result.pop('_id')
-        return db_result
+        if "name" not in api_result:
+            return api_result
+        else:
+            db_result = self.dbHandler.find_playerInfo_by_name(api_result["name"])
+            if db_result is None: # DB에 들어가있지 않은 상태
+                self.dbHandler.insert_playerInfo(api_result)
+                print("검색한 Player의 DB 추가")
+            elif api_result["revisionDate"] != db_result["revisionDate"]:
+                self.dbHandler.update_player(db_result["name"], api_result)
+                print("검색한 Player의 DB 갱신")
+            db_result = self.dbHandler.find_playerInfo_by_name(api_result["name"])
+            db_result.pop('_id')
+            return db_result
 
     def createChampioninfoData(self):
         api_result = self.apiHandler.test_get_champion_json() 
