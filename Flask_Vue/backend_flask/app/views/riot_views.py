@@ -23,11 +23,14 @@ class RiotView:
             name = request.args.get('name')
             print(name)
             riot_service = RiotService()
+            version = riot_service.get_version()['v']
             playerinfo = riot_service.searchPlayerInfo(name)
             if "name" in playerinfo:
-                if playerinfo['profileIconId'] == -1:
+                if playerinfo['profileIconId'] == -1:      
                     return jsonify({'status': {'status_code':'405','message':'올바르지 않은 롤 닉네임'}})
                 else:
+                    profileicon = f"http://ddragon.leagueoflegends.com/cdn/{version}/img/profileicon/{playerinfo['profileIconId']}.png"
+                    playerinfo['profileIconId'] = profileicon
                     playerinfo["revisionDate"] = str(datetime.datetime.fromtimestamp(int(playerinfo["revisionDate"])/1000.0))
                     return playerinfo
             else:
@@ -40,6 +43,7 @@ class RiotView:
         print("championList")
         if request.method == 'POST':
             riot_service = RiotService()
+            riot_service.create_champion_spell_images()
             if riot_service.countSummaryChampions() == 0:
                 riot_service.createSummaryChampions()
                 riot_service.createChampioninfoData()

@@ -16,8 +16,10 @@ from LolWatcher import LolWatcher
 class WatcherHandler:
     def __init__(self):
         self.API_KEY="RGAPI-330711e3-2f76-48c1-b832-6a455f132270"
+        self.lolwatcher = LolWatcher(self.API_KEY)
         self.REGION = "kr"
-        self.VERSION = "10.24.1"
+        # self.VERSION = "10.24.1"
+        self.VERSION = self.test_get_version()['v']
         self.FULL=False
         self.LOCALE = "ko_KR"
         self.ENCRYPTED_SUMMONER_ID = ""
@@ -25,7 +27,6 @@ class WatcherHandler:
         self.ENCRYPTED_ACCOUNT_ID = ""
         self.ENCRYPTED_PUUID = ""
         self.CHAMPION_ID = 1
-        self.lolwatcher = LolWatcher(self.API_KEY)
 
     # @classmethod
     # def init_by_name(self, name):
@@ -156,11 +157,24 @@ class WatcherHandler:
         resp_lol_champion_spell_img = self.lolwatcher.datadragon.spell_img(self.VERSION, spell_id)
         return resp_lol_champion_spell_img
 
+    def test_get_champion_spell_url_by_champion_spell_id(self, spell_id):
+        resp_lol_champion_spell_img = self.lolwatcher.datadragon.spell_img_url(self.VERSION, spell_id)
+        return resp_lol_champion_spell_img
+
     def test_get_champion_passive_img_by_champion_passive_id(self, passive_id):
         resp_lol_champion_passive_img = self.lolwatcher.datadragon.passive_img(self.VERSION, passive_id)
         return resp_lol_champion_passive_img
 
-if __name__ == "__main__":    
+    def test_get_champion_passive_url_by_champion_passive_id(self, passive_id):
+        resp_lol_champion_passive_img = self.lolwatcher.datadragon.passive_img_url(self.VERSION, passive_id)
+        return resp_lol_champion_passive_img
+        
+if __name__ == "__main__":  
+    w = WatcherHandler()  
+    # print(w.test_get_summoner_info_by_name("휘랑"))
+    # print(w.test_get_version())
+    print(len(w.test_get_champion_json()['data']))
+
     """
     test_get_version(API_KEY, REGION)
     test_get_champion_per_version_locale(API_KEY, VERSION, FULL, LOCALE)

@@ -118,6 +118,9 @@ class MongoDBHandler:
     def insert_champion_spell_images(self, input_data):
         return self.image_service.insert_champion_spell_images(input_data)
 
+    def insert_champion_spell_images_url(self, input_data):
+        return self.image_service.insert_champion_spell_images_url(input_data)
+
     def get_champion_spell_images_by_champion_id(self, champion_id):
         return self.image_service.get_champion_spell_images_by_champion_id(champion_id)
 

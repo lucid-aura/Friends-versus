@@ -11,8 +11,8 @@
                 <tbody>
                     <tr>
                         <td> <img :src=this.champion_square /> </td>
-                        <td> 챔피언 태그 </td>
-                        <td> 챔피언 인포 </td>
+                        <td> {{ info_list[3] }} </td>
+                        <td> {{ info_list[4] }} </td>
                     </tr>
                     <tr>
                         <td colspan = "3">
@@ -118,6 +118,20 @@
                         <th>W</th>
                         <th>E</th>
                         <th>R</th>
+                        <tr @mouseover="updateSkillInfoimg($event)">
+                            <!--
+                            <td id="0"><img :src=spell_imgURL[0]></td>
+                            <td id="1"><img :src=spell_imgURL[1]></td>
+                            <td id="2"><img :src=spell_imgURL[2]></td>
+                            <td id="3"><img :src=spell_imgURL[3]></td>
+                            <td id="4"><img :src=spell_imgURL[4]></td>
+                            -->
+                            <td><img id="0" :src=spell_imgURL[0]></td>
+                            <td><img id="1" :src=spell_imgURL[1]></td>
+                            <td><img id="2" :src=spell_imgURL[2]></td>
+                            <td><img id="3" :src=spell_imgURL[3]></td>
+                            <td><img id="4" :src=spell_imgURL[4]></td>
+                        </tr>
                         <tr @mouseover="updateSkillInfo($event)">
                             <td id="0">{{ spell_list[0] }}</td>
                             <td id="1">{{ spell_list[1] }}</td>
@@ -152,7 +166,7 @@ export default {
             stat_list: [],
             spell_list: [],
             spell_content: [],
-
+            spell_imgURL: [],
             result: ' ',
         }
     },
@@ -165,8 +179,9 @@ export default {
             this.stat_list = res.data[1];
             this.spell_list = res.data[2];
             this.spell_content = res.data[3];
+            this.spell_imgURL = res.data[4]
             this.champion_square += this.info_list[2];
-            console.log(this.info_list);
+            console.log(this.spell_imgURL);
         }).catch((error) => {
             console.error(error);
         });
@@ -176,6 +191,10 @@ export default {
     },
     methods: {
         updateSkillInfo: function(event) {
+            const targetId = event.target.id;
+            this.result = targetId
+        },
+        updateSkillInfoimg: function(event) {
             const targetId = event.target.id;
             this.result = targetId
         },

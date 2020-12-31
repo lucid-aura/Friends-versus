@@ -49,8 +49,8 @@ class DataDragonUrls:
     img_champion_loading = DataDragonEndpoint("/cdn/img/champion/loading/{skin_id}.jpg")
     img_champion_splash = DataDragonEndpoint("/cdn/img/champion/splash/{skin_id}.jpg")
     img_champion_square = DataDragonChampionImgEndpoint("{champion_id}.png")
-    img_champion_spell = DataDragonChampionImgEndpoint("{spell_id}")
-    img_champion_passive = DataDragonChampionImgEndpoint("{passive_id}")
+    img_champion_spell = DataDragonSpellImgEndpoint("{spell_id}")
+    img_champion_passive = DataDragonPassiveImgEndpoint("{passive_id}")
     championsFull = DataDragonVersionLocaleEndpoint("/championFull.json")
     champions = DataDragonVersionLocaleEndpoint("/champion.json")
     champion = DataDragonVersionLocaleEndpoint("/champion/")
@@ -91,10 +91,18 @@ class DataDragonAPI:
         print(url, " SK ")
         return self._base_api.raw_request_static(url, query)
 
+    def spell_img_url(self, version:str, spell_id):
+        url, query = DataDragonUrls.img_champion_spell(version=version, spell_id=spell_id)
+        return url
+
     def passive_img(self, version:str, passive_id):
         url, query = DataDragonUrls.img_champion_passive(version=version, passive_id=passive_id)
         print(url, " PS ")
         return self._base_api.raw_request_static(url, query)
+
+    def passive_img_url(self, version:str, passive_id):
+        url, query = DataDragonUrls.img_champion_passive(version=version, passive_id=passive_id)
+        return url
 
     def versions_for_region(self, region: str):
         region = re.sub(r"\d", "", region)

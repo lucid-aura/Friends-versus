@@ -26,6 +26,9 @@ class RiotService:
         else:
             return None
         
+    def get_version(self):
+        return self.apiHandler.test_get_version()
+
     def createSummaryChampions(self):
         api_result = self.apiHandler.test_get_champion_json() 
         # 이후에 해당 챔피언 상세 데이타도 DB에 들어가야함.
@@ -39,6 +42,15 @@ class RiotService:
         # print(api_result['data']['Zoe']['name'])
         # print(api_result['data']['Zoe']['title'])
         # print(api_result['name'])
+
+    def insertSummaryChanpion(self):
+        api_result = self.apiHandler.test_get_champion_json()
+        api_count = len(api_result['data'])
+        db_result = self.dbHandler.count_document("DATA", "CHAMPIONS_SUMMARY")
+        if api_count != db_result:
+            print(api_count)
+            print(db_result)
+            print("챔피언 정보의 갱신이 필요합니다.")
 
     def countSummaryChampions(self): # SummaryChampions document가 비어있는지 확인
         cnt = self.dbHandler.count_document("DATA", "CHAMPIONS_SUMMARY")
@@ -90,7 +102,11 @@ class RiotService:
         result.append(db_result['stats'])
         result.append(self.getChampioninfo_Spellname(db_result))
         result.append(self.getChampioninfo_Spellcontent(db_result))
+        result.append(self.get_champion_spell_images_by_champion_id(champion_name))
+        # print(self.getChampioninfo_Spellcontent(db_result))
+        # print(self.get_champion_spell_images_by_champion_id(champion_name))
         return result
+
 
     def getChampioninfo_ChampionInfo(self, result):
         champion_info = []
@@ -195,6 +211,7 @@ class RiotService:
         db_result = self.dbHandler.find_item("DATA", "CHAMPION", "id", champion_id)
         if self.dbHandler.find_champion_spell_images_by_champion_id(champion_id) is None:
             spell_id_list = []
+
             P = db_result['passive']['image']['full']
             Q = db_result['spells'][0]['image']['full']
             W = db_result['spells'][1]['image']['full']
@@ -209,12 +226,22 @@ class RiotService:
             inputdata = {}
             inputdata['champion_id'] = champion_id
             inputdata['spell_id_list'] = spell_id_list
-            inputdata['P'] = self.apiHandler.test_get_champion_passive_img_by_champion_passive_id(P)
-            inputdata['Q'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(Q)
-            inputdata['W'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(W)
-            inputdata['E'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(E)
-            inputdata['R'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(R)
-            db_result = self.dbHandler.insert_champion_spell_images(inputdata)
+
+            # get image binary
+            # inputdata['P'] = self.apiHandler.test_get_champion_passive_img_by_champion_passive_id(P)
+            # inputdata['Q'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(Q)
+            # inputdata['W'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(W)
+            # inputdata['E'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(E)
+            # inputdata['R'] = self.apiHandler.test_get_champion_spell_img_by_champion_spell_id(R)
+            #db_result = self.dbHandler.insert_champion_spell_images(inputdata)
+
+            # get image url
+            inputdata['P'] = self.apiHandler.test_get_champion_passive_url_by_champion_passive_id(P)
+            inputdata['Q'] = self.apiHandler.test_get_champion_spell_url_by_champion_spell_id(Q)
+            inputdata['W'] = self.apiHandler.test_get_champion_spell_url_by_champion_spell_id(W)
+            inputdata['E'] = self.apiHandler.test_get_champion_spell_url_by_champion_spell_id(E)
+            inputdata['R'] = self.apiHandler.test_get_champion_spell_url_by_champion_spell_id(R)
+            db_result = self.dbHandler.insert_champion_spell_images_url(inputdata)
 
     def find_champion_spell_images_by_champion_id(self, champion_id):
         db_result = self.dbHandler.find_champion_spell_images_by_champion_id(champion_id)
@@ -222,7 +249,13 @@ class RiotService:
 
     def get_champion_spell_images_by_champion_id(self, champion_id):
         db_result = self.dbHandler.get_champion_spell_images_by_champion_id(champion_id)
-        return db_result
+        res = []
+        res.append(db_result['P'])
+        res.append(db_result['Q'])
+        res.append(db_result['W'])
+        res.append(db_result['E'])
+        res.append(db_result['R'])
+        return res
 
     def count_spell_champion_image(self):
         cnt = self.dbHandler.count_document("IMG2", "SPELLS")
@@ -230,3 +263,12 @@ class RiotService:
 
     def testFunction(self, champion_id):
         api_result = self.apiHandler.test_get_champion_loading_img_by_champion_skin_number(champion_skin_id)
+
+
+
+        
+if __name__ == "__main__":  
+    w = RiotService()  
+    # print(w.test_get_summoner_info_by_name("휘랑"))
+    # print(w.test_get_version())
+    print(w.insertSummaryChanpion())

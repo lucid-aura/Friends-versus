@@ -87,6 +87,25 @@ class ImageService:
             
         return result
 
+    def insert_champion_spell_images_url(self, input_data):
+        result = self.data_dao.find_item("IMG", "SPELLS", "champion_id", input_data['champion_id'])
+        if result is None:
+            temp = {}
+            temp['champion_id'] = input_data['champion_id']
+            temp['spell_id_list'] = input_data['spell_id_list']
+            temp['P'] = input_data['P'] 
+            temp['Q'] = input_data['Q']
+            temp['W'] = input_data['W']
+            temp['E'] = input_data['E']
+            temp['R'] = input_data['R']
+            result = self.data_dao.insert_item("IMG", "SPELLS", temp)
+            # self.data_dao.update_item("champion_id", input_data['champion_id'], "P", input_data['P'], "IMG", "SPELLS")
+            # def update_item(self, column_name, column_value, update_column, update_value, db_name, collection_name):
+            # self.data_dao.update_row("champion_id", input_data['champion_id'], input_data, "IMG", "SPELLS")
+            return result
+            
+        return result
+
     def get_champion_spell_images_by_champion_id(self, champion_id):
         result = self.data_dao.find_item("IMG", "SPELLS", 'champion_id', champion_id)
         return result

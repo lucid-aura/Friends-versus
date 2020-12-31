@@ -2,13 +2,15 @@
     <div class="custom-home">
         <table>
             <thead>
-                <h3 colspan="3"> {{ player_info['name'] }} </h3>
+                <h3 colspan="4"> {{ player_info['name'] }} </h3>
             </thead>
             <tbody>
                 <tr>
                     <td rowspan = "2">
-                        <img :src=this.url   id="player_icon" style="width: 50%; height: 50%"/>
-                        
+                        <img :src=player_info.profileIconId style="width: 90px; height: 90px"/>
+                    </td>
+                    <td rowspan = "2">
+                        <img :src=player_info.profileIconId style="width: 90px; height: 90px"/>
                     </td>
                     <td>
                         <p>닉네임 {{ player_info['name'] }}</p>
@@ -34,49 +36,16 @@
 export default {
     props: {
         id: String,
-        player_info: Object
+        player_info: Object,
+        icon_url: String
     },
     data() { // DB로 받아오는 과정이 필요함. 스크립트 내 저장된 데이터를 쓰는 것이 아니라...
         return {
-            url: "",
+            profile_icon_url: '',
         }
     },
-    method:{
-        geturl(){
-            return this.url
-        },
-        resolve_img_url(){
-            
-            let path = "http://ddragon.leagueoflegends.com/cdn/10.24.1/img/";
-            //path += picture_src;
-            //path += ".png";
-            path = "http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/588.png";
-            return path
-        },
-        test(){
-            var path = 'http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/';
-            path += this.player_info['profileIconId'];
-            path += '.png'
-            document.getElementById("player_icon").src =path;
-            return path
-        },
 
-    },
-    mounted() {
-        var path = 'http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/';
-        path += this.player_info['profileIconId'];
-        path += '.png'
-        this.url = path
-        document.getElementById("player_icon").src =path;
-        console.log("mounted");
-    },
-    created() {
-        
-        //icon.setAttribute("src", "http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/588.png");
-        //icon.src = "http://ddragon.leagueoflegends.com/cdn/10.24.1/img/profileicon/588.png";
-    
-        console.log("created");
-    },
+
 
 }
 </script>

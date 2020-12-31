@@ -26,6 +26,7 @@ export default {
             id: '',
             player_info: [],
             result: ' ',
+            icon_url: ''
         }
     },
     mounted: function() {
@@ -42,6 +43,7 @@ export default {
                 if (res.data['status'] == null) {
                     this.player_info = res.data;
                     this.id = this.player_info['name']
+                    this.icon_url = res.data['profileIconId']
                     console.log(res.data);
                 }
                 else {
